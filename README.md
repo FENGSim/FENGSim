@@ -1,4 +1,4 @@
-# ![FENGSim](image/image1.svg)
+# [![FENGSim](image/image1.svg)](https://github.com/fengsim/FENGSim)
 
 The FENGSim project is more than open source; it's a bold declaration of freedom. It champions the brave, persistent, and innovative spirit that breaks boundaries. Too many engineers and researchers see their potential stifled by unequal resource distribution. FENGSim shatters these barriers, unleashing that potential by providing the freedom and support for all to build, explore, and create. Join us in this mission.
 
