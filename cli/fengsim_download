@@ -1,20 +1,21 @@
 #!/bin/bash
 
-git clone https://github.com/fengsim/FENGSim.git
+git clone https://github.com/FENGSim/FENGSim.git
 
 cd FENGSim
 
-git clone https://github.com/fengsim/docs.git
+git clone https://github.com/FENGSim/docs.git
+git clone https://github.com/FENGSim/fengsim.github.io.git
 
 cd toolkit
 
-git clone https://github.com/fengsim/MultiX.git
-git clone https://github.com/fengsim/CFD.git
-git clone https://github.com/fengsim/CEM.git
-git clone https://github.com/fengsim/DAE.git
-git clone https://github.com/fengsim/NLA.git
-git clone https://github.com/fengsim/Particles.git
-git clone https://github.com/fengsim/PS.git
+git clone https://github.com/FENGSim/MultiX.git
+git clone https://github.com/FENGSim/CFD.git
+git clone https://github.com/FENGSim/CEM.git
+git clone https://github.com/FENGSim/DAE.git
+git clone https://github.com/FENGSim/NLA.git
+git clone https://github.com/FENGSim/Particles.git
+git clone https://github.com/FENGSim/PS.git
 
 # report
 cd MultiX/docs
