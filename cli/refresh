@@ -22,6 +22,20 @@ cd ..
 echo $'\n'
 echo $'\n'
 
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo ">>>"
+echo ">>> fengsim.github.io"
+echo ">>>"
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+cd fengsim.github.io
+git checkout main
+git pull origin main
+cd ..
+echo $'\n'
+echo $'\n'
+
 cd toolkit
 
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
@@ -131,6 +145,7 @@ echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 cd ..
 git add docs
+git add fengsim.github.io
 git add toolkit/CFD
 git add toolkit/CEM
 git add toolkit/DAE
