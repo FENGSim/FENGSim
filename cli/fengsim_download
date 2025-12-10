@@ -1,21 +1,22 @@
 #!/bin/bash
 
-git clone https://github.com/OpenDigitalTwin-Dev/FENGSim.git
+git clone https://github.com/fengsim/FENGSim.git
 
 cd FENGSim
 
-git clone https://github.com/OpenDigitalTwin-Dev/docs.git
+git clone https://github.com/fengsim/docs.git
 
 cd toolkit
 
-git clone https://github.com/OpenDigitalTwin-Dev/MultiX.git
-git clone https://github.com/OpenDigitalTwin-Dev/CFD.git
-git clone https://github.com/OpenDigitalTwin-Dev/CEM.git
-git clone https://github.com/OpenDigitalTwin-Dev/DAE.git
-git clone https://github.com/OpenDigitalTwin-Dev/NLA.git
-git clone https://github.com/OpenDigitalTwin-Dev/Particles.git
-git clone https://github.com/OpenDigitalTwin-Dev/PS.git
+git clone https://github.com/fengsim/MultiX.git
+git clone https://github.com/fengsim/CFD.git
+git clone https://github.com/fengsim/CEM.git
+git clone https://github.com/fengsim/DAE.git
+git clone https://github.com/fengsim/NLA.git
+git clone https://github.com/fengsim/Particles.git
+git clone https://github.com/fengsim/PS.git
 
+# report
 cd MultiX/docs
 ./install
 
