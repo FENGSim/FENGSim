@@ -19,3 +19,6 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/fengsim/docs.git
+[submodule "fengsim.github.io"]	
+	path = docs
+	url = https://github.com/fengsim/fengsim.github.io.git
