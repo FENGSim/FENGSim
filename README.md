@@ -9,7 +9,7 @@ Moreover, FENGSim offers tools for managing library dependencies, package manage
 To install FENGSim on Ubuntu 24.04:
 
 ```shell
-	git clone https://github.com/fengsim/FENGSim.git
+	git clone https://github.com/FENGSim/FENGSim.git
 	cd FENGSim
 	./install
 ```
@@ -32,7 +32,7 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 
 ```shell
 	cd FENGSim/toolkit
-	git clone https://github.com/fengsim/MultiX.git
+	git clone https://github.com/FENGSim/MultiX.git
 ```
 
 Consequently, all the commands and the README.md files will be revised to be the rules and the notebooks in the Warp AI terminal.
