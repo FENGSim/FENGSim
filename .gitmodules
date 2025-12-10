@@ -1,21 +1,21 @@
 [submodule "toolkit/CFD"]
 	path = toolkit/CFD
-	url = https://github.com/OpenDigitalTwin-Dev/CFD.git
+	url = https://github.com/fengsim/CFD.git
 [submodule "toolkit/CEM"]
 	path = toolkit/CEM
-	url = https://github.com/OpenDigitalTwin-Dev/CEM.git
+	url = https://github.com/fengsim/CEM.git
 [submodule "toolkit/DAE"]
 	path = toolkit/DAE
-	url = https://github.com/OpenDigitalTwin-Dev/DAE.git
+	url = https://github.com/fengsim/DAE.git
 [submodule "toolkit/PS"]
 	path = toolkit/PS
-	url = https://github.com/OpenDigitalTwin-Dev/PS.git
+	url = https://github.com/fengsim/PS.git
 [submodule "toolkit/NLA"]
 	path = toolkit/NLA
-	url = https://github.com/OpenDigitalTwin-Dev/NLA.git
+	url = https://github.com/fengsim/NLA.git
 [submodule "toolkit/Particles"]
 	path = toolkit/Particles
-	url = https://github.com/OpenDigitalTwin-Dev/Particles.git
+	url = https://github.com/fengsim/Particles.git
 [submodule "docs"]
 	path = docs
-	url = https://github.com/OpenDigitalTwin-Dev/docs.git
+	url = https://github.com/fengsim/docs.git
