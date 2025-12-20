@@ -11,5 +11,7 @@ tar -xzf Particles-25.12.tar.gz -C FENGSim/toolkit/Particles --strip-components=
 tar -xzf DAE-25.12.tar.gz -C FENGSim/toolkit/DAE --strip-components=1
 tar -xzf NLA-25.12.tar.gz -C FENGSim/toolkit/NLA --strip-components=1
 tar -xzf PS-25.12.tar.gz -C FENGSim/toolkit/PS --strip-components=1
+tar -xzf docs-25.12.tar.gz -C FENGSim/docs/ --strip-components=1
+tar -xzf report-25.12.tar.gz -C FENGSim/toolkit/MultiX/docs --strip-components=1
 
 rm *.tar.gz
