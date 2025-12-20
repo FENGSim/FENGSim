@@ -55,6 +55,14 @@ maxAlphaCo      1;
 
 functions
 {
+    writeAlphaSolid
+    {
+        type            writeObjects;
+        libs            ("libutilityFunctionObjects.so");
+        objects         (alpha.solid);
+        writeOption     anyWrite;
+        writeControl    writeTime; // Matches the write interval specified above
+    }
     #ifeq ${ENABLE_SOLIDIFICATION_DATA} true
         solidificationData
         {

@@ -1,0 +1,1 @@
+gmsh test.geo -3 -format vtk -save_all
