@@ -1,0 +1,15 @@
+unzip fengsim-25.12.zip
+
+tar -xzf FENGSim-25.12.tar.gz
+mv FENGSim-25.12 FENGSim
+
+mkdir FENGSim/toolkit/MultiX
+tar -xzf MultiX-25.12.tar.gz -C FENGSim/toolkit/MultiX --strip-components=1
+tar -xzf CFD-25.12.tar.gz -C FENGSim/toolkit/CFD --strip-components=1
+tar -xzf CEM-25.12.tar.gz -C FENGSim/toolkit/CEM --strip-components=1
+tar -xzf Particles-25.12.tar.gz -C FENGSim/toolkit/Particles --strip-components=1
+tar -xzf DAE-25.12.tar.gz -C FENGSim/toolkit/DAE --strip-components=1
+tar -xzf NLA-25.12.tar.gz -C FENGSim/toolkit/NLA --strip-components=1
+tar -xzf PS-25.12.tar.gz -C FENGSim/toolkit/PS --strip-components=1
+
+rm *.tar.gz
