@@ -4,15 +4,15 @@ from numpy.fft import fft2, ifft2, fftfreq
 
 def fourier_poisson_solver():
     # 2d poisson equation
-    N = 64                    
-    L = 2 * np.pi            
+    N = 32                    
+    L = 1          
     x = np.linspace(0, L, N, endpoint=False)  
     y = x.copy()
     X, Y = np.meshgrid(x, y)
     
-    # u(x,y) = sin(2x)cos(3y)
-    u_exact = np.sin(2*X) * np.cos(3*Y)
-    f = -13 * np.sin(2*X) * np.cos(3*Y)
+    # u(x,y) = sin(2*pi*x)sin(2*pi*y)
+    u_exact = np.sin(2*np.pi*X) * np.sin(2*np.pi*Y)
+    f = -8 * np.pi * np.pi * np.sin(2*np.pi*X) * np.sin(2*np.pi*Y)
     
     u_numerical = solve_poisson_spectral(f, L)
 
