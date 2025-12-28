@@ -12,23 +12,13 @@ def fourier_poisson_solver():
     
     # u(x,y) = sin(2*pi*x)sin(2*pi*y)
     u_exact = np.sin(2*np.pi*X) * np.sin(2*np.pi*Y)
-    #f = -8.0 * np.pi * np.pi * np.sin(2.0*np.pi*X) * np.sin(2.0*np.pi*Y)
-    f = np.array([[-0,-0,-0,0],
-                  [-0,-78.957,-9.6694e-15,78.957],
-                  [-0,-9.6694e-15,-1.1842e-30,9.6694e-15],
-                  [0,78.957,9.6694e-15,-78.957]], dtype=float)
-
- 
- 
-
+    f = -8.0 * np.pi * np.pi * np.sin(2.0*np.pi*X) * np.sin(2.0*np.pi*Y)
     
     u_numerical = solve_poisson_spectral(f, L)
 
-    return
     error = np.max(np.abs(u_numerical - u_exact))
     print(f"error: {error:.2e}")
 
-    return
     # visualization
     fig, axes = plt.subplots(1, 3, figsize=(15, 4))
     
@@ -77,32 +67,20 @@ def solve_poisson_spectral(f, L):
     print(f)
     print(f"\n")
     
-    #f_hat = fft2(f)
-    #print(f_hat)
-    #print("\n")
-    f_hat = np.fft.fft2(f)
+    f_hat = fft2(f)
     print(f_hat)
     print("\n")
-    
-    F_manual = np.zeros((M, N), dtype=complex)
-    
-    for u in range(M):      # 对应k1
-        for v in range(N):  # 对应k2
-            total = 0 + 0j
-            for x in range(M):      # 对应j1
-                for y in range(N):  # 对应j2
-                    angle = -2 * np.pi * (u*x/M + v*y/N)
-                    total += f[x, y] * (np.cos(angle) + 1j*np.sin(angle))
-            F_manual[u, v] = total
-    print(F_manual)
 
-    #print(np.fft.fftfreq(N, 1/N))
-    
+    print(np.fft.fftfreq(N, 1/N))
     u_hat = -f_hat / K2
-    
+    print(np.fft.fftfreq(N, 1/N))
     u_hat[0, 0] = 0
+    print(u_hat)
+    print("\n")
     
     u = np.real(ifft2(u_hat))
+    print(u)
+    print("\n")
     
     return u
 
