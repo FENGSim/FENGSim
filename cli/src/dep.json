@@ -1,0 +1,6 @@
+{
+  "occt": {
+    "dir": "toolkit/Geometry/occt",
+    "dep": ["qt", "vtk", "gmsh"]
+  }
+}
