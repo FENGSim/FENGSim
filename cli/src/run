@@ -12,7 +12,8 @@ echo "$1"
 
 if [ "$1" = "occt" ]; then
    occt_dir=$(jq -r '.occt.dir' dep.json) # -r remove ""
-   echo "$occt_dir"
+   echo $occt_dir
+   occt_install=$PWD/occt
    cd ../../$occt_dir
-   ls
+   echo $occt_install
 fi	
