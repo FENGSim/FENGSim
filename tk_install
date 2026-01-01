@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -z "${1}" ]; then
+    echo "Please select the software to install."
+    exit 1
+else
+    homepath="$(realpath ${BASH_SOURCE[0]%"$(basename "$0")"})"
+    (cd "$homepath"/cli/src/ && ./install "$1")
+fi
+
+
