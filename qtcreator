@@ -2,9 +2,5 @@ export MESA_GL_VERSION_OVERRIDE=3.3
 export MESA_GLSL_VERSION_OVERRIDE=330
 export LIBGL_ALWAYS_SOFTWARE=1
 
-filename=$PWD
-homepath="${filename%FENGSim*}"
-homepath+=FENGSim
-cd $homepath
-cd cli
-./qtcreator
+homepath="$(realpath ${BASH_SOURCE[0]%"$(basename "$0")"})"
+(cd "$homepath/cli" && ./qtcreator &)
