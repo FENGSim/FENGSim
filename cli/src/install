@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if ! dpkg -s jq &> /dev/null; then
+    sudo apt-get update
+    sudo apt-get install -y jq
+fi
+
+homepath="$(realpath ${BASH_SOURCE[0]%"$(basename "$0")"}/../../)"
+echo "homepath: "$homepath
+depfile="${homepath}/cli/src/dep.json"
+echo "depfile: "$depfile
+
+run_tool() {
+    tool_dir="$homepath/$(jq -r ".${tool_name}.dir" "$depfile")" # -r remove "" and must use "" can't use ''
+    echo "tool_dir: "$tool_dir
+    tool_install="$homepath/cli/src/${tool_name}"
+    echo "tool_install: "$tool_install
+    (cd $tool_dir && . $tool_install)
+}
+
+deps=($(jq -r ".${1}.dep[]" "$depfile"))
+for dep in "${deps[@]}"; do
+    tool_name="$dep"
+    echo $tool_name
+    run_tool	
+done
+tool_name="$1"
+run_tool
+
