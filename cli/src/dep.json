@@ -1,22 +1,26 @@
 {
-  "occt": {
-    "dir": "toolkit/Geometry/occt",
-    "dep": ["vtk"]
-  },
-  "vtk": {
-    "dir": "toolkit/Geometry/vtk",
-    "dep": []
-  },
-  "tetgen": {
-    "dir": "toolkit/Geometry/tetgen",
-    "dep": []
-  },
-  "triangle": {
-    "dir": "toolkit/Geometry/triangle",
-    "dep": []
-  },
-  "netgen": {
-    "dir": "toolkit/Geometry/netgen",
-    "dep": []
-  }
+    "occt": {
+	"dir": "toolkit/Geometry/occt",
+	"dep": ["vtk"]
+    },
+    "vtk": {
+	"dir": "toolkit/Geometry/vtk",
+	"dep": []
+    },
+    "tetgen": {
+	"dir": "toolkit/Geometry/tetgen",
+	"dep": []
+    },
+    "triangle": {
+	"dir": "toolkit/Geometry/triangle",
+	"dep": []
+    },
+    "netgen": {
+	"dir": "toolkit/Geometry/netgen",
+	"dep": []
+    },
+    "lapack": {
+	"dir": "toolkit/NLA/lapack",
+	"dep": []
+    }
 }
