@@ -10,5 +10,9 @@
   "tetgen": {
     "dir": "toolkit/Geometry/tetgen",
     "dep": []
+  },
+  "triangle": {
+    "dir": "toolkit/Geometry/triangle",
+    "dep": []
   }
 }
