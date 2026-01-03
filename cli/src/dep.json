@@ -14,5 +14,9 @@
   "triangle": {
     "dir": "toolkit/Geometry/triangle",
     "dep": []
+  },
+  "netgen": {
+    "dir": "toolkit/Geometry/netgen",
+    "dep": []
   }
 }
