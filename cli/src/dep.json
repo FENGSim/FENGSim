@@ -22,5 +22,9 @@
     "lapack": {
 	"dir": "toolkit/NLA/lapack",
 	"dep": []
+    },
+    "fftw": {
+	"dir": "toolkit/Tools/fftw",
+	"dep": []
     }
 }
