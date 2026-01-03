@@ -6,7 +6,7 @@ FENGSim serves as a software development kit (SDK) for high-fidelity numerical s
 
 Moreover, FENGSim offers tools for managing library dependencies, package management, and continuous integration and continuous deployment (CICD) processes, which include compiling, code merging, version control, testing, and deployment. The project will also feature interfaces for the integration of machinery and sensors, covering drivers, communication, and control applications. Additionally, FENGSim includes a large language model (LLM) assistant, developed using open-source code and classical literature, to enhance user experience and support.
 
-Four Levels of Mastery in Product Design and Manufacturing
+Four levels of mastery in product design and manufacturing:
 
   * Copying based on experience or trial-and-error.
   * Using software without understanding its underlying principles—this is little different from simple copying.
