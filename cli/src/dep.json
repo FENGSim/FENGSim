@@ -6,5 +6,9 @@
   "vtk": {
     "dir": "toolkit/Geometry/vtk",
     "dep": []
+  },
+  "tetgen": {
+    "dir": "toolkit/Geometry/tetgen",
+    "dep": []
   }
 }
