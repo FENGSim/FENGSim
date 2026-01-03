@@ -26,5 +26,9 @@
     "fftw": {
 	"dir": "toolkit/Tools/fftw",
 	"dep": []
+    },
+    "petsc": {
+	"dir": "toolkit/NLA/petsc-3.23",
+	"dep": ["lapack","fftw"]
     }
 }
