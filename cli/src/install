@@ -11,19 +11,20 @@ depfile="${homepath}/cli/src/dep.json"
 echo "depfile: "$depfile
 
 run_tool() {
-    tool_dir="$homepath/$(jq -r ".${tool_name}.dir" "$depfile")" # -r remove "" and must use "" can't use ''
+    tool_dir="$homepath/$(jq -r ".${1}.dir" "$depfile")" # -r remove "" and must use "" can't use ''
     echo "tool_dir: "$tool_dir
-    tool_install="$homepath/cli/src/${tool_name}"
+    tool_install="$homepath/cli/src/${1}"
     echo "tool_install: "$tool_install
     (cd $tool_dir && . $tool_install)
 }
 
-deps=($(jq -r ".${1}.dep[]" "$depfile"))
-for dep in "${deps[@]}"; do
-    tool_name="$dep"
-    echo $tool_name
-    run_tool	
-done
-tool_name="$1"
-run_tool
+function_name() {
+    deps=($(jq -r ".${1}.dep[]" "$depfile"))
+    for dep in "${deps[@]}"; do
+	function_name "$dep"
+    done
+    echo "${1}"
+    run_tool "${1}"
+}
 
+function_name "${1}"
