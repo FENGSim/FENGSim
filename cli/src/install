@@ -5,15 +5,15 @@ if ! dpkg -s jq &> /dev/null; then
     sudo apt-get install -y jq
 fi
 
-homepath="$(realpath ${BASH_SOURCE[0]%"$(basename "$0")"}/../../)"
-echo "homepath: "$homepath
-depfile="${homepath}/cli/src/dep.json"
+fengsim="$(realpath ${BASH_SOURCE[0]%"$(basename "$0")"}/../../)"
+echo "fengsim: "$fengsim
+depfile="${fengsim}/cli/src/dep.json"
 echo "depfile: "$depfile
 
-run_tool() {
-    tool_dir="$homepath/$(jq -r ".${1}.dir" "$depfile")" # -r remove "" and must use "" can't use ''
+tool_install() {
+    tool_dir="$fengsim/$(jq -r ".${1}.dir" "$depfile")" # -r remove "" and must use "" can't use ''
     echo "tool_dir: "$tool_dir
-    tool_install="$homepath/cli/src/${1}"
+    tool_install="$fengsim/cli/src/${1}"
     echo "tool_install: "$tool_install
     (cd $tool_dir && . $tool_install)
 }
@@ -24,7 +24,7 @@ function_name() {
 	function_name "$dep"
     done
     echo "${1}"
-    run_tool "${1}"
+    tool_install "${1}"
 }
 
 function_name "${1}"
