@@ -42,5 +42,9 @@
     "openblas": {
 	"dir": "toolkit/NLA/openblas",
 	"dep": []
+    },
+    "hypre": {
+	"dir": "toolkit/NLA/hypre-3.0.0",
+	"dep": []
     }
 }
