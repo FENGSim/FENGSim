@@ -34,5 +34,13 @@
     "slepc": {
 	"dir": "toolkit/NLA/slepc-3.23",
 	"dep": ["petsc"]
+    },
+    "superlu": {
+	"dir": "toolkit/NLA/superlu",
+	"dep": ["openblas"]
+    },
+    "openblas": {
+	"dir": "toolkit/NLA/openblas",
+	"dep": []
     }
 }
