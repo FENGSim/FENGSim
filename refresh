@@ -1,0 +1,4 @@
+#!/bin/bash
+
+homepath="$(realpath ${BASH_SOURCE[0]%"$(basename "$0")"})"
+(cd "$homepath"/cli && ./refresh)

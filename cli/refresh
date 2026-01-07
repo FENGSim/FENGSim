@@ -1,9 +1,6 @@
 #!/bin/bash
 
-filename=$PWD
-homepath="${filename%FENGSim*}"
-homepath+=FENGSim
-echo $homepath
+homepath="$(realpath ${BASH_SOURCE[0]%"$(basename "$0")"}/../)"
 
 cd $homepath
 git pull origin main
