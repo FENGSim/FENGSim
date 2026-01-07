@@ -36,12 +36,12 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 
 ```shell
 	cd FENGSim
-	./submodule_update
+	./submodule
 ```
 
 ```shell
 	cd FENGSim/toolkit
-	./multix_install
+	./multix
 ```
 
 Consequently, all the commands and the README.md files will be revised to be the rules and the notebooks in the Warp AI terminal.
