@@ -9,32 +9,36 @@ FLIP= 0
 
 # solver
 method(ulmpm, FLIP, linear, FLIP)
+scheme(usl)
 
 # grid
-dimension(2, 0, 3, 0, 3, 1)
+dimension(2, 0, 3, 0, 3, 0.05)
 
 # solid
 material(mat1, linear, rho, E, nu)
 region(rpart, block, 0, 1, 1, 2)
 # set particle number in one cell:1, material:mat1, cellsize:1, initial temperature:0	
-solid(spart, region, rpart, 1, mat1, 1, 0)
+solid(spart, region, rpart, 1, mat1, 0.05, 0)
 
 # initial conditions
 group(gpart, particles, region, rpart, solid, spart)
-fix(v0part, initial_velocity_particles, gpart, 0.5, 0, NULL)
+fix(v0part, initial_velocity_particles, gpart, 0.1, 0, NULL)
 
 # boundary conditions
-region(bc1, block, 3-0.1, 3+0.1, -INF, INF)
+region(bc1, block, -INF, 0, -INF, INF)
 group(gbc1, nodes, region, bc1, solid, spart)
 fix(BC_1,   velocity_nodes, gbc1, 0, 0, NULL)
 
+region(bc2, block, 1, INF, -INF, INF)
+group(gbc2, nodes, region, bc2, solid, spart)
+fix(BC_2,   velocity_nodes, gbc2, 0.1, 0, NULL)
+
 # output
-N_log = 1
-dumping_interval = N_log*1
+dumping_interval = 20
 dump(dump1, all, particle, dumping_interval, dump_p.*.LAMMPS, x, y, z)
 dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
 
 # run
-set_dt(1)
-run_time(5)
+set_dt(0.001)
+run_time(1)
 
