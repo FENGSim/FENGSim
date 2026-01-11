@@ -1,3 +1,5 @@
+sudo apt -y install python3-scipy
+
 cd ../../../toolkit/DAE/kdl
 ./install
 cd ../mbdyn
