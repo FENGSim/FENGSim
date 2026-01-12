@@ -1,0 +1,4 @@
+mkdir Refs
+./../../../toolkit/MultiX/extern/Calculix/bin/cgx -b pre.fbl
+./../../../toolkit/MultiX/extern/Calculix/bin/ccx_2.21 modal
+./../../../toolkit/MultiX/extern/Calculix/bin/cgx -b shapes.fbl
