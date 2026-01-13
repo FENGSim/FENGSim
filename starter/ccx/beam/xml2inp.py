@@ -3,12 +3,14 @@ import sys
 import json
 import re
 
-xml_file_name = input("请输入xml配置文件名称：");
+xml_file_name = input("input .xml file: ");
 xml_file_name = xml_file_name + ".xml"
-print ("您输入的xml文件名是: ", xml_file_name)
-mesh_file_name = input("请输入网格文件名称：");
+print (".xml file is ", xml_file_name)
+
+mesh_file_name = input("input .msh file: ");
 mesh_file_name = mesh_file_name + ".msh"
-print ("您输入的网格文件名称: ", mesh_file_name)
+print (".msh file is ", mesh_file_name)
+
 f = open('modal.inp', 'w')
 f2 = open(mesh_file_name, 'r')
 
@@ -20,7 +22,6 @@ MATERIAL = ""
 ELASTIC = []
 DENSITY = 0
 frequency = 1
-BNDS = {}
 
 for child in root:
     if child.tag == "Calculix" :
@@ -37,9 +38,6 @@ for child in root:
                             ELASTIC.append(float(values[1]))
                         if child3.tag == "DENSITY" :
                             DENSITY = float(child3.text)
-            if child1.tag == "Boundary" :
-                for child2 in child1:
-                    BNDS[child2.tag]=child2.text
             if child1.tag == "Frequency" :
                 frequency = int(child1.text)
 
@@ -47,7 +45,6 @@ print(ELSET)
 print(MATERIAL)
 print(ELASTIC)
 print(DENSITY)
-print(BNDS)
 print(frequency)
 
 #    *include, input=all2.msh
@@ -78,9 +75,13 @@ for line in f2:
             var = 0
         if (values_point[1]=="type=CPS4") :
             var = 0
-        if (values_point[1]=="type=C3D8") :
+        if (values_point[1]=="type=C3D8I") :
             var = 1
-            f.write("*ELEMENT, type=C3D8, ELSET="+ELSET+"\n")
+            f.write("*ELEMENT, type=C3D8I, ELSET="+ELSET+"\n")
+            continue
+        if (values_point[1]=="type=C3D4") :
+            var = 1
+            f.write("*ELEMENT, type=C3D4, ELSET="+ELSET+"\n")
             continue
     if var == 1 :
         f.write(line+"\n")
@@ -94,9 +95,6 @@ f.write("*DENSITY"+"\n")
 f.write(str(DENSITY)+"\n")
 f.write("*SOLID SECTION, ELSET="+ELSET+",MATERIAL="+MATERIAL+"\n")
 f.write("1"+"\n")
-f.write("*boundary\n")
-for key,values in BNDS.items():
-    f.write(key+","+values+"\n")
 f.write("*STEP"+"\n")
 f.write("*frequency"+"\n")
 f.write(str(frequency)+"\n")
