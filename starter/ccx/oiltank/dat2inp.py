@@ -3,13 +3,13 @@ import sys
 import json
 import re
 
-xml_file_name = input("请输入xml配置文件名称：");
+xml_file_name = input("input .xml file: ");
 xml_file_name = xml_file_name + ".xml"
-print ("您输入的xml文件名是: ", xml_file_name)
+print (".xml file is", xml_file_name)
 
-mesh_file_name = input("请输入网格文件名称：");
+mesh_file_name = input("input .dat file: ");
 mesh_file_name = mesh_file_name + ".dat"
-print ("您输入的网格文件名称: ", mesh_file_name)
+print (".dat file is", mesh_file_name)
 
 f = open('modal.inp', 'w')
 f2 = open(mesh_file_name, 'r')
