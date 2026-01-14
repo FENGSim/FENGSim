@@ -5,10 +5,10 @@ import re
 
 xml_file_name = input("input .xml file: ");
 xml_file_name = xml_file_name + ".xml"
-print (".xml file is ", xml_file_name)
+print (".xml file is", xml_file_name)
 mesh_file_name = input("input .msh file: ");
 mesh_file_name = mesh_file_name + ".msh"
-print (".msh file is ", mesh_file_name)
+print (".msh file is", mesh_file_name)
 f = open('modal.inp', 'w')
 f2 = open(mesh_file_name, 'r')
 
