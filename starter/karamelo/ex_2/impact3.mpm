@@ -11,14 +11,14 @@ FLIP= 0.5
 method(ulmpm, FLIP, linear, FLIP)
 scheme(usl)
 
-h = 0.2
+h = 0.25
 
 # grid
 dimension(2, 0, 4, 0, 4, h)
 
 # solid
 material(mat1, linear, rho, E, nu)
-region(rpart, block, 0, 1, 1, 3)
+region(rpart, block, 0, 1, 1.5, 2.5)
 # set particle number in one cell:1, material:mat1, cellsize:1, initial temperature:0	
 solid(spart, region, rpart, 1, mat1, h, 0)
 
@@ -32,7 +32,7 @@ group(gbc1, nodes, region, bc1, solid, spart)
 fix(BC_1, velocity_nodes, gbc1, 0, 0, NULL)
 
 # output
-dumping_interval = 10
+dumping_interval = 50
 dump(dump1, all, particle, dumping_interval, dump_p.*.LAMMPS, x, y, z)
 dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
 
