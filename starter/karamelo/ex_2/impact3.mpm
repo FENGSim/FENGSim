@@ -32,11 +32,11 @@ group(gbc1, nodes, region, bc1, solid, spart)
 fix(BC_1, velocity_nodes, gbc1, 0, 0, NULL)
 
 # output
-dumping_interval = 50
+dumping_interval = 10
 dump(dump1, all, particle, dumping_interval, dump_p.*.LAMMPS, x, y, z)
 dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
 
 # run
-set_dt(0.001)
+set_dt(0.0025)
 run_time(5)
 
