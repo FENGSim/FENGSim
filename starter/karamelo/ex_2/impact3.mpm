@@ -27,7 +27,7 @@ group(gpart, particles, region, rpart, solid, spart)
 fix(v0part, initial_velocity_particles, gpart, 0.5, 0, NULL)
 
 # boundary conditions
-region(bc1, block, 1, INF, -INF, INF)
+region(bc1, block, 1.1, INF, -INF, INF)
 group(gbc1, nodes, region, bc1, solid, spart)
 fix(BC_1, velocity_nodes, gbc1, 0, 0, NULL)
 
