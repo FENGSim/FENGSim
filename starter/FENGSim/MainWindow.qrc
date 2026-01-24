@@ -2,7 +2,6 @@
     <qresource prefix="/main_wind">
         <file>figure/main_wind/cad.png</file>
         <file>figure/main_wind/fem.png</file>
-        <file>figure/main_wind/Fengsim_logo_hi.png</file>
         <file>figure/main_wind/handle.png</file>
         <file>figure/main_wind/mesh.png</file>
         <file>figure/main_wind/visual.png</file>
