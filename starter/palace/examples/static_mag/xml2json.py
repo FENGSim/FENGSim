@@ -3,12 +3,12 @@ import sys
 import json
 import re
 
-xml_file_name = input("请输入xml配置文件名称：");
+xml_file_name = input("input .xml: ");
 xml_file_name = xml_file_name + ".xml"
-print ("您输入的xml文件名是: ", xml_file_name)
-mesh_file_name = input("请输入网格文件名称：");
+print (".xml is", xml_file_name)
+mesh_file_name = input("input .msh: ");
 mesh_file_name = "mesh/" + mesh_file_name + ".msh"
-print ("您输入的网格文件名称: ", mesh_file_name)
+print (".msh is", mesh_file_name)
 
 tree = E.parse(xml_file_name)
 root = tree.getroot()
