@@ -1,0 +1,53 @@
+#####################################################
+#               UNITS: MPa, mm, s                   #
+#####################################################
+
+#E   = 2.5
+#nu  = 0.25
+#rho = 1
+E   = 1e+3                     # Young's modulus
+nu  = 0.3                      # Poisson's ratio
+rho = 1000                     # density
+
+FLIP= 1.0
+
+# solver
+method(ulmpm, FLIP, linear, FLIP)
+scheme(usl)
+
+h = 1
+
+# grid
+dimension(2, 0, 3, 0, 3, h)
+
+# solid
+material(mat, linear, rho, E, nu)
+
+region(rpart1, block, 0, 1, 1, 2)
+# set particle number in one cell:1, material:mat1, cellsize:1, initial temperature:0	
+solid(spart1, region, rpart1, 1, mat, h, 0)
+region(rpart2, block, 2, 3, 1, 2)
+# set particle number in one cell:1, material:mat1, cellsize:1, initial temperature:0	
+solid(spart2, region, rpart2, 1, mat, h, 0)
+
+v = 0.1
+# initial conditions
+group(gpart1, particles, region, rpart1, solid, spart1)
+fix(v0part1, initial_velocity_particles, gpart1, v, 0, NULL)
+group(gpart2, particles, region, rpart2, solid, spart2)
+fix(v0part2, initial_velocity_particles, gpart2, -v, 0, NULL)
+
+# boundary conditions
+#region(bc1, block, 1, INF, -INF, INF)
+#group(gbc1, nodes, region, bc1, solid, spart)
+#fix(BC_1, velocity_nodes, gbc1, 0, 0, NULL)
+
+# output
+dumping_interval = 50
+dump(dump1, all, particle, dumping_interval, dump_p.*.LAMMPS, x, y, z)
+dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
+
+# run
+set_dt(0.001)
+run_time(10)
+
