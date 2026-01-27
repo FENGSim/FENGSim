@@ -12,8 +12,8 @@ rho = 1000                     # density
 FLIP= 1.0
 
 # solver
-method(ulmpm, FLIP, linear, FLIP)
-scheme(usl)
+method(tlmpm, FLIP, linear, FLIP)
+#scheme(usl)
 
 h = 1
 
@@ -36,6 +36,9 @@ group(gpart1, particles, region, rpart1, solid, spart1)
 fix(v0part1, initial_velocity_particles, gpart1, v, 0, NULL)
 group(gpart2, particles, region, rpart2, solid, spart2)
 fix(v0part2, initial_velocity_particles, gpart2, -v, 0, NULL)
+
+fix(contact, contact/hertz, spart1, spart2)
+
 
 # boundary conditions
 #region(bc1, block, 1, INF, -INF, INF)
