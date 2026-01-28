@@ -143,3 +143,18 @@ function generate_spheres_mesh(;
 
     return gmsh.finalize()
 end
+
+function main()
+    generate_spheres_mesh(
+        filename="spheres.msh",
+        radius_a=1.0,
+        radius_b=2.0,
+        center_d=5.0,
+        verbose=5,
+        gui=false
+    )
+end
+
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end
