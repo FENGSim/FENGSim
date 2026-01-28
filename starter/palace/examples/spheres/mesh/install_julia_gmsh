@@ -1,0 +1,2 @@
+curl -fsSL https://install.julialang.org | sh
+julia -e 'using Pkg; Pkg.add("Gmsh")'
