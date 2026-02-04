@@ -2,9 +2,6 @@
 #               UNITS: MPa, mm, s                   #
 #####################################################
 
-#E   = 2.5
-#nu  = 0.25
-#rho = 1
 E   = 1e+3                     # Young's modulus
 nu  = 0.3                      # Poisson's ratio
 rho = 1000                     # density
@@ -12,21 +9,21 @@ rho = 1000                     # density
 FLIP= 1.0
 
 # solver
-method(tlmpm, FLIP, linear, FLIP)
+method(ulmpm, FLIP, linear, FLIP)
 #scheme(usl)
 
-h = 1
+h = 0.25
 
 # grid
-dimension(2, 0, 3, 0, 3, h)
+dimension(2, 0, 3, 0, 1, h)
 
 # solid
 material(mat, linear, rho, E, nu)
 
-region(rpart1, block, 0, 1, 1, 2)
+region(rpart1, block, 0, 1, 0, 1)
 # set particle number in one cell:1, material:mat1, cellsize:1, initial temperature:0	
 solid(spart1, region, rpart1, 1, mat, h, 0)
-region(rpart2, block, 2, 3, 1, 2)
+region(rpart2, block, 2, 3, 0, 1)
 # set particle number in one cell:1, material:mat1, cellsize:1, initial temperature:0	
 solid(spart2, region, rpart2, 1, mat, h, 0)
 
@@ -36,14 +33,6 @@ group(gpart1, particles, region, rpart1, solid, spart1)
 fix(v0part1, initial_velocity_particles, gpart1, v, 0, NULL)
 group(gpart2, particles, region, rpart2, solid, spart2)
 fix(v0part2, initial_velocity_particles, gpart2, -v, 0, NULL)
-
-fix(contact, contact/hertz, spart1, spart2)
-
-
-# boundary conditions
-#region(bc1, block, 1, INF, -INF, INF)
-#group(gbc1, nodes, region, bc1, solid, spart)
-#fix(BC_1, velocity_nodes, gbc1, 0, 0, NULL)
 
 # output
 dumping_interval = 50
