@@ -1,1 +1,2 @@
 wget https://download.qt.io/archive/qtcreator/10.0/10.0.2/installer_source/linux_x64/qtcreator.7z
+7z x qtcreator.7z
