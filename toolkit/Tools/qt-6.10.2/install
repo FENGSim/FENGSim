@@ -1,0 +1,25 @@
+#rm -rf qt6-src
+#mkdir qt6-src
+cd qt6-src
+
+#wget https://download.qt.io/archive/qt/6.10/6.10.2/submodules/qtbase-everywhere-src-6.10.2.tar.xz
+#tar -xJf qtbase-everywhere-src-6.10.2.tar.xz
+#wget https://download.qt.io/archive/qt/6.10/6.10.2/submodules/qtdeclarative-everywhere-src-6.10.2.tar.xz
+#tar -xJf qtdeclarative-everywhere-src-6.10.2.tar.xz
+#wget https://download.qt.io/archive/qt/6.10/6.10.2/submodules/qtshadertools-everywhere-src-6.10.2.tar.xz
+#tar -xJf qtshadertools-everywhere-src-6.10.2.tar.xz
+
+cd qtbase-everywhere-src-6.10.2/
+./configure -prefix ../../qt6-build -nomake examples -nomake tests -confirm-license
+cmake --build . --parallel
+cmake --install .
+
+cd ../qtshadertools-everywhere-src-6.10.2/
+./../../qt6-build/bin/qt-configure-module . 
+cmake --build . --parallel
+cmake --install .
+
+cd ../qtdeclarative-everywhere-src-6.10.2/
+./../../qt6-build/bin/qt-configure-module . 
+cmake --build . --parallel
+cmake --install .
