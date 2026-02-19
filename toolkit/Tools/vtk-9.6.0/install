@@ -1,5 +1,5 @@
-#wget https://vtk.org/files/release/9.6/VTK-9.6.0.tar.gz
-#tar -xzf VTK-9.6.0.tar.gz
+wget https://vtk.org/files/release/9.6/VTK-9.6.0.tar.gz
+tar -xzf VTK-9.6.0.tar.gz
 
 cd VTK-9.6.0
 mkdir build
