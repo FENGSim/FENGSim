@@ -1,0 +1,2 @@
+wget https://github.com/Open-Cascade-SAS/OCCT/archive/refs/tags/V7_9_3.tar.gz
+tar -xzf V7_9_3.tar.gz
