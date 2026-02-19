@@ -10,8 +10,9 @@ tar -xJf qtdeclarative-everywhere-src-6.10.2.tar.xz
 wget https://download.qt.io/archive/qt/6.10/6.10.2/submodules/qtshadertools-everywhere-src-6.10.2.tar.xz
 tar -xJf qtshadertools-everywhere-src-6.10.2.tar.xz
 
+# sudo apt install libxcb*
 cd qtbase-everywhere-src-6.10.2/
-./configure -prefix ../../qt6-build -nomake examples -nomake tests -confirm-license
+./configure -prefix ../../qt6-build -xcb -nomake examples -nomake tests -confirm-license
 cmake --build . --parallel
 cmake --install .
 
