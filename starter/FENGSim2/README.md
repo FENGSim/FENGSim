@@ -1,2 +1,5 @@
-* Julia
-* Qt6
+* julia
+* gmsh
+* occt
+* vtk
+* qt
