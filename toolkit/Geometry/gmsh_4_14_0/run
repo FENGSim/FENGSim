@@ -1,3 +1,0 @@
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/../install/occt_install/lib
-cd ../install/gmsh_4_14_0_install/bin/
-./gmsh
