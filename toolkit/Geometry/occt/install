@@ -1,5 +1,0 @@
-mkdir build
-cd build
-cmake .. -DINSTALL_DIR=$PWD/../../install/occt_install
-make -j8
-make install
