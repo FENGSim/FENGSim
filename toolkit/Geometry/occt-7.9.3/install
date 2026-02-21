@@ -1,0 +1,9 @@
+#wget https://github.com/Open-Cascade-SAS/OCCT/archive/refs/tags/V7_9_3.tar.gz
+tar -xzf V7_9_3.tar.gz
+
+cd OCCT-7_9_3
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=$PWD/../../../install/occt-7.9.3 -DUSE_VTK=ON -D3RDPARTY_VTK_DIR=$PWD/../../../install/vtk-9.6.0/lib/cmake/vtk-9.6/
+make -j4
+make install
