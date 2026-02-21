@@ -1,0 +1,9 @@
+wget https://vtk.org/files/release/9.6/VTK-9.6.0.tar.gz
+tar -xzf VTK-9.6.0.tar.gz
+
+cd VTK-9.6.0
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=$PWD/../../../install/vtk-9.6.0 -DVTK_GROUP_ENABLE_Qt=YES -DVTK_QT_VERSION=6 -DQt6_DIR=$PWD/../../../../Tools/qt-6.10.2/qt6-build/lib/cmake/Qt6
+make -j4
+make install
