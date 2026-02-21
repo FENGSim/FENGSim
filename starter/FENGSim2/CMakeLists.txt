@@ -11,8 +11,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-find_package(VTK REQUIRED COMPONENTS CommonCore PATHS ${CMAKE_BINARY_DIR}/../../toolkit/Tools/install/vtk-9.6.0/lib/cmake/vtk-9.6/)
-find_package(OpenCASCADE REQUIRED PATHS ${CMAKE_BINARY_DIR}/../../toolkit/Tools/install/occt-7.9.3/lib/cmake/opencascade)
+find_package(VTK REQUIRED COMPONENTS CommonCore PATHS ${CMAKE_BINARY_DIR}/../../toolkit/Geometry/install/vtk-9.6.0/lib/cmake/vtk-9.6/)
+find_package(OpenCASCADE REQUIRED PATHS ${CMAKE_BINARY_DIR}/../../toolkit/Geometry/install/occt-7.9.3/lib/cmake/opencascade NO_DEFAULT_PATH)
 
 set(PROJECT_SOURCES
         main.cpp
