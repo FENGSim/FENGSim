@@ -9,6 +9,7 @@
 E   = 207
 nu  = 0.3
 rho = 7.83e-06
+
 E1   = 2.5
 nu1  = 0.25
 rho1 = 1
@@ -31,12 +32,7 @@ d3 = -2.969
 d4 = 0
 d5 = 0
 
-Ep = 2070
-nup=0
-density=7.83e-5
-Kp = Ep/(3*(1-2*nup))
-Gp = Ep/(2*(1+nup))
-
+# temperature: eos and plastic work
 S = 1.5
 c0 = 5030
 Gamma = 0
@@ -60,23 +56,29 @@ cellsize = L/N
 dimension(2,0,1,0,1,cellsize)
 
 # -----------MATERIALS ----------------#
-# EOS, strengh, dasmage and temperature
+# EOS, strengh, damage and temperature
+
 eos(eoss, shock,  rho, K, c0, S, Gamma, cv, Tr, 0, 0)
+
 strength(strengthjc, johnson_cook, G, sigmay, B, n, epsdot0, C, m, Tr, Tm)
+
 temperature(tpw, plastic_work, chi, cp, kappa, alpha, Tr, Tm)
+
 damage(damagejc, damage_johnson_cook, d1, d2, d3, d4, d5, epsdot0, Tr, Tm)
+
 material(mat1, eos-strength, eoss, strengthjc, damagejc, tpw)
+
 material(mat2, linear, rho1, E1, nu1)
 
 # -----------SOLIDS ----------------#
 # defined using: geometry, material, PPC per 1 direction
 region(work-piece, block, 0, 1, 0, 1)
-#solid(piece, region, work-piece, 1, mat1, cellsize, 0)
-solid(piece, region, work-piece, 1, mat2, cellsize, 0)
+solid(piece, region, work-piece, 1, mat1, cellsize, 0)
+#solid(piece, region, work-piece, 1, mat2, cellsize, 0)
 
 # initial conditions
 group(gpart, particles, region, work-piece, solid, piece)
-fix(v0part, initial_velocity_particles, gpart, 0.5, 0, NULL)
+fix(v0part, initial_velocity_particles, gpart, 500.0, 0, NULL)
 
 # boundary conditions
 region(bc, block, 1, INF, -INF, INF)
@@ -89,7 +91,5 @@ dump(dump1, all, particle, dumping_interval, dump_p.*.LAMMPS, x, y, z)
 dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
 
 # run
-set_dt(0.001)
-run_time(1)
-#set_dt(0.001)
-#run_time(1)
+set_dt(0.000002)
+run_time(0.002)
