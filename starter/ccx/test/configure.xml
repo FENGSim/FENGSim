@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<Calculix>
+  <Mesh_File>CXX.inp</Mesh_File>
+  <Problem>Modal</Problem>
+  <Materials>
+    <dianjipian>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </dianjipian>
+    <daorejiao>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </daorejiao>
+    <paomian>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </paomian>
+    <duanban>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </duanban>
+    <others>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </others>
+    <dianxin>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </dianxin>
+    <DUAN>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </DUAN>
+    <DIANJIPIAN>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </DIANJIPIAN>
+    <samllbeam>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </samllbeam>
+    <shangke>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </shangke>
+    <Outerringglue>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </Outerringglue>
+    <tie>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </tie>
+    <SHELL111>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </SHELL111>
+    <PAOMIAN1>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </PAOMIAN1>
+    <BAT>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </BAT>
+    <waterup>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </waterup>
+    <BOLT>
+      <MATERIAL>Beryllia</MATERIAL>
+      <ELASTIC>380e9, 0.34</ELASTIC>
+      <DENSITY>3020</DENSITY>
+    </BOLT>
+  </Materials>
+  <Boundaries>
+    <waternode>1,6</waternode>
+  </Boundaries>
+  <Frequency>10</Frequency>
+</Calculix>
