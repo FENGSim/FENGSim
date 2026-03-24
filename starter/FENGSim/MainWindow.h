@@ -428,6 +428,7 @@ public slots:
     void OpenRobotModule ();
     void RobotSolver ();
     void mbdOpenFile ();
+    void mbdOpenFile2 ();
     void mbdImportResults ();
 
 

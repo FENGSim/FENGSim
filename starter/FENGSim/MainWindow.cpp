@@ -334,6 +334,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(robot_dock->ui->pushButton, SIGNAL(clicked()), this, SLOT(mbdOpenFile()));
     connect(robot_dock->ui->pushButton_2, SIGNAL(clicked()), this, SLOT(RobotSolver()));
     connect(robot_dock->ui->pushButton_3, SIGNAL(clicked()), this, SLOT(mbdImportResults()));
+    connect(robot_dock->ui->pushButton_4, SIGNAL(clicked()), this, SLOT(mbdOpenFile2()));
 
 
     // *******************************************************
@@ -3592,6 +3593,58 @@ void  MainWindow::mbdOpenFile () {
                 << traj[i*10+7] << " "
                 << traj[i*10+8] << " "
                 << traj[i*10+9] << endl;
+    }
+
+
+    vtk_widget->mbdmodel();
+    vtk_widget->mbdPath();
+}
+
+void  MainWindow::mbdOpenFile2 () {
+    mbd_file_name = QFileDialog::getOpenFileName(this,tr("Open File"),"../../starter/mbdyn",
+                                                 tr("MBD Files (*.mov)")
+                                                 , 0 , QFileDialog::DontUseNativeDialog);
+
+
+    std::ifstream is;
+    is.open("./data/am/slices_pathplanning.vtk");
+    const int len = 512;
+    char L[len];
+    is.getline(L,len);
+    is.getline(L,len);
+    is.getline(L,len);
+    is.getline(L,len);
+    is.getline(L,len);
+    int n;
+    int m = sscanf(L,"%*s %d %*s",&n);
+    vector<double> traj;
+    for (int i=0; i<n; i++) {
+        is.getline(L,len);
+        double z[3];
+        int d = sscanf(L,"%lf %lf %lf",z,z+1,z+2);
+        for (int i=0; i<d; i++) traj.push_back(z[i]);
+    }
+    is.close();
+    std::ofstream out;
+    out.open("../mbdyn/robot/ur3.traj");
+    out << "# point 1(3) --- point 2(3) --- orientation(3) --- velocity(1)" << endl;
+    for (int i=0; i<traj.size()/3-1; i++) {
+        out << traj[i*3+0]/1000 - robot_dock->ui->doubleSpinBox->value()
+                << " "
+                << traj[i*3+1]/1000 - robot_dock->ui->doubleSpinBox_2->value()
+                << " "
+                << traj[i*3+2]/1000
+                << " "
+                << traj[(i+1)*3+0]/1000 - robot_dock->ui->doubleSpinBox->value()
+                << " "
+                << traj[(i+1)*3+1]/1000 - robot_dock->ui->doubleSpinBox_2->value()
+                << " "
+                << traj[(i+1)*3+2]/1000
+                << " "
+                << "90 "
+                << "0 "
+                << "0 "
+                << "1" << endl;
     }
 
 

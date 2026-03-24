@@ -201,7 +201,7 @@
            <string notr="true">padding-left:3px;</string>
           </property>
           <property name="value">
-           <double>3.500000000000000</double>
+           <double>0.350000000000000</double>
           </property>
          </widget>
         </item>
@@ -216,7 +216,7 @@
            <string notr="true">padding-left:3px;</string>
           </property>
           <property name="value">
-           <double>3.500000000000000</double>
+           <double>0.350000000000000</double>
           </property>
          </widget>
         </item>
