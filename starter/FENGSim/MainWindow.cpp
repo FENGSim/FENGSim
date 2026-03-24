@@ -335,6 +335,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(robot_dock->ui->pushButton_2, SIGNAL(clicked()), this, SLOT(RobotSolver()));
     connect(robot_dock->ui->pushButton_3, SIGNAL(clicked()), this, SLOT(mbdImportResults()));
     connect(robot_dock->ui->pushButton_4, SIGNAL(clicked()), this, SLOT(mbdOpenFile2()));
+    connect(robot_dock->ui->pushButton_7, SIGNAL(clicked()), this, SLOT(RobotSolver()));
+    connect(robot_dock->ui->pushButton_8, SIGNAL(clicked()), this, SLOT(mbdImportResults()));
+    connect(robot_dock->ui->pushButton_5, SIGNAL(clicked()), this, SLOT(mbdImportMeasureResults()));
 
 
     // *******************************************************

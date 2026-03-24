@@ -430,6 +430,9 @@ public slots:
     void mbdOpenFile ();
     void mbdOpenFile2 ();
     void mbdImportResults ();
+    void mbdImportMeasureResults () {
+        vtk_widget->mbdImportMeasureResults(QString("./../wheel/data/source.stl"));
+    }
 
 
     // *******************************************************

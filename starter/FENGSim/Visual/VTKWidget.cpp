@@ -3263,6 +3263,78 @@ void VTKWidget::mbdImportResults(int n, QString file_name)
     is.close();
 }
 
+void VTKWidget::mbdImportMeasureResults (QString file_name, double x, double y) {
+    renderer->RemoveActor(mbd_simulation_actor_6);
+
+    vtkNew<vtkTransform> transform;
+    //transform->Translate(0.00001,0.00001,0.00001);
+    //transform->Scale(0.001,0.001,0.001);
+    //transform->RotateX(z[4]);
+    //transform->RotateY(z[5]);
+    //transform->RotateZ(z[6]);
+
+    //vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
+    vtkSmartPointer<vtkMatrix4x4> T = vtkSmartPointer<vtkMatrix4x4>::New();
+    ifstream is;
+    is.open(QString("./data/meas/trans_matrix").toStdString().c_str());
+    double z[4];
+    const int len = 256;
+    char L[len];
+    for (int i=0; i<4; i++)
+    {
+        is.getline(L,len);
+        sscanf(L, "%lf %lf %lf %lf", z, z+1, z+2, z+3);
+        for (int j=0; j<4; j++) {
+            T->Element[i][j] = z[j];
+        }
+    }
+    is.close();
+    vtkSmartPointer<vtkMatrix4x4> T2 = vtkSmartPointer<vtkMatrix4x4>::New();
+    T2->Element[0][0] = -0.001;
+    T2->Element[0][3] = 0.35;
+    T2->Element[1][1] = -0.001;
+    T2->Element[1][3] = 0.35;
+    T2->Element[2][2] = 0.001;
+    T2->Element[3][3] = 1;
+
+    vtkSmartPointer<vtkMatrix4x4> T3 = vtkSmartPointer<vtkMatrix4x4>::New();
+    vtkMatrix4x4::Multiply4x4(T2, T, T3);
+    transform->SetMatrix(T3);
+
+    vtkSmartPointer<vtkVoxelGrid> us =  vtkSmartPointer<vtkVoxelGrid>::New();
+        us->SetInputConnection(reader6->GetOutputPort());
+    us->SetConfigurationStyleToLeafSize();
+    us->SetLeafSize(3,3,3);
+    us->Update();
+
+    vtkSmartPointer<vtkCellArray> cells = vtkSmartPointer<vtkCellArray>::New();
+    for (int i=0; i<us->GetOutput()->GetNumberOfPoints(); i++)
+    {
+        vtkSmartPointer<vtkVertex> vertex = vtkSmartPointer<vtkVertex>::New();
+        vertex->GetPointIds()->SetNumberOfIds(1);
+        vertex->GetPointIds()->SetId(0,i);
+        cells->InsertNextCell(vertex);
+    }
+    us->GetOutput()->SetVerts(cells);
+
+
+
+
+    transformFilter6->SetInputConnection(us->GetOutputPort());
+    transformFilter6->SetTransform(transform);
+
+    mapper6->SetInputConnection(transformFilter6->GetOutputPort());
+    mbd_simulation_actor_6 = vtkSmartPointer<vtkActor>::New();
+    mbd_simulation_actor_6->SetMapper(mapper6);
+    mbd_simulation_actor_6->GetProperty()->EdgeVisibilityOff();
+    mbd_simulation_actor_6->GetProperty()->SetLineWidth(1);
+    mbd_simulation_actor_6->GetProperty()->SetColor(0.0, 1.0, 0.0);
+    mbd_simulation_actor_6->SetPickable(false);
+    mbd_simulation_actor_6->SetSelected(false);
+    renderer->AddActor(mbd_simulation_actor_6);
+    GetRenderWindow()->Render();
+}
+
 void VTKWidget::rivetImportResults(QString file_name)
 {
     renderer->RemoveActor(rivet_simulation_actor);

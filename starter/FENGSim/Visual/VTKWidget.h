@@ -421,24 +421,28 @@ private:
     vtkSmartPointer<vtkActor> mbd_simulation_actor_3;
     vtkSmartPointer<vtkActor> mbd_simulation_actor_4;
     vtkSmartPointer<vtkActor> mbd_simulation_actor_5;
+    vtkSmartPointer<vtkActor> mbd_simulation_actor_6;
     vtkSmartPointer<vtkSTLReader> reader0 = vtkSmartPointer<vtkSTLReader>::New();
     vtkSmartPointer<vtkSTLReader> reader1 = vtkSmartPointer<vtkSTLReader>::New();
     vtkSmartPointer<vtkSTLReader> reader2 = vtkSmartPointer<vtkSTLReader>::New();
     vtkSmartPointer<vtkSTLReader> reader3 = vtkSmartPointer<vtkSTLReader>::New();
     vtkSmartPointer<vtkSTLReader> reader4 = vtkSmartPointer<vtkSTLReader>::New();
     vtkSmartPointer<vtkSTLReader> reader5 = vtkSmartPointer<vtkSTLReader>::New();
+    vtkSmartPointer<vtkSTLReader> reader6 = vtkSmartPointer<vtkSTLReader>::New();
     vtkNew<vtkTransformFilter> transformFilter0;
     vtkNew<vtkTransformFilter> transformFilter1;
     vtkNew<vtkTransformFilter> transformFilter2;
     vtkNew<vtkTransformFilter> transformFilter3;
     vtkNew<vtkTransformFilter> transformFilter4;
     vtkNew<vtkTransformFilter> transformFilter5;
+    vtkNew<vtkTransformFilter> transformFilter6;
     vtkNew<vtkPolyDataMapper> mapper0;
     vtkNew<vtkPolyDataMapper> mapper1;
     vtkNew<vtkPolyDataMapper> mapper2;
     vtkNew<vtkPolyDataMapper> mapper3;
     vtkNew<vtkPolyDataMapper> mapper4;
     vtkNew<vtkPolyDataMapper> mapper5;
+    vtkNew<vtkPolyDataMapper> mapper6;
 public:
     void mbdmodel () {
         reader0->SetFileName("../mbdyn/robot/stage1.stl");
@@ -453,10 +457,13 @@ public:
         reader4->Update();
         reader5->SetFileName("../mbdyn/robot/hand.stl");
         reader5->Update();
+        reader6->SetFileName("../wheel/data/source.stl");
+        reader6->Update();
     }
 public:
     void mbdImportResults (int n, QString file_name);
     void mbdPath ();
+    void mbdImportMeasureResults (QString file_name, double x=0, double y=0);
 
 
     /* !
