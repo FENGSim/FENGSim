@@ -2920,6 +2920,8 @@ void MainWindow::AMSlices2PathPlanning()
     out << "Model = InfillTest" << endl;
     out << meas_path.toStdString() << "/data/am/slices_pathplanning.vtk" << endl;
     out << meas_path.toStdString() << "/data/am/pathplanning.vtk" << endl;
+    out << robot_dock->ui->doubleSpinBox->value() << endl;
+    out << robot_dock->ui->doubleSpinBox_2->value() << endl;
     out.close();
 
     QProcess *proc = new QProcess();
@@ -3555,6 +3557,44 @@ void  MainWindow::mbdOpenFile () {
     mbd_file_name = QFileDialog::getOpenFileName(this,tr("Open File"),"../../starter/mbdyn",
                                                  tr("MBD Files (*.mov)")
                                                  , 0 , QFileDialog::DontUseNativeDialog);
+
+
+    std::ifstream is;
+    is.open("../mbdyn/robot/ur3.traj");
+    const int len = 512;
+    char L[len];
+    is.getline(L,len);
+    vector<double> traj;
+    while (is.getline(L, len)) {
+        double z[10];
+        int d = sscanf(L,"%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf"
+                       ,z,z+1,z+2
+                       ,z+3,z+4,z+5
+                       ,z+6,z+7,z+8
+                       ,z+9
+                       );
+        for (int i=0; i<d; i++) traj.push_back(z[i]);
+    }
+    is.close();
+    std::ofstream out;
+    out.open("../mbdyn/robot/ur3.traj");
+    out << "# point 1(3) --- point 2(3) --- orientation(3) --- velocity(1)" << endl;
+    for (int i=0; i<traj.size()/10; i++) {
+        out << traj[i*10+0] - robot_dock->ui->doubleSpinBox_3->value()
+                << " "
+                << traj[i*10+1] - robot_dock->ui->doubleSpinBox_4->value() << " "
+                << traj[i*10+2] << " "
+                << traj[i*10+3] - robot_dock->ui->doubleSpinBox_3->value()
+                << " "
+                << traj[i*10+4] - robot_dock->ui->doubleSpinBox_4->value() << " "
+                << traj[i*10+5] << " "
+                << traj[i*10+6] << " "
+                << traj[i*10+7] << " "
+                << traj[i*10+8] << " "
+                << traj[i*10+9] << endl;
+    }
+
+
     vtk_widget->mbdmodel();
     vtk_widget->mbdPath();
 }
@@ -4131,12 +4171,12 @@ void MainWindow::TransportMCRun()
     //    B1.Run();
     //    return;
 
-//    QFile::remove("/home/jiping/OpenDT/MPU1.2/output.vtk");
-//    QFile::remove("/home/jiping/OpenDT/MPU1.2/output2.vtk");
-//    QProcess *proc = new QProcess();
-//    proc->setWorkingDirectory("/home/jiping/OpenDT/MPU1.2/build");
-//    std::cout << proc->workingDirectory().toStdString() << std::endl;
-//    proc->start("./exampleTOF");
+    //    QFile::remove("/home/jiping/OpenDT/MPU1.2/output.vtk");
+    //    QFile::remove("/home/jiping/OpenDT/MPU1.2/output2.vtk");
+    //    QProcess *proc = new QProcess();
+    //    proc->setWorkingDirectory("/home/jiping/OpenDT/MPU1.2/build");
+    //    std::cout << proc->workingDirectory().toStdString() << std::endl;
+    //    proc->start("./exampleTOF");
 
 
 
@@ -4144,56 +4184,56 @@ void MainWindow::TransportMCRun()
 
 
 
-//    if (proc->waitForFinished(-1)) {
+    //    if (proc->waitForFinished(-1)) {
 
-        std::cout << "transport check" << std::endl;
+    std::cout << "transport check" << std::endl;
 
-        std::ifstream is("../geant4/B1/build/output.vtk");
-        std::ofstream out("../geant4/B1/build/output2.vtk");
+    std::ifstream is("../geant4/B1/build/output.vtk");
+    std::ofstream out("../geant4/B1/build/output2.vtk");
 
-        const int len = 256;
-        char L[len];
-        int n = 0;
-        while(is.getline(L,len)) n++;
-        is.close();
+    const int len = 256;
+    char L[len];
+    int n = 0;
+    while(is.getline(L,len)) n++;
+    is.close();
 
-        is.open("../geant4/B1/build/output.vtk");
-        out << "# vtk DataFile Version 2.0" << std::endl;
-        out << "Unstructured Grid by M++" << std::endl;
-        out << "ASCII" << std::endl;
-        out << "DATASET UNSTRUCTURED_GRID" << std::endl;
-        out << "POINTS " << 2*n << " float" << std::endl;
-        while(is.getline(L,len)) {
-            double z[6];
-            sscanf(L, "%lf %lf %lf %lf %lf %lf", z, z + 1, z + 2, z + 3, z + 4, z + 5);
-            out << z[0] << " " << z[1] << " " << z[2] << std::endl;
-            out << z[3] << " " << z[4] << " " << z[5] << std::endl;
-        }
-        out << "CELLS " << n << " " << 3*n << std::endl;
-        for (int i = 0; i < n; i++) {
-            out << 2 << " " << i*2 << " " << i*2+1 << std::endl;
-        }
-        out << "CELL_TYPES " << n << std::endl;
-        for (int i = 0; i < n; i++) {
-            out << 3 << std::endl;
-        }
-        out.close();
-        is.close();
-        vtk_widget->TransportImportVTKFile("../geant4/B1/build/output2.vtk",9);
+    is.open("../geant4/B1/build/output.vtk");
+    out << "# vtk DataFile Version 2.0" << std::endl;
+    out << "Unstructured Grid by M++" << std::endl;
+    out << "ASCII" << std::endl;
+    out << "DATASET UNSTRUCTURED_GRID" << std::endl;
+    out << "POINTS " << 2*n << " float" << std::endl;
+    while(is.getline(L,len)) {
+        double z[6];
+        sscanf(L, "%lf %lf %lf %lf %lf %lf", z, z + 1, z + 2, z + 3, z + 4, z + 5);
+        out << z[0] << " " << z[1] << " " << z[2] << std::endl;
+        out << z[3] << " " << z[4] << " " << z[5] << std::endl;
+    }
+    out << "CELLS " << n << " " << 3*n << std::endl;
+    for (int i = 0; i < n; i++) {
+        out << 2 << " " << i*2 << " " << i*2+1 << std::endl;
+    }
+    out << "CELL_TYPES " << n << std::endl;
+    for (int i = 0; i < n; i++) {
+        out << 3 << std::endl;
+    }
+    out.close();
+    is.close();
+    vtk_widget->TransportImportVTKFile("../geant4/B1/build/output2.vtk",9);
 
 
 
-        //        data_analyze results;
-        //        std::vector<double> results_show(results.analyze());
+    //        data_analyze results;
+    //        std::vector<double> results_show(results.analyze());
 
-        //        std::cout << results_show.size() << std::endl;
-        //        for (int i=0; i<results_show.size(); i++)
-        //            std::cout << results_show[i] << " ";
-        //        std::cout << std::endl;
-        //        for (int i=0; i<9; i++)
-        //            transport_dock->ui->tableWidget_2->item(i,0)->setText(QString::number(results_show[i]));
+    //        std::cout << results_show.size() << std::endl;
+    //        for (int i=0; i<results_show.size(); i++)
+    //            std::cout << results_show[i] << " ";
+    //        std::cout << std::endl;
+    //        for (int i=0; i<9; i++)
+    //            transport_dock->ui->tableWidget_2->item(i,0)->setText(QString::number(results_show[i]));
 
-        return;
+    return;
 
     //}
 }
