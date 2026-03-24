@@ -131,7 +131,7 @@
         </column>
         <item row="0" column="0">
          <property name="text">
-          <string>0.1</string>
+          <string>0.04</string>
          </property>
         </item>
         <item row="1" column="0">
@@ -146,12 +146,12 @@
         </item>
         <item row="3" column="0">
          <property name="text">
-          <string>0.1</string>
+          <string>0.14</string>
          </property>
         </item>
         <item row="4" column="0">
          <property name="text">
-          <string>0.1</string>
+          <string>0.12</string>
          </property>
         </item>
        </widget>
@@ -517,8 +517,8 @@
   </layout>
  </widget>
  <resources>
-  <include location="../DataBaseWindow.qrc"/>
   <include location="../AMWindow.qrc"/>
+  <include location="../DataBaseWindow.qrc"/>
   <include location="RivetWindow.qrc"/>
  </resources>
  <connections/>

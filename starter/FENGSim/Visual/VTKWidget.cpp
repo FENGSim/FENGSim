@@ -3328,6 +3328,7 @@ void VTKWidget::mbdImportMeasureResults (QString file_name, double x, double y) 
     mbd_simulation_actor_6->SetMapper(mapper6);
     mbd_simulation_actor_6->GetProperty()->EdgeVisibilityOff();
     mbd_simulation_actor_6->GetProperty()->SetLineWidth(1);
+    mbd_simulation_actor_6->GetProperty()->SetPointSize(3);
     mbd_simulation_actor_6->GetProperty()->SetColor(0.0, 1.0, 0.0);
     mbd_simulation_actor_6->SetPickable(false);
     mbd_simulation_actor_6->SetSelected(false);
