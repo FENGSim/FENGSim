@@ -2,9 +2,9 @@
 
 The FENGSim project is more than open source; it's a bold declaration of freedom. It champions the brave, persistent, and innovative spirit that breaks boundaries. Too many engineers and researchers see their potential stifled by unequal resource distribution. FENGSim shatters these barriers, unleashing that potential by providing the freedom and support for all to build, explore, and create. Join us in this mission.
 
-FENGSim serves as a software development kit (SDK) for high-fidelity numerical simulation and adaptive processing, integrating a variety of mathematical libraries such as computational geometry, computer algebra, numerical methods, numerical linear algebra, computer graphics, image processing, probability and statistics, optimization, and artificial intelligence. Central to the project are multi-x couplers tailored for intricate applications. It also incorporates the CAX software framework along with practical examples.
+FENGSim serves as a software development kit (SDK) for **high-fidelity numerical simulation** and **adaptive processing**, integrating a variety of mathematical libraries. Central to the project are **multi-x couplers** tailored for intricate applications. It also incorporates **the CAX software framework** along with practical examples. **We also aim for FENGSim to function as a high-fidelity physics engine in NVIDIA Omniverse, enabling reinforcement learning.**
 
-Moreover, FENGSim offers tools for managing library dependencies, package management, and continuous integration and continuous deployment (CICD) processes, which include compiling, code merging, version control, testing, and deployment. The project will also feature interfaces for the integration of machinery and sensors, covering drivers, communication, and control applications. Additionally, FENGSim includes a large language model (LLM) assistant, developed using open-source code and classical literature, to enhance user experience and support. **We also aim for FENGSim to function as a high-fidelity physics engine in NVIDIA Omniverse, enabling reinforcement learning.**
+Moreover, FENGSim offers tools for managing library dependencies, package management, and continuous integration and continuous deployment (CICD) processes, which include compiling, code merging, version control, testing, and deployment. The project will also feature interfaces for the integration of machinery and sensors, covering drivers, communication, and control applications. 
 
 Four levels of mastery in product design and manufacturing:
 
@@ -43,20 +43,6 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 	cd FENGSim/toolkit
 	./multix
 ```
-
-Consequently, all the commands and the README.md files will be revised to be the rules and the notebooks in the Warp AI terminal.
-
-This is really interesting. Since Warp operates as a terminal, it can use commands like grep and find to search for particular files, such as README.md, and also look for specific content, like installation instructions, within those files. The outcomes can then be input into the AI. As a result, our SDK is a great data source for Warp.
-
-We will utilize Warp alongside our SDK to accomplish the following tasks:
-1. Manage the SDK
-2. Acquire background knowledge
-3. Develop code
-4. Enhance automation for CAD design, model simplification, structural mesh generation, path planning, and inverse modeling.
-
-<div align="center">
-<img decoding="async" src="image/warp.png" width="1800">
-</div>
 
 # [Docs](https://fengsim-docs.readthedocs.io)
 
