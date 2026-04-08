@@ -23,10 +23,10 @@ int main (int argc, char** argv) {
     UniformSampling<PointXYZ> uniform;
     uniform.setRadiusSearch(uns_radius);  // 1m
 
-    uniform.setInputCloud(_cloud_source.makeShared ());
+    uniform.setInputCloud(_cloud_source.makeShared());
     uniform.filter(cloud_source);
     
-    uniform.setInputCloud(_cloud_target.makeShared ());
+    uniform.setInputCloud(_cloud_target.makeShared());
     uniform.filter(cloud_target);
 
     //export_pc_to_vtk(cloud_source, "./data/meas/fengsim_meas_source_us.vtk");
@@ -40,17 +40,17 @@ int main (int argc, char** argv) {
 	*/
         std::cout << "**sacia**" << std::endl;
 	sacia_align sacia;
-	sacia.align(cloud_target, cloud_source, cloud_sacia, uns_radius, i*sacia_itnum);
+	sacia.align(cloud_target,cloud_source,cloud_sacia,uns_radius,i*sacia_itnum);
 
 	/*!
 	  step 3 icp
 	*/
 	std::cout << "**icp**" << std::endl;
 	icp_align icp;
-	double fit = icp.align(cloud_sacia, _cloud_source, cloud_icp);
+	double fit = icp.align(cloud_sacia,_cloud_source,cloud_icp);
 	std::cout << fit << std::endl;
 
-	if (fit < 1) {
+	if (fit<1) {
 	    std::cout << "**registration done.**" << std::endl;
 	    Eigen::Matrix4f transform = sacia.transform.inverse()*icp.transform.inverse();
 	    //transformPointCloud (cloud_source, cloud_icp, transform);
