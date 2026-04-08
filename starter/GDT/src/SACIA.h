@@ -1,5 +1,5 @@
 /*!
-  the codes from /software/pcl/test/registration/test_sac_ia.cpp
+  the codes from /src/test/test_sac_ia.cpp
 */
 
 #include <pcl/point_types.h>

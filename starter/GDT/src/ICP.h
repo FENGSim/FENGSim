@@ -1,5 +1,5 @@
 /*!
-  the codes from /software/pcl/test/registration/test_registration.cpp
+  the codes from /src/test/test_registration.cpp
 */
 
 #include <pcl/point_types.h>
