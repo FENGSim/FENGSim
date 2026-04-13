@@ -1,5 +1,5 @@
 /*!
-  the codes from /src/test/test_sac_ia.cpp
+  the codes from FENGSim/toolkit/Geometry/pcl/test/registration/test_sac_ia.cpp
 */
 
 #include <pcl/point_types.h>
@@ -21,17 +21,20 @@ class sacia_align {
     Eigen::Matrix4f transform;
     double align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& cloud_target, PointCloud<PointXYZ>& cloud_sacia, double radius=1, double itnum=2000)
     {
-        // Create shared pointers
+	/*!
+	  Create shared pointers
+	*/
         PointCloud<PointXYZ>::Ptr cloud_source_ptr, cloud_target_ptr;
 	cloud_source_ptr = cloud_source.makeShared ();
 	cloud_target_ptr = cloud_target.makeShared ();
 	
-	// Initialize estimators for surface normals and FPFH features
+	/*!
+	  Initialize estimators for surface normals and FPFH features
+	*/
 	search::KdTree<PointXYZ>::Ptr tree (new search::KdTree<PointXYZ>);
 	
 	NormalEstimation<PointXYZ, Normal> norm_est;
 	//NormalEstimationOMP<PointXYZ, Normal> norm_est(16);
-
 	norm_est.setSearchMethod (tree);
 	norm_est.setRadiusSearch (2.5*radius);
 	PointCloud<Normal> normals;
@@ -44,21 +47,27 @@ class sacia_align {
 	fpfh_est.setRadiusSearch (5.0*radius);
 	PointCloud<FPFHSignature33> features_source, features_target;
 	
-	// Estimate the FPFH features for the source cloud
+	/*!
+	  Estimate the FPFH features for the source cloud
+	*/
 	norm_est.setInputCloud (cloud_source_ptr);
 	norm_est.compute (normals);
 	fpfh_est.setInputCloud (cloud_source_ptr);
 	fpfh_est.setInputNormals (normals.makeShared ());
 	fpfh_est.compute (features_source);
 	
-	// Estimate the FPFH features for the target cloud
+	/*!
+	  Estimate the FPFH features for the target cloud
+	*/
 	norm_est.setInputCloud (cloud_target_ptr);
 	norm_est.compute (normals);
 	fpfh_est.setInputCloud (cloud_target_ptr);
 	fpfh_est.setInputNormals (normals.makeShared ());
 	fpfh_est.compute (features_target);
 	
-	// Initialize Sample Consensus Initial Alignment (SAC-IA)
+	/*!
+	  Initialize Sample Consensus Initial Alignment (SAC-IA)
+	*/
 	SampleConsensusInitialAlignment<PointXYZ, PointXYZ, FPFHSignature33> reg;
 	reg.setNumberOfSamples(3);
 	/** \brief Get the minimum distances between samples, as set by the user */

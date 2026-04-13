@@ -1,5 +1,6 @@
 /*!
-  the codes from /src/test/test_registration.cpp
+  https://pcl.readthedocs.io/projects/tutorials/en/master/iterative_closest_point.html#iterative-closest-point
+  FENGSim/toolkit/Geometry/pcl/doc/tutorials/content/sources/registration_api/example2.cpp
 */
 
 #include <pcl/point_types.h>
