@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.1)
 project(slice2mesh)
 
+set(CMAKE_CXX_COMPILER /usr/bin/g++-10)
+
 set(CMAKE_SKIP_BUILD_RPATH FALSE)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 set(CMAKE_INSTALL_RPATH $ORIGIN)
