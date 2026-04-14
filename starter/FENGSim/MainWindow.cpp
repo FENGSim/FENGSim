@@ -2907,20 +2907,20 @@ void MainWindow::AMSetSlicesVisible()
 void MainWindow::AMSlices2PathPlanning()
 {
     ofstream out;
-    QString file = meas_path+QString("/../AM/build/solver/conf/m++conf");
-    std::cout << file.toStdString() << std::endl;
-    out.open("./../AM/build/solver/conf/m++conf");
-    out << "loadconf = solver/conf/pathplanning.conf;" << endl;
-    out << "#loadconf = solver/conf/slicing.conf;" << endl;
-    out << "#loadconf = solver/conf/am.conf;" << endl;
-    out << "#loadconf = solver/conf/poisson.conf;" << endl;
-    out << "#loadconf = solver/conf/heat.conf;" << endl;
-    out << "#loadconf = solver/conf/elasticity.conf;" << endl;
-    out << "#loadconf = solver/conf/telasticity.conf;" << endl;
-    out << "#loadconf = solver/conf/telastoplasticity.conf" << endl;
-    out << "#loadconf = solver/conf/meshcoarsing.conf" << endl;
+    QString file = meas_path+QString("/../AM/build/AM/conf/m++conf");
+    std::cout << "path planning: " << file.toStdString() << std::endl;
+    out.open("./../AM/build/AM/conf/m++conf");
+    out << "loadconf = AM/conf/pathplanning.conf;" << endl;
+    out << "#loadconf = AM/conf/slicing.conf;" << endl;
+    out << "#loadconf = AM/conf/am.conf;" << endl;
+    out << "#loadconf = AM/conf/poisson.conf;" << endl;
+    out << "#loadconf = AM/conf/heat.conf;" << endl;
+    out << "#loadconf = AM/conf/elasticity.conf;" << endl;
+    out << "#loadconf = AM/conf/telasticity.conf;" << endl;
+    out << "#loadconf = AM/conf/telastoplasticity.conf" << endl;
+    out << "#loadconf = AM/conf/meshcoarsing.conf" << endl;
     out.close();
-    out.open("./../AM/build/solver/conf/pathplanning.conf");
+    out.open("./../AM/build/AM/conf/pathplanning.conf");
     out << "Model = InfillTest" << endl;
     out << meas_path.toStdString() << "/data/am/slices_pathplanning.vtk" << endl;
     out << meas_path.toStdString() << "/data/am/pathplanning.vtk" << endl;
