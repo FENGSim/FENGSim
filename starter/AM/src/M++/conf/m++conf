@@ -1,2 +1,2 @@
-loadconf = solver/conf/m++conf;
+loadconf = AM/conf/m++conf;
 loadconf = mesh/conf/m++conf;
