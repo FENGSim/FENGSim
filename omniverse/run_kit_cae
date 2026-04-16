@@ -1,0 +1,2 @@
+cd kit-cae
+./repo.sh launch -n omni.cae.kit
