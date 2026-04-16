@@ -1,4 +1,0 @@
-git clone https://github.com/NVIDIA-Omniverse/kit-cae.git
-cd kit-cae
-./repo.sh build -r
-./repo.sh launch -n omni.cae.kit
