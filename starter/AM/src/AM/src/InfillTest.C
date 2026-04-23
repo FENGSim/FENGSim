@@ -361,11 +361,11 @@ namespace cura {
 	for (int i = 0; i < parameters_list.size(); i++) {
 	    for (int j = 0; j < parameters_list[i].result_lines.size(); j++) {
 		for (int k = 0; k < (parameters_list[i].result_lines)[j].size()-1; k++) {
-		    out << (parameters_list[i].result_lines)[j][k].X / scale << " "
-			<< (parameters_list[i].result_lines)[j][k].Y / scale << " "
+		    out << (parameters_list[i].result_lines)[j][k].X / scale  << " "
+			<< (parameters_list[i].result_lines)[j][k].Y / scale  << " "
 			<< heights[i] / scale << " "
-			<< (parameters_list[i].result_lines)[j][k+1].X / scale << " "
-			<< (parameters_list[i].result_lines)[j][k+1].Y / scale << " "
+			<< (parameters_list[i].result_lines)[j][k+1].X / scale  << " "
+			<< (parameters_list[i].result_lines)[j][k+1].Y / scale  << " "
 			<< heights[i] / scale << " "
 			<< "90 0 0 1"
 			<< std::endl;
