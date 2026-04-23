@@ -1,16 +1,11 @@
-//Copyright (c) 2019 Ultimaker B.V.
-//CuraEngine is released under the terms of the AGPLv3 or higher.
+// author: Jiping Xin
 
 #include "SlicePhaseTest.h"
 
 /*!
-  the original codes are in the path
-  "FENGSim/toolkit/cura_engine/tests/integration/SlicePhaseTest.cpp"
+  The original codes are in the path "FENGSim/toolkit/cura_engine/tests/integration/SlicePhaseTest.cpp"
 */
 
-/*!
-  using namespace cura;
-*/
 void SlicePhaseTestMain (int argc, char** argv) {
     std::ifstream is;
     is.open(std::string("./AM/conf/slicing.conf").c_str());
@@ -40,7 +35,7 @@ void SlicePhaseTestMain (int argc, char** argv) {
     std::cout << layer_height << std::endl;
     
     /*!
-      configuration
+      Configuration
     */
     cura::Application::getInstance().current_slice = new cura::Slice(1);
     /*!
@@ -62,7 +57,7 @@ void SlicePhaseTestMain (int argc, char** argv) {
     scene.settings.add("xy_offset_layer_0", "0");
     
     /*!
-      import stl mesh
+      Import stl mesh.
     */
     cura::MeshGroup& mesh_group = scene.mesh_groups.back();
     const cura::FMatrix3x3 transformation;
@@ -70,39 +65,34 @@ void SlicePhaseTestMain (int argc, char** argv) {
     cura::Mesh& cube_mesh = mesh_group.meshes[0];
     
     /*!
-      generate slices
+      Generate slices.
     */
     const cura::coord_t layer_thickness = scene.settings.get<cura::coord_t>("layer_height");
     const cura::coord_t initial_layer_thickness = scene.settings.get<cura::coord_t>("layer_height_0");
     constexpr bool variable_layer_height = false;
     constexpr std::vector<cura::AdaptiveLayer>* variable_layer_height_values = nullptr;
-    std::cout << "cube_mesh.getAABB().max.z: " << cube_mesh.getAABB().max.z << std::endl;
+    /*!
+      Since Cura expects input in meters but converts it to millimeters,
+      the height will be scaled by a factor of 1000.
+    */
     const size_t num_layers = (cube_mesh.getAABB().max.z - initial_layer_thickness) / layer_thickness + 1;
     cura::Slicer slicer(&cube_mesh,layer_thickness,num_layers,variable_layer_height,variable_layer_height_values);
     std::cout << "The number of layers in the output must equal the requested number of layers." << std::endl 
 	      << "  " << slicer.layers.size() << " " << num_layers << std::endl;
-
+    
     /*!
-      export slices for visualization
+      Export slices for visualization.
     */
     Export2VTK(vtkfile,slicer,initial_layer_thickness,layer_thickness);
     /*!                                                                          
-      export slices for path planning                                           
-      the difference between Export2VTK and Export2VTK4PathPlanning is that     
-      initial layer and need to pay attention the initial layer hieight is in   
-      fact the 0.5 of the buttom                                                
+      Export slices for path planning.
+      The difference between Export2VTK and Export2VTK4PathPlanning lies in the initial layer.
+      Note that the initial layer is the slice of the model bottom moved up to the initial layer height,
+      rather than being a slice generated directly at the initial layer height.
     */
     Export2VTK4PathPlanning(vtkfile4pathplanning,slicer,initial_layer_thickness,layer_thickness);
     /*!
-      export slices for meshing                                                 
-      different format                                                          
+      Export slices for meshing (CLI format).
     */
     Export2Cli4Mesh(cliefile4meshing, slicer, initial_layer_thickness, layer_thickness, cube_mesh.getAABB().min.z);
 }
-
-
-
-
-
-
-
