@@ -19,7 +19,7 @@ void SlicePhaseTestMain (int argc, char** argv) {
     is.getline(L,len);
     std::string vtkfile4pathplanning = L;
     is.getline(L,len);
-    std::string cliefile4meshing = L;
+    std::string clifile4meshing = L;
     is.getline(L,len);
     double layer_height_0 = 0.2;
     sscanf(L,"%lf", &layer_height_0);
@@ -30,7 +30,7 @@ void SlicePhaseTestMain (int argc, char** argv) {
     std::cout << stlfile << std::endl;
     std::cout << vtkfile << std::endl;
     std::cout << vtkfile4pathplanning << std::endl;
-    std::cout << cliefile4meshing << std::endl;
+    std::cout << clifile4meshing << std::endl;
     std::cout << layer_height_0 << std::endl;
     std::cout << layer_height << std::endl;
     
@@ -99,5 +99,5 @@ void SlicePhaseTestMain (int argc, char** argv) {
     /*!
       Export slices for meshing (CLI format).
     */
-    Export2Cli4Mesh(cliefile4meshing, slicer, initial_layer_thickness, layer_thickness, cube_mesh.getAABB().min.z);
+    Export2Cli4Mesh(clifile4meshing, slicer, initial_layer_thickness, layer_thickness, cube_mesh.getAABB().min.z);
 }
