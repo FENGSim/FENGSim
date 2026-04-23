@@ -1573,8 +1573,8 @@ void MainWindow::AMStlModelToSlices()
     out << "Model = SlicePhaseTest" << endl;
     out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/am.stl" << endl;
     out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/slices.vtk" << endl;
-    out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/slices_pathplanning.vtk" << endl;
-    out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/slices_meshing.cli" << endl;
+    out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/slices4pathplanning.vtk" << endl;
+    out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/slices4meshing.cli" << endl;
     out << additive_manufacturing_dock->ui->doubleSpinBox->value() << endl;
     out << additive_manufacturing_dock->ui->doubleSpinBox_2->value() << endl;
     out.close();
@@ -2922,7 +2922,7 @@ void MainWindow::AMSlices2PathPlanning()
     out.close();
     out.open("./../AM/build/AM/conf/pathplanning.conf");
     out << "Model = InfillTest" << endl;
-    out << meas_path.toStdString() << "/data/am/slices_pathplanning.vtk" << endl;
+    out << meas_path.toStdString() << "/data/am/slices4pathplanning.vtk" << endl;
     out << meas_path.toStdString() << "/data/am/pathplanning.vtk" << endl;
     out << robot_dock->ui->doubleSpinBox->value() << endl;
     out << robot_dock->ui->doubleSpinBox_2->value() << endl;
@@ -3613,7 +3613,7 @@ void  MainWindow::mbdOpenFile2 () {
 
 
     std::ifstream is;
-    is.open("./data/am/slices_pathplanning.vtk");
+    is.open("./data/am/slices4pathplanning.vtk");
     const int len = 512;
     char L[len];
     is.getline(L,len);
