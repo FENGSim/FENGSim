@@ -78,7 +78,8 @@ void SlicePhaseTestMain (int argc, char** argv) {
     const size_t num_layers = (cube_mesh.getAABB().max.z - initial_layer_thickness) / layer_thickness + 1;
     cura::Slicer slicer(&cube_mesh,layer_thickness,num_layers,variable_layer_height,variable_layer_height_values);
     std::cout << "The number of layers in the output must equal the requested number of layers." << std::endl 
-	      << "  " << slicer.layers.size() << " " << num_layers << std::endl;
+	      << " " << slicer.layers.size() << " " << num_layers
+	      << " "  << layer_thickness << std::endl;
     
     /*!
       Export slices for visualization.
