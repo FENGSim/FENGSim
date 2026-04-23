@@ -1,5 +1,6 @@
-//Copyright (c) 2019 Ultimaker B.V.
-//CuraEngine is released under the terms of the AGPLv3 or higher.
+/*!
+  The original codes are in the path "FENGSim/toolkit/Geometry/cura_engine/tests/InfillTest.cpp".
+*/
 
 #include <gtest/gtest.h>
 
