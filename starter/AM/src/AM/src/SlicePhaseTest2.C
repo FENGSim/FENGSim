@@ -4,9 +4,9 @@ void Export2VTK (std::string vtkfile, cura::Slicer slicer, const cura::coord_t i
     double scale = 1000;
     
     int n = 0;
-    for(int i = 0; i < slicer.layers.size(); i++) {
+    for(int i=0; i<slicer.layers.size(); i++) {
 	const cura::SlicerLayer& layer = slicer.layers[i];
-	for (int j = 0; j < layer.polygons.size(); j++) {
+	for (int j=0; j<layer.polygons.size(); j++) {
 	    cura::Polygon sliced_polygon = layer.polygons[j];
 	    n += sliced_polygon.size();
 	}
@@ -18,25 +18,20 @@ void Export2VTK (std::string vtkfile, cura::Slicer slicer, const cura::coord_t i
     //std::cout << cube_mesh.getAABB().min.y << " " << cube_mesh.getAABB().max.y << std::endl;
     
     std::ofstream out;
-    out.open(vtkfile.c_str()); // the file is in the build path of FENGSim
+    out.open(vtkfile.c_str()); 
     out <<"# vtk DataFile Version 2.0" << std::endl;
-
     out << "slices example" << std::endl;
     out << "ASCII" << std::endl;
     out << "DATASET POLYDATA" << std::endl;
     out << "POINTS " << n << " float" << std::endl;
-    for(int i = 0; i < slicer.layers.size(); i++) {
+    for(int i=0; i<slicer.layers.size(); i++) {
 	const cura::SlicerLayer& layer = slicer.layers[i];
-	for (int j = 0; j < layer.polygons.size(); j++) {
+	for (int j=0; j<layer.polygons.size(); j++) {
 	    cura::Polygon sliced_polygon = layer.polygons[j];
-	    for(int k = 0; k < sliced_polygon.size(); k++) {
+	    for(int k=0; k<sliced_polygon.size(); k++) {
 		out << sliced_polygon[k].X / scale << " "
 		    << sliced_polygon[k].Y / scale << " "
-		    << (initial_layer_thickness + i * layer_thickness) / scale << std::endl;
-		// *************************************************
-		// hi pay attention, the initial_layer_thickness / 2 is the initial height to cut the stl mesh.
-		//<< layer.z / scale << std::endl;
-		// *************************************************
+		    << layer.z / scale << std::endl;
 	    }
 	}
     }	
@@ -61,9 +56,9 @@ void Export2VTK4PathPlanning (std::string vtkfile_pathplanning, cura::Slicer sli
     double scale = 1000;
     
     int n = 0;
-    for(int i = 1; i < slicer.layers.size(); i++) {
+    for(int i=1; i<slicer.layers.size(); i++) {
 	const cura::SlicerLayer& layer = slicer.layers[i];
-	for (int j = 0; j < layer.polygons.size(); j++) {
+	for (int j=0; j<layer.polygons.size(); j++) {
 	    cura::Polygon sliced_polygon = layer.polygons[j];
 	    n += sliced_polygon.size();
 	}
@@ -82,23 +77,25 @@ void Export2VTK4PathPlanning (std::string vtkfile_pathplanning, cura::Slicer sli
     out << "ASCII" << std::endl;
     out << "DATASET POLYDATA" << std::endl;
     out << "POINTS " << n << " float" << std::endl;
-    for(int i = 1; i < slicer.layers.size(); i++) {
+    for(int i=1; i<slicer.layers.size(); i++) {
         const cura::SlicerLayer& layer = slicer.layers[i];
 	for (int j = 0; j < layer.polygons.size(); j++) {
 	    cura::Polygon sliced_polygon = layer.polygons[j];
 	    for(int k = 0; k < sliced_polygon.size(); k++) {
-	        out << sliced_polygon[k].X / scale << " " << sliced_polygon[k].Y / scale  << " " << (initial_layer_thickness + i * layer_thickness) / scale << std::endl;
+	        out << sliced_polygon[k].X / scale << " "
+		    << sliced_polygon[k].Y / scale  << " "
+		    << layer.z / scale << std::endl;
 	    }
 	}
     }
     out << "POLYGONS " << slicer.layers.size()-1 << " " << slicer.layers.size()-1 + n << std::endl;
     int m = 0;
-    for(int i = 1; i < slicer.layers.size(); i++) {
+    for(int i=1; i<slicer.layers.size(); i++) {
         const cura::SlicerLayer& layer = slicer.layers[i];
-	for (int j = 0; j < layer.polygons.size(); j++) {
+	for (int j=0; j<layer.polygons.size(); j++) {
 	    cura::Polygon sliced_polygon = layer.polygons[j];
 	    out << sliced_polygon.size();
-	    for(int k = 0; k < sliced_polygon.size(); k++) {
+	    for(int k=0; k<sliced_polygon.size(); k++) {
 	        out << " " << m;
 		m++;
 	    }

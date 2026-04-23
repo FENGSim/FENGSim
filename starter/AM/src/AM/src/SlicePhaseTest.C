@@ -88,7 +88,7 @@ void SlicePhaseTestMain (int argc, char** argv) {
     /*!                                                                          
       Export slices for path planning.
       The difference between Export2VTK and Export2VTK4PathPlanning lies in the initial layer.
-      Note that the initial layer is the slice of the model bottom moved up to the initial layer height,
+      Note that the initial layer is the slice of the model at the middle of the initial layer height,
       rather than being a slice generated directly at the initial layer height.
     */
     Export2VTK4PathPlanning(vtkfile4pathplanning,slicer,initial_layer_thickness,layer_thickness);
