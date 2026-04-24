@@ -725,7 +725,13 @@
             <string notr="true">padding-left:3px;</string>
            </property>
            <property name="decimals">
-            <number>5</number>
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <double>100000.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>300.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -752,6 +758,12 @@
         <spacer name="verticalSpacer_8">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
         </spacer>
        </item>
@@ -1342,7 +1354,7 @@
         <x>0</x>
         <y>0</y>
         <width>293</width>
-        <height>74</height>
+        <height>70</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1436,7 +1448,7 @@
         <x>0</x>
         <y>0</y>
         <width>293</width>
-        <height>74</height>
+        <height>70</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1553,7 +1565,7 @@
         <x>0</x>
         <y>0</y>
         <width>293</width>
-        <height>74</height>
+        <height>70</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1670,7 +1682,7 @@
         <x>0</x>
         <y>0</y>
         <width>293</width>
-        <height>95</height>
+        <height>91</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1825,7 +1837,7 @@
         <x>0</x>
         <y>0</y>
         <width>293</width>
-        <height>74</height>
+        <height>70</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1915,12 +1927,12 @@
   </layout>
  </widget>
  <resources>
+  <include location="../MeshWindow.qrc"/>
   <include location="../AMWindow.qrc"/>
   <include location="../MeasureWidnow.qrc"/>
   <include location="../MainWindow.qrc"/>
   <include location="../FEMWindow.qrc"/>
   <include location="../CADWindow.qrc"/>
-  <include location="../MeshWindow.qrc"/>
  </resources>
  <connections/>
 </ui>
