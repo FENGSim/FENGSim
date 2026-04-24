@@ -2749,7 +2749,8 @@ void VTKWidget::AMImportSlices()
     renderer->RemoveActor(am_slices_actor);
     am_slices_actor = vtkSmartPointer<vtkActor>::New();
     am_slices_actor->SetMapper(mapper);
-    am_slices_actor->GetProperty()->EdgeVisibilityOn();
+    //am_slices_actor->GetProperty()->EdgeVisibilityOn();
+    am_slices_actor->GetProperty()->SetOpacity(0.5);
     // actor->GetProperty()->SetFrontfaceCulling(1); // shit this is OK, check it for long time
     // actor->GetProperty()->SetOpacity(100.0);
     // renderer

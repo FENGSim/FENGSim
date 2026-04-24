@@ -1614,6 +1614,7 @@ void MainWindow::AMSlicesToPathPlanning()
     out << "Model = InfillTest" << endl;
     out << cli_file_name.toStdString() + ".vtk" << endl;
     out << path_file_name.toStdString() << endl;
+    out << 300 << endl;
     out.close();
 
     QProcess *proc = new QProcess();
@@ -2924,6 +2925,7 @@ void MainWindow::AMSlices2PathPlanning()
     out << "Model = InfillTest" << endl;
     out << meas_path.toStdString() << "/data/am/slices4pathplanning.vtk" << endl;
     out << meas_path.toStdString() << "/data/am/pathplanning.vtk" << endl;
+    out << 300 << endl;
     out << robot_dock->ui->doubleSpinBox->value() << endl;
     out << robot_dock->ui->doubleSpinBox_2->value() << endl;
     out.close();
