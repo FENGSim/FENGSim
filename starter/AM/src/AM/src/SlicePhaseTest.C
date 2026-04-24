@@ -22,10 +22,10 @@ void SlicePhaseTestMain (int argc, char** argv) {
     std::string clifile4meshing = L;
     is.getline(L,len);
     double layer_height_0 = 0.2;
-    sscanf(L,"%lf", &layer_height_0);
+    sscanf(L,"%lf",&layer_height_0);
     is.getline(L,len);
     double layer_height = 0.25;
-    sscanf(L,"%lf", &layer_height);
+    sscanf(L,"%lf",&layer_height);
     
     std::cout << stlfile << std::endl;
     std::cout << vtkfile << std::endl;
@@ -42,26 +42,26 @@ void SlicePhaseTestMain (int argc, char** argv) {
       And a few settings that we want to default.
     */
     cura::Scene& scene = cura::Application::getInstance().current_slice->scene;    
-    scene.settings.add("slicing_tolerance", "middle");
-    scene.settings.add("layer_height_0", std::to_string(layer_height_0));
-    scene.settings.add("layer_height", std::to_string(layer_height));
-    scene.settings.add("magic_mesh_surface_mode", "normal");
-    scene.settings.add("meshfix_extensive_stitching", "false");
-    scene.settings.add("meshfix_keep_open_polygons", "false");
-    scene.settings.add("minimum_polygon_circumference", "1");
-    //scene.settings.add("meshfix_maximum_resolution", "0.00001");
-    //scene.settings.add("meshfix_maximum_deviation", "0.00001");
-    scene.settings.add("meshfix_maximum_resolution", "0.001");
-    scene.settings.add("meshfix_maximum_deviation", "0.001");
-    scene.settings.add("xy_offset", "0");
-    scene.settings.add("xy_offset_layer_0", "0");
+    scene.settings.add("slicing_tolerance","middle");
+    scene.settings.add("layer_height_0",std::to_string(layer_height_0));
+    scene.settings.add("layer_height",std::to_string(layer_height));
+    scene.settings.add("magic_mesh_surface_mode","normal");
+    scene.settings.add("meshfix_extensive_stitching","false");
+    scene.settings.add("meshfix_keep_open_polygons","false");
+    scene.settings.add("minimum_polygon_circumference","1");
+    //scene.settings.add("meshfix_maximum_resolution","0.00001");
+    //scene.settings.add("meshfix_maximum_deviation","0.00001");
+    scene.settings.add("meshfix_maximum_resolution","0.001");
+    scene.settings.add("meshfix_maximum_deviation","0.001");
+    scene.settings.add("xy_offset","0");
+    scene.settings.add("xy_offset_layer_0","0");
     
     /*!
       Import stl mesh.
     */
     cura::MeshGroup& mesh_group = scene.mesh_groups.back();
     const cura::FMatrix3x3 transformation;
-    cura::loadMeshIntoMeshGroup(&mesh_group, stlfile.c_str(), transformation, scene.settings);
+    cura::loadMeshIntoMeshGroup(&mesh_group,stlfile.c_str(),transformation,scene.settings);
     cura::Mesh& cube_mesh = mesh_group.meshes[0];
     
     /*!
@@ -78,7 +78,9 @@ void SlicePhaseTestMain (int argc, char** argv) {
     const size_t num_layers = (cube_mesh.getAABB().max.z - initial_layer_thickness) / layer_thickness + 1;
     cura::Slicer slicer(&cube_mesh,layer_thickness,num_layers,variable_layer_height,variable_layer_height_values);
     std::cout << "The number of layers in the output must equal the requested number of layers." << std::endl 
-	      << " " << slicer.layers.size() << " " << num_layers
+	      << " " << slicer.layers.size()
+	      << " " << cube_mesh.getAABB().max.z
+	      << " " << num_layers
 	      << " "  << layer_thickness << std::endl;
     
     /*!
@@ -99,5 +101,5 @@ void SlicePhaseTestMain (int argc, char** argv) {
     /*!
       Export slices for meshing (CLI format).
     */
-    Export2Cli4Mesh(clifile4meshing, slicer, initial_layer_thickness, layer_thickness, cube_mesh.getAABB().min.z);
+    Export2Cli4Mesh(clifile4meshing,slicer,initial_layer_thickness,layer_thickness,cube_mesh.getAABB().min.z);
 }
