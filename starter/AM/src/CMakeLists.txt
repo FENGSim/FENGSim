@@ -35,7 +35,8 @@ target_link_libraries (AMSolver ${CMAKE_BINARY_DIR}/../../../toolkit/Tools/insta
 target_link_libraries (AMSolver ${CMAKE_BINARY_DIR}/../../../toolkit/Tools/install/libarcus_install/lib/libArcus.so)
 target_link_libraries (AMSolver /usr/lib/x86_64-linux-gnu/libgomp.so.1)
 
-file(COPY "M++/log" DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY "M++/data/vtk" DESTINATION ${CMAKE_BINARY_DIR}/data)
-file(COPY "M++/conf" DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY "../log" DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY "../data/vtk" DESTINATION ${CMAKE_BINARY_DIR}/data)
+file(COPY "../data/am" DESTINATION ${CMAKE_BINARY_DIR}/data)
+file(COPY "../conf" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "AM/conf" DESTINATION ${CMAKE_BINARY_DIR}/AM)

@@ -1,5 +1,6 @@
-//Copyright (c) 2019 Ultimaker B.V.
-//CuraEngine is released under the terms of the AGPLv3 or higher.
+/*!
+  The original codes are in the path "FENGSim/toolkit/Geometry/cura_engine/tests/InfillTest.cpp".
+*/
 
 #include <gtest/gtest.h>
 
@@ -213,9 +214,15 @@ namespace cura {
 
     */
 
-    //std::vector<Point3> pnts;
-    //std::vector<double> heights;
 
+
+    
+    /*!
+      by Dr. Jiping Xin
+     */
+
+
+    
     void VtkToPolygons (std::string filename, std::vector<Polygons>& layers, std::vector<double>& heights);
     void ExportPathLinesToVtk (std::string pathfile, std::vector<InfillTestParameters> parameters_list, std::vector<double>& heights);
     void ExportPathLinesToMbdyn (std::vector<InfillTestParameters> parameters_list, std::vector<double>& heights);
@@ -235,17 +242,18 @@ namespace cura {
 	std::string clifile = L;
 	is.getline(L,len);
 	std::string pathfile = L;
-
 	std::cout << clifile << std::endl;
 	std::cout << pathfile << std::endl;
+	is.getline(L,len);
+	double line_distance = 100;
+	sscanf(L,"%lf",&line_distance);
+	
 	is.close();
 	
         std::vector<Polygons> shapes;
 	std::vector<double> heights;
-	VtkToPolygons(clifile.c_str(), shapes, heights);
-
-	std::cout << shapes.size() << std::endl;
-	//double stop; std::cin >> stop;
+	VtkToPolygons(clifile.c_str(),shapes,heights);
+	std::cout << "layers: " << shapes.size() << std::endl;
 	
 	/*
 	  if (!readTestPolygons(polygon_filenames, shapes))
@@ -260,7 +268,6 @@ namespace cura {
 	   - Gyroid, since it doesn't handle the 100% infill and related cases well
 	*/
         std::vector<EFillMethod> skip_methods = { EFillMethod::CROSS, EFillMethod::CROSS_3D, EFillMethod::CUBICSUBDIV, EFillMethod::GYROID };
-	
         std::vector<EFillMethod> methods;
         for (int i_method = 0; i_method < static_cast<int>(EFillMethod::NONE); ++i_method) {
 		const EFillMethod method = static_cast<EFillMethod>(i_method);
@@ -268,10 +275,7 @@ namespace cura {
 		    methods.push_back(method);
 		}
 	}
-
-        //std::vector<coord_t> line_distances = { 300, 400, 600, 800, 1200 };
-	std::vector<coord_t> line_distances = { 300, 400, 600, 800, 1200, 1600, 2000, 3200};
-	
+	std::vector<coord_t> line_distances = { 300, 400, 600, 800, 1200, 1600, 2000, 3200};	
         std::vector<InfillTestParameters> parameters_list;
         size_t test_polygon_id = 0;
         for (const Polygons& polygons : shapes) {
@@ -281,14 +285,13 @@ namespace cura {
 	    //parameters_list.push_back(generateInfillToTest(InfillParameters(method, dont_zig_zaggify, do_connect_polygons, line_distance), test_polygon_id, polygons));
 	    //parameters_list.push_back(generateInfillToTest(InfillParameters(methods[0], do_zig_zaggify, dont_connect_polygons, line_distances[0]), test_polygon_id, polygons));
 	    //parameters_list.push_back(generateInfillToTest(InfillParameters(methods[0], dont_zig_zaggify, dont_connect_polygons, 200), test_polygon_id, polygons));
-	    parameters_list.push_back(generateInfillToTest(InfillParameters(methods[0], do_zig_zaggify, do_connect_polygons, line_distances[6]), test_polygon_id, polygons));
+	    parameters_list.push_back(generateInfillToTest(InfillParameters(methods[0], do_zig_zaggify, do_connect_polygons, line_distance), test_polygon_id, polygons));
 	    //}
 	    //}
 	    ++test_polygon_id;
         }
-	std::cout << test_polygon_id << std::endl;
 
-	for (int i = 0; i < parameters_list.size(); i++) {
+	for (int i=0; i<parameters_list.size(); i++) {
 	    //ExportOutLinesToVtk(parameters_list[i].outline_polygons, heights[i], "infill_outlines"+std::to_string(i)+".vtk");
 	    //ExportPathLinesToVtk(parameters_list[i].result_lines, heights[i], "infill_pathlines"+std::to_string(i)+".vtk");
 	    //ExportOutLinesToVtk(parameters_list[i].outline_polygons, heights[i], pathfile+"_outlines"+std::to_string(i)+".vtk");
@@ -296,7 +299,7 @@ namespace cura {
 	}
 	
 	// collect all path lines together
-	ExportPathLinesToVtk(pathfile, parameters_list, heights);
+	ExportPathLinesToVtk(pathfile,parameters_list,heights);
 	ExportPathLinesToMbdyn(parameters_list, heights);
 	return parameters_list;
     }
@@ -305,14 +308,10 @@ namespace cura {
     	double scale = 1000;
 	
 	int n = 0;
-	for (int i = 0; i < parameters_list.size(); i++) {
-	    for (int j = 0; j < parameters_list[i].result_lines.size(); j++) {
-	        n += (parameters_list[i].result_lines)[j].size();
-	    }
-	}
 	int m = 0;
-	for (int i = 0; i < parameters_list.size(); i++) {
-	    for (int j = 0; j < parameters_list[i].result_lines.size(); j++) {
+	for (int i=0; i<parameters_list.size(); i++) {
+	    for (int j=0; j<parameters_list[i].result_lines.size(); j++) {
+	        n += (parameters_list[i].result_lines)[j].size();
 		m++;
 	    }
 	}
@@ -325,9 +324,9 @@ namespace cura {
 	out << "ASCII" << std::endl;
 	out << "DATASET UNSTRUCTURED_GRID" << std::endl;
 	out << "POINTS " << n << " float" << std::endl;
-	for (int i = 0; i < parameters_list.size(); i++) {
-	    for (int j = 0; j < parameters_list[i].result_lines.size(); j++) {
-		for (int k = 0; k < (parameters_list[i].result_lines)[j].size(); k++) {
+	for (int i=0; i<parameters_list.size(); i++) {
+	    for (int j=0; j<parameters_list[i].result_lines.size(); j++) {
+		for (int k=0; k<(parameters_list[i].result_lines)[j].size(); k++) {
 		    out << (parameters_list[i].result_lines)[j][k].X / scale << " "
 			<< (parameters_list[i].result_lines)[j][k].Y / scale << " "
 			<< heights[i] / scale << std::endl;
@@ -336,10 +335,10 @@ namespace cura {
 	}
 	out << "CELLS " << m << " " << m + n << std::endl;
 	int l = 0;
-	for (int i = 0; i < parameters_list.size(); i++) {
-	    for (int j = 0; j < parameters_list[i].result_lines.size(); j++) {
+	for (int i=0; i<parameters_list.size(); i++) {
+	    for (int j=0; j<parameters_list[i].result_lines.size(); j++) {
 		out << (parameters_list[i].result_lines)[j].size();
-		for (int k = 0; k < (parameters_list[i].result_lines)[j].size(); k++) {
+		for (int k=0; k<(parameters_list[i].result_lines)[j].size(); k++) {
 		    out << " " << l;
 		    l++;
 		}
@@ -347,7 +346,7 @@ namespace cura {
 	    }
 	}
 	out << "CELL_TYPES " << m << std::endl;
-	for (int i = 0; i < m; i++) {
+	for (int i=0; i<m; i++) {
 	    out << 4 << std::endl;
 	}
     }
@@ -361,11 +360,11 @@ namespace cura {
 	for (int i = 0; i < parameters_list.size(); i++) {
 	    for (int j = 0; j < parameters_list[i].result_lines.size(); j++) {
 		for (int k = 0; k < (parameters_list[i].result_lines)[j].size()-1; k++) {
-		    out << (parameters_list[i].result_lines)[j][k].X / scale << " "
-			<< (parameters_list[i].result_lines)[j][k].Y / scale << " "
+		    out << (parameters_list[i].result_lines)[j][k].X / scale  << " "
+			<< (parameters_list[i].result_lines)[j][k].Y / scale  << " "
 			<< heights[i] / scale << " "
-			<< (parameters_list[i].result_lines)[j][k+1].X / scale << " "
-			<< (parameters_list[i].result_lines)[j][k+1].Y / scale << " "
+			<< (parameters_list[i].result_lines)[j][k+1].X / scale  << " "
+			<< (parameters_list[i].result_lines)[j][k+1].Y / scale  << " "
 			<< heights[i] / scale << " "
 			<< "90 0 0 1"
 			<< std::endl;
@@ -376,7 +375,6 @@ namespace cura {
 } //namespace cura
 
 void InfillTestMain () {
-    //cura::generateInfillTests();
     cura::generateInfillTests(" ");
 }
 

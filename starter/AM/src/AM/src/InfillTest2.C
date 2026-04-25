@@ -16,36 +16,33 @@
 namespace cura
 {
     void VtkToPolygons (std::string filename, std::vector<Polygons>& layers, std::vector<double>& heights) {
-
 	std::vector<Point3> pnts;
 	heights.clear();
 	
 	std::ifstream is;
 	is.open(filename.c_str());
-	
 	const int len = 512*2;
 	char L[len];
-	
-	for (int i = 0; i < 5; i++) is.getline(L,len);
+	for (int i=0; i<5; i++) is.getline(L,len);
 	
 	double scale = 1000;
-	
 	while (is.getline(L,len)) {
-	    if (strncasecmp("POLYGONS", L, 8) == 0) break;
+	    if (strncasecmp("POLYGONS",L,8) == 0) break;
 	    double z[3];
-	    sscanf(L, "%lf %lf %lf", z, z + 1, z + 2);
+	    sscanf(L,"%lf %lf %lf",z,z+1,z+2);
 	    Point3 p;
 	    p.x = z[0] * scale;
 	    p.y = z[1] * scale;
 	    p.z = z[2] * scale;
 	    pnts.push_back(p);
 
-	    if (heights.size() > 0) {
-	        if ((z[2] * scale) != heights[heights.size()-1])
-		    heights.push_back(z[2] * scale);
+	    if (heights.size()>0) {
+		if ((z[2]*scale)!=heights[heights.size()-1]) {
+		    heights.push_back(z[2]*scale);
+		}
 	    }
 	    else {
-		heights.push_back(z[2] * scale);
+		heights.push_back(z[2]*scale);
 	    }
 	}
 	
@@ -54,22 +51,19 @@ namespace cura
 	    cura::Polygons Polys;
 	    
 	    int m = -1;
-	    sscanf(L, "%d[^ ]", &m);
-	    std::cout << "polygon: " << m << std::endl;
-
+	    sscanf(L,"%d[^ ]",&m);
 	    std::string ss1 = "%*d";
-	    for (int i = 0; i < m; i++) {
+	    for (int i=0; i<m; i++) {
 		std::string ss2 = "";
 		ss2 = ss1 + " %d[^ ]";
 		int v;
-		sscanf(L, ss2.c_str(), &v);
-		Poly.emplace_back(pnts[v].x, pnts[v].y);
+		sscanf(L,ss2.c_str(), &v);
+		Poly.emplace_back(pnts[v].x,pnts[v].y);
 		ss1 += " %*d";
 	    }
 	    Polys.add(Poly);
 	    layers.push_back(cura::Polygons(Polys));
 	}
-	std::cout << "layers: " << layers.size() << std::endl;
 	is.close();
     }
     

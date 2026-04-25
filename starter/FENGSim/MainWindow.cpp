@@ -1573,8 +1573,8 @@ void MainWindow::AMStlModelToSlices()
     out << "Model = SlicePhaseTest" << endl;
     out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/am.stl" << endl;
     out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/slices.vtk" << endl;
-    out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/slices_pathplanning.vtk" << endl;
-    out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/slices_meshing.cli" << endl;
+    out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/slices4pathplanning.vtk" << endl;
+    out << "../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/am/slices4meshing.cli" << endl;
     out << additive_manufacturing_dock->ui->doubleSpinBox->value() << endl;
     out << additive_manufacturing_dock->ui->doubleSpinBox_2->value() << endl;
     out.close();
@@ -1614,6 +1614,7 @@ void MainWindow::AMSlicesToPathPlanning()
     out << "Model = InfillTest" << endl;
     out << cli_file_name.toStdString() + ".vtk" << endl;
     out << path_file_name.toStdString() << endl;
+    out << 300 << endl;
     out.close();
 
     QProcess *proc = new QProcess();
@@ -2870,8 +2871,8 @@ void MainWindow::AMSTL2Slices()
     out << "Model = SlicePhaseTest" << endl;
     out << meas_path.toStdString() << "/data/am/am.stl"  << endl;
     out << meas_path.toStdString() << "/data/am/slices.vtk" << endl;
-    out << meas_path.toStdString() << "/data/am/slices_pathplanning.vtk" << endl;
-    out << meas_path.toStdString() << "/data/am/slices_meshing.cli" << endl;
+    out << meas_path.toStdString() << "/data/am/slices4pathplanning.vtk" << endl;
+    out << meas_path.toStdString() << "/data/am/slices4meshing.cli" << endl;
     out << additive_manufacturing_dock->ui->doubleSpinBox->text().toDouble() << endl;
     out << additive_manufacturing_dock->ui->doubleSpinBox_2->text().toDouble() << endl;
     out.close();
@@ -2922,8 +2923,9 @@ void MainWindow::AMSlices2PathPlanning()
     out.close();
     out.open("./../AM/build/AM/conf/pathplanning.conf");
     out << "Model = InfillTest" << endl;
-    out << meas_path.toStdString() << "/data/am/slices_pathplanning.vtk" << endl;
+    out << meas_path.toStdString() << "/data/am/slices4pathplanning.vtk" << endl;
     out << meas_path.toStdString() << "/data/am/pathplanning.vtk" << endl;
+    out << additive_manufacturing_dock->ui->doubleSpinBox_3->value() << endl;
     out << robot_dock->ui->doubleSpinBox->value() << endl;
     out << robot_dock->ui->doubleSpinBox_2->value() << endl;
     out.close();
@@ -3557,18 +3559,20 @@ void MainWindow::FEMExampleCompute()
 // *******************************************************
 //      multibody dynmaic
 
-void  MainWindow::mbdOpenFile () {
+void MainWindow::mbdOpenFile () {
     mbd_file_name = QFileDialog::getOpenFileName(this,tr("Open File"),"../../starter/mbdyn",
                                                  tr("MBD Files (*.mov)")
                                                  , 0 , QFileDialog::DontUseNativeDialog);
 
-
     std::ifstream is;
     is.open("../mbdyn/robot/ur3.traj");
+
     const int len = 512;
     char L[len];
     is.getline(L,len);
+
     vector<double> traj;
+
     while (is.getline(L, len)) {
         double z[10];
         int d = sscanf(L,"%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf"
@@ -3580,6 +3584,7 @@ void  MainWindow::mbdOpenFile () {
         for (int i=0; i<d; i++) traj.push_back(z[i]);
     }
     is.close();
+
     std::ofstream out;
     out.open("../mbdyn/robot/ur3.traj");
     out << "# point 1(3) --- point 2(3) --- orientation(3) --- velocity(1)" << endl;
@@ -3610,7 +3615,7 @@ void  MainWindow::mbdOpenFile2 () {
 
 
     std::ifstream is;
-    is.open("./data/am/slices_pathplanning.vtk");
+    is.open("./data/am/slices4pathplanning.vtk");
     const int len = 512;
     char L[len];
     is.getline(L,len);
