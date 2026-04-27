@@ -300,7 +300,7 @@ namespace cura {
 	
 	// collect all path lines together
 	ExportPathLinesToVtk(pathfile,parameters_list,heights);
-	ExportPathLinesToMbdyn(parameters_list, heights);
+	ExportPathLinesToMbdyn(parameters_list,heights);
 	return parameters_list;
     }
 
@@ -352,14 +352,13 @@ namespace cura {
     }
 
     void ExportPathLinesToMbdyn (std::vector<InfillTestParameters> parameters_list, std::vector<double>& heights) {
-	
     	double scale = 1e6;
 	std::ofstream out;
 	out.open("../../mbdyn/robot/ur3.traj");
 	out << "# point 1(3) --- point 2(3) --- orientation(3) --- velocity(1)" << std::endl;
-	for (int i = 0; i < parameters_list.size(); i++) {
-	    for (int j = 0; j < parameters_list[i].result_lines.size(); j++) {
-		for (int k = 0; k < (parameters_list[i].result_lines)[j].size()-1; k++) {
+	for (int i=0; i<parameters_list.size(); i++) {
+	    for (int j=0; j<parameters_list[i].result_lines.size(); j++) {
+		for (int k=0; k<(parameters_list[i].result_lines)[j].size()-1; k++) {
 		    out << (parameters_list[i].result_lines)[j][k].X / scale  << " "
 			<< (parameters_list[i].result_lines)[j][k].Y / scale  << " "
 			<< heights[i] / scale << " "
