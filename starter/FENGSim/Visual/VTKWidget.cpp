@@ -2698,9 +2698,12 @@ void VTKWidget::AMImportSTL ()
     renderer->RemoveActor(am_stl_actor);
     am_stl_actor = vtkSmartPointer<vtkActor>::New();
     am_stl_actor->SetMapper(mapper);
-    am_stl_actor->GetProperty()->EdgeVisibilityOn();
+    //am_stl_actor->GetProperty()->EdgeVisibilityOn();
     // actor->GetProperty()->SetFrontfaceCulling(1); // shit this is OK, check it for long time
-    // actor->GetProperty()->SetOpacity(100.0);
+    //am_stl_actor->GetProperty()->SetRepresentationToWireframe();
+    am_stl_actor->GetProperty()->SetOpacity(0.3);
+    am_stl_actor->GetProperty()->SetColor(1,1,1);
+    //am_stl_actor->GetProperty()->SetEdgeColor(1,1,1);
     // renderer
     renderer->AddActor(am_stl_actor);
     //renderer->ResetCamera();
@@ -2749,8 +2752,10 @@ void VTKWidget::AMImportSlices()
     renderer->RemoveActor(am_slices_actor);
     am_slices_actor = vtkSmartPointer<vtkActor>::New();
     am_slices_actor->SetMapper(mapper);
-    //am_slices_actor->GetProperty()->EdgeVisibilityOn();
-    am_slices_actor->GetProperty()->SetOpacity(0.5);
+    am_slices_actor->GetProperty()->EdgeVisibilityOn();
+    am_slices_actor->GetProperty()->SetRepresentationToWireframe();
+    am_slices_actor->GetProperty()->SetColor(0,0,1);
+    am_slices_actor->GetProperty()->SetLineWidth(2);
     // actor->GetProperty()->SetFrontfaceCulling(1); // shit this is OK, check it for long time
     // actor->GetProperty()->SetOpacity(100.0);
     // renderer
@@ -2805,6 +2810,7 @@ void VTKWidget::AMImportPathPlanning()
     // actor->GetProperty()->SetFrontfaceCulling(1); // shit this is OK, check it for long time
     // actor->GetProperty()->SetOpacity(100.0);
     am_pathplanning_actor->GetProperty()->SetColor(COLOR6);
+    am_pathplanning_actor->GetProperty()->SetLineWidth(2);
 
     // renderer
     renderer->AddActor(am_pathplanning_actor);
@@ -3145,7 +3151,7 @@ void VTKWidget::mbdPath () {
     vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
     actor->SetMapper(mapper);
     actor->GetProperty()->SetColor(1,0,0);
-    actor->GetProperty()->SetLineWidth(1);
+    actor->GetProperty()->SetLineWidth(2);
     renderer->AddActor(actor);
 
     //    vtkSmartPointer<vtkSphereSource> ss = vtkSmartPointer<vtkSphereSource>::New();

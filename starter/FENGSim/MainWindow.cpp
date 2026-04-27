@@ -3591,11 +3591,13 @@ void MainWindow::mbdOpenFile () {
     for (int i=0; i<traj.size()/10; i++) {
         out << traj[i*10+0] - robot_dock->ui->doubleSpinBox_3->value()
                 << " "
-                << traj[i*10+1] - robot_dock->ui->doubleSpinBox_4->value() << " "
+                << traj[i*10+1] - robot_dock->ui->doubleSpinBox_4->value()
+                << " "
                 << traj[i*10+2] << " "
                 << traj[i*10+3] - robot_dock->ui->doubleSpinBox_3->value()
                 << " "
-                << traj[i*10+4] - robot_dock->ui->doubleSpinBox_4->value() << " "
+                << traj[i*10+4] - robot_dock->ui->doubleSpinBox_4->value()
+                << " "
                 << traj[i*10+5] << " "
                 << traj[i*10+6] << " "
                 << traj[i*10+7] << " "
