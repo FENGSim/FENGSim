@@ -107,7 +107,7 @@ void Export2VTK4PathPlanning (std::string vtkfile_pathplanning, cura::Slicer sli
 
 void Export2Cli4Mesh (std::string clifile_meshing, cura::Slicer slicer, const cura::coord_t initial_layer_thickness, const cura::coord_t layer_thickness, double buttom) {
     double scale = 1000;
-	
+    std::cout << buttom << std::endl;
     std::ofstream out;
     out.open(clifile_meshing.c_str());
     out << "$$HEADERSTART" << std::endl;
@@ -120,10 +120,10 @@ void Export2Cli4Mesh (std::string clifile_meshing, cura::Slicer slicer, const cu
 
     const cura::SlicerLayer& layer = slicer.layers[0];
     out << "$$LAYER/" << buttom << std::endl;
-    for (int j = 0; j < layer.polygons.size(); j++) {
+    for (int j=0; j<layer.polygons.size(); j++) {
 	cura::Polygon sliced_polygon = layer.polygons[j];
 	out << "$$POLYLINE/0,1," << sliced_polygon.size() + 1;
-	for(int k = 0; k < sliced_polygon.size(); k++) {
+	for(int k=0; k<sliced_polygon.size(); k++) {
 	    out << "," << (sliced_polygon[k].X) / scale << "," << (sliced_polygon[k].Y) / scale;
 	}
 	out << "," << (sliced_polygon[0].X) / scale << "," << (sliced_polygon[0].Y) / scale
@@ -132,23 +132,23 @@ void Export2Cli4Mesh (std::string clifile_meshing, cura::Slicer slicer, const cu
     
     const cura::SlicerLayer& layer1 = slicer.layers[1];
     out << "$$LAYER/" << initial_layer_thickness / scale << std::endl;
-    for (int j = 0; j < layer1.polygons.size(); j++) {
+    for (int j=0; j<layer1.polygons.size(); j++) {
 	cura::Polygon sliced_polygon = layer1.polygons[j];
 	out << "$$POLYLINE/0,1," << sliced_polygon.size() + 1;
-	for(int k = 0; k < sliced_polygon.size(); k++) {
+	for(int k=0; k<sliced_polygon.size(); k++) {
 	    out << "," << (sliced_polygon[k].X) / scale << "," << (sliced_polygon[k].Y) / scale;
 	}
 	out << "," << (sliced_polygon[0].X) / scale << "," << (sliced_polygon[0].Y) / scale
 	    << std::endl;
     }
 
-    for(int i = 1; i < slicer.layers.size(); i++) {
+    for(int i=1; i<slicer.layers.size(); i++) {
         const cura::SlicerLayer& layer2 = slicer.layers[i];
 	out << "$$LAYER/" << (initial_layer_thickness + i * layer_thickness) / scale << std::endl;
-	for (int j = 0; j < layer2.polygons.size(); j++) {
+	for (int j=0; j<layer2.polygons.size(); j++) {
 	    cura::Polygon sliced_polygon = layer2.polygons[j];
 	    out << "$$POLYLINE/0,1," << sliced_polygon.size() + 1;
-	    for(int k = 0; k < sliced_polygon.size(); k++) {
+	    for(int k=0; k<sliced_polygon.size(); k++) {
 	        out << "," << (sliced_polygon[k].X) / scale << "," << (sliced_polygon[k].Y) / scale;
 	    }
 	    out << "," << (sliced_polygon[0].X) / scale << "," << (sliced_polygon[0].Y) / scale
