@@ -2969,11 +2969,11 @@ void MainWindow::AMSlices2Mesh()
     std::cout << (meas_path+QString("/../../toolkit/Geometry/install/slice2mesh_install/bin")).toStdString() << std::endl;
     std::cout << (QString("./slice2mesh_exec ")
                   +meas_path
-                  +QString("/data/am/slices_meshing.cli ")
+                  +QString("/data/am/slices4meshing.cli ")
                   + additive_manufacturing_dock->ui->lineEdit_2->text()).toStdString() << std::endl;
     QString command(QString("./slice2mesh_exec ")
                     +meas_path
-                    +QString("/data/am/slices_meshing.cli ")
+                    +QString("/data/am/slices4meshing.cli ")
                     + additive_manufacturing_dock->ui->lineEdit_2->text());
     proc->start(command);
 
