@@ -66,6 +66,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(ui->actionMesh, SIGNAL(triggered()), this, SLOT(OpenMeshModule()));
     connect(ui->actionSolver, SIGNAL(triggered()), this, SLOT(OpenSolverModule()));
     connect(ui->actionVisual, SIGNAL(triggered()), this, SLOT(OpenVisualModule()));
+    connect(ui->actionPlane, SIGNAL(triggered()), this, SLOT(DatumPlane()));
+
 
     QToolButton *cadView = new QToolButton(this);
     cadView->setPopupMode(QToolButton::InstantPopup);
@@ -4803,4 +4805,13 @@ void MainWindow::Machining2ImportMPMResults () {
 
     machining2_step++;
     machining2_timer->singleShot(1, this, SLOT(Machining2ImportMPMResults()));
+}
+
+void MainWindow::DatumPlane() {
+    if (ui->actionPlane->isChecked()) {
+        vtk_widget->DatumPlane();
+    }
+    else {
+        vtk_widget->DatumPlaneClear();
+    }
 }

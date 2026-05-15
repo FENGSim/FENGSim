@@ -28,6 +28,8 @@
 #include "vtkTransformFilter.h"
 #include "vtkVoxelGrid.h"
 #include "vtkScalarBarActor.h"
+#include "vtkPlaneSource.h"
+
 
 class VTKWidget : public QVTKOpenGLWidget
 {
@@ -562,6 +564,13 @@ public:
         GetRenderWindow()->Render();
     }
     void SetTextPosition ();
+
+
+    vtkNew<vtkActor> planeActorXY;
+    vtkNew<vtkActor> planeActorYZ;
+    vtkNew<vtkActor> planeActorXZ;
+    void DatumPlane ();
+    void DatumPlaneClear ();
 
 };
 

@@ -580,7 +580,8 @@ public slots:
     void Machining2ImportResults ();
     void Machining2ImportMPMResults ();
 
-
+public slots:
+    void DatumPlane ();
 
 };
 

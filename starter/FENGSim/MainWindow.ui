@@ -72,7 +72,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -193,6 +193,7 @@
    <addaction name="actionMeasure"/>
    <addaction name="actionSPC"/>
    <addaction name="actionTransport"/>
+   <addaction name="actionPlane"/>
    <addaction name="separator"/>
    <addaction name="actionAbout"/>
   </widget>
@@ -646,6 +647,18 @@
     <string>Robot</string>
    </property>
   </action>
+  <action name="actionPlane">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="MainWindow.qrc">
+     <normaloff>:/main_wind/figure/main_wind/datumplane.png</normaloff>:/main_wind/figure/main_wind/datumplane.png</iconset>
+   </property>
+   <property name="text">
+    <string>Plane</string>
+   </property>
+  </action>
   <zorder>dockWidget</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -659,17 +672,17 @@
  </customwidgets>
  <resources>
   <include location="Robot/RobotWindow.qrc"/>
-  <include location="MainWindow.qrc"/>
-  <include location="Rivet/RivetWindow.qrc"/>
-  <include location="CADWindow.qrc"/>
   <include location="MeshWindow.qrc"/>
-  <include location="Pipe/fig/PipeWindow.qrc"/>
-  <include location="System.qrc"/>
+  <include location="CADWindow.qrc"/>
+  <include location="SPCWindow.qrc"/>
   <include location="TransportWindow.qrc"/>
+  <include location="MainWindow.qrc"/>
+  <include location="Machining/machining.qrc"/>
+  <include location="Rivet/RivetWindow.qrc"/>
+  <include location="Pipe/fig/PipeWindow.qrc"/>
   <include location="MeasureWidnow.qrc"/>
   <include location="OCPoro.qrc"/>
-  <include location="SPCWindow.qrc"/>
-  <include location="Machining/machining.qrc"/>
+  <include location="System.qrc"/>
  </resources>
  <connections/>
 </ui>

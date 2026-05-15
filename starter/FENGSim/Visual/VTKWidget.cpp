@@ -3971,3 +3971,72 @@ int VTKWidget::OCPoroImportVTKFile(std::string name, int n)
 
     return m;
 }
+
+
+void VTKWidget::DatumPlane() {
+    vtkNew<vtkPlaneSource> planeSourceXY;
+    vtkNew<vtkPlaneSource> planeSourceYZ;
+    vtkNew<vtkPlaneSource> planeSourceXZ;
+
+    double origin[3] = {0.0, 0.0, 0.0};
+    double point1[3] = {1.0, 0.0, 0.0};
+    double point2[3] = {0.0, 1.0, 0.0};
+    double point3[3] = {0.0, 0.0, 1.0};
+    planeSourceXY->SetOrigin(origin);
+    planeSourceXY->SetPoint1(point1);
+    planeSourceXY->SetPoint2(point2);
+    planeSourceXY->SetXResolution(10);
+    planeSourceXY->SetYResolution(10);
+    planeSourceXY->Update();
+
+    planeSourceYZ->SetOrigin(origin);
+    planeSourceYZ->SetPoint1(point2);
+    planeSourceYZ->SetPoint2(point3);
+    planeSourceYZ->SetXResolution(10);
+    planeSourceYZ->SetYResolution(10);
+    planeSourceYZ->Update();
+
+    planeSourceXZ->SetOrigin(origin);
+    planeSourceXZ->SetPoint1(point1);
+    planeSourceXZ->SetPoint2(point3);
+    planeSourceXZ->SetXResolution(10);
+    planeSourceXZ->SetYResolution(10);
+    planeSourceXZ->Update();
+
+    vtkNew<vtkPolyDataMapper> mapperXY;
+    mapperXY->SetInputConnection(planeSourceXY->GetOutputPort());
+    planeActorXY->SetMapper(mapperXY);
+    planeActorXY->GetProperty()->SetRepresentationToSurface();
+    planeActorXY->GetProperty()->SetColor(1.0,1.0,1.0);
+    planeActorXY->GetProperty()->SetOpacity(0.3);
+
+    vtkNew<vtkPolyDataMapper> mapperYZ;
+    mapperYZ->SetInputConnection(planeSourceYZ->GetOutputPort());
+    planeActorYZ->SetMapper(mapperYZ);
+    planeActorYZ->GetProperty()->SetRepresentationToSurface();
+    planeActorYZ->GetProperty()->SetColor(1.0,1.0,1.0);
+    planeActorYZ->GetProperty()->SetOpacity(0.3);
+
+    vtkNew<vtkPolyDataMapper> mapperXZ;
+    mapperXZ->SetInputConnection(planeSourceXZ->GetOutputPort());
+    planeActorXZ->SetMapper(mapperXZ);
+    planeActorXZ->GetProperty()->SetRepresentationToSurface();
+    planeActorXZ->GetProperty()->SetColor(1.0,1.0,1.0);
+    planeActorXZ->GetProperty()->SetOpacity(0.3);
+
+    renderer->AddActor(planeActorXY);
+    renderer->AddActor(planeActorYZ);
+    renderer->AddActor(planeActorXZ);
+
+    GetRenderWindow()->Render();
+
+}
+
+void VTKWidget::DatumPlaneClear() {
+    renderer->RemoveActor(planeActorXY);
+    renderer->RemoveActor(planeActorYZ);
+    renderer->RemoveActor(planeActorXZ);
+
+    GetRenderWindow()->Render();
+}
+
