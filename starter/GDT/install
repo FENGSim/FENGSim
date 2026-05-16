@@ -1,3 +1,5 @@
+sudo apt -y install libflann-dev libboost1.83-all-dev
+
 mkdir build
 cd build
 cmake ..
