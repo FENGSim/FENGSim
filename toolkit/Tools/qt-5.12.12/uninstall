@@ -1,0 +1,2 @@
+rm -rf ./qt-everywhere-src-5.12.12/build
+rm -rf 5.12.12
