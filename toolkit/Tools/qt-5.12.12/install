@@ -12,7 +12,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
 # you need to copy qt.conf to 5.12.12/bin/ and add QT_PLUGIN_PATH=./../../toolkit/Tools/qt/5.12.12/plugins using qtcreator
 # apt install qtcreator and add qmake in 5.12.12/bin
 
-wget https://download.qt.io/archive/qt/5.12/5.12.12/single/qt-everywhere-src-5.12.12.tar.xz
+#wget https://download.qt.io/archive/qt/5.12/5.12.12/single/qt-everywhere-src-5.12.12.tar.xz
 tar -xJf qt-everywhere-src-5.12.12.tar.xz
 cd qt-everywhere-src-5.12.12
 mkdir build
