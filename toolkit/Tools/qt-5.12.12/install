@@ -20,5 +20,8 @@ cd build
 ./../configure --prefix=./../../5.12.12 -xcb -no-xcb-xlib -xcb-xinput -nomake examples -nomake tests -skip qtwebengine -skip qtmultimedia -skip qtvirtualkeyboard -skip qtlocation
 make -j8
 make install
+cd ..
+cd ..
+cp qt.conf 5.12.12/bin
 
 #-icu ICU_PREFIX=$HOME/software/qt/origin/icu/usr/local ICU_LIBS="-licui18n -licuuc -licudata"
