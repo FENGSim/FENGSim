@@ -1,12 +1,6 @@
 sudo apt -y install wget cmake make gcc g++ gcc-9 g++-9 libxcb* libx11-xcb-dev libxkbcommon-dev libxkbcommon-x11-dev libgl1-mesa-dev libglu1-mesa-dev python3 python3-pip python-is-python3
 
-sudo apt -y install libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev \
-    freeglut3-dev mesa-utils libdrm-dev libgles2-mesa-dev \	   
-    build-essential cmake pkg-config xorg xorg-dev
-
-#    libxcb1-dev libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev \
-#    libxcb-sync0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev \
-#    libxcb-xinerama0-dev libxkbcommon-dev libxkbcommon-x11-dev \
+sudo apt -y install libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev freeglut3-dev mesa-utils libdrm-dev libgles2-mesa-dev build-essential pkg-config xorg xorg-dev
 
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
@@ -15,7 +9,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
 
 # for ubuntu 24.04 there is a package (xkbcommon) version is too new, please use ubuntu 20.04 is OK
 # for ubuntu 22.04 -xcb-xlib not working, please use ubuntu 20.04 is OK
-# could compile qt 5.12.12 in ubuntu 20.04 docker and use it on the host computer 24.04
+# could compile qt 5.12.12 in ubuntu 20.04 docker and use it on the host computer 24.04 is OK
 # you need to copy qt.conf to 5.12.12/bin/ and add QT_PLUGIN_PATH=./../../toolkit/Tools/qt/5.12.12/plugins using qtcreator
 # apt install qtcreator and add qmake in 5.12.12/bin
 
