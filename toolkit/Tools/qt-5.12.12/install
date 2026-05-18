@@ -7,10 +7,9 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
 #sudo update-alternatives --config gcc
 #sudo update-alternatives --config g++
 
-# for ubuntu 24.04 there is a package (xkbcommon) version is too new, please use ubuntu 20.04 is OK
-# for ubuntu 22.04 -xcb-xlib not working, please use ubuntu 20.04 is OK
-# could compile qt 5.12.12 in ubuntu 20.04 docker and use it on the host computer 24.04 is OK
-# you need to copy qt.conf to 5.12.12/bin/ and add QT_PLUGIN_PATH=./../../toolkit/Tools/qt/5.12.12/plugins using qtcreator
+# for ubuntu 24.04 there is a package (xkbcommon) version is too new, please use ubuntu 22.04 and 20.04 is OK
+# could compile qt 5.12.12 in ubuntu 22.04 docker and use it on the host computer 24.04 is OK
+# you need to copy qt.conf to 5.12.12/bin/ and add QT_PLUGIN_PATH=./../../toolkit/Tools/qt-5.12.12/5.12.12/plugins using qtcreator
 # apt install qtcreator and add qmake in 5.12.12/bin
 
 #wget https://download.qt.io/archive/qt/5.12/5.12.12/single/qt-everywhere-src-5.12.12.tar.xz
