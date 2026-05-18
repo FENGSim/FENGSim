@@ -1,0 +1,24 @@
+#sudo apt -y install make gcc g++ gcc-9 g++-9 libxcb* libx11-xcb-dev libxcb-util-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-render-util0-dev libxcb-xinerama0-dev libxkbcommon-dev libxkbcommon-x11-dev libgl1-mesa-dev libglu1-mesa-dev python3 python3-pip python-is-python3
+
+sudo apt -y install wget cmake make gcc g++ gcc-9 g++-9 libxcb* libx11-xcb-dev libxkbcommon-dev libxkbcommon-x11-dev libgl1-mesa-dev libglu1-mesa-dev python3 python3-pip python-is-python3
+
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
+#sudo update-alternatives --config gcc
+#sudo update-alternatives --config g++
+
+# for ubuntu 24.04 there is a package (xkbcommon) version is too new, please use ubuntu 22.04 is OK
+# could compile qt 5.12.12 in ubuntu 22.04 docker and use it on the host computer 24.04
+# you need to copy qt.conf to 5.12.12/bin/ and add QT_PLUGIN_PATH=./../../toolkit/Tools/qt/5.12.12/plugins using qtcreator
+# apt install qtcreator and add qmake in 5.12.12/bin
+
+wget https://download.qt.io/archive/qt/5.12/5.12.12/single/qt-everywhere-src-5.12.12.tar.xz
+tar -xJf qt-everywhere-src-5.12.12.tar.xz
+cd qt-everywhere-src-5.12.12
+mkdir build
+cd build
+./../configure --prefix=./../../5.12.12 -xcb -no-xcb-xlib -xcb-xinput -nomake examples -nomake tests -skip qtwebengine -skip qtmultimedia -skip qtvirtualkeyboard -skip qtlocation
+make -j8
+make install
+
+#-icu ICU_PREFIX=$HOME/software/qt/origin/icu/usr/local ICU_LIBS="-licui18n -licuuc -licudata"

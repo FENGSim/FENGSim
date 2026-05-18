@@ -4,36 +4,38 @@ echo "Do you want to download all the tar.gz files?"
 read name
 
 if [ "$name" = "yes" ]; then
-    gh release download 25.12 -R FENGSim/FENGSim -A tar.gz
-    gh release download 25.12 -R FENGSim/MultiX -A tar.gz
-    gh release download 25.12 -R FENGSim/CFD -A tar.gz
-    gh release download 25.12 -R FENGSim/CEM -A tar.gz
-    gh release download 25.12 -R FENGSim/Particles -A tar.gz
-    gh release download 25.12 -R FENGSim/DAE -A tar.gz
-    gh release download 25.12 -R FENGSim/NLA -A tar.gz
-    gh release download 25.12 -R FENGSim/PS -A tar.gz
+    gh release download 26.06 -R FENGSim/FENGSim -A tar.gz
+    gh release download 26.06 -R FENGSim/MultiX -A tar.gz
+    gh release download 26.06 -R FENGSim/CFD -A tar.gz
+    gh release download 26.06 -R FENGSim/CEM -A tar.gz
+    gh release download 26.06 -R FENGSim/Particles -A tar.gz
+    gh release download 26.06 -R FENGSim/DAE -A tar.gz
+    gh release download 26.06 -R FENGSim/NLA -A tar.gz
+    gh release download 26.06 -R FENGSim/PS -A tar.gz
     
-    gh release download 25.12 -R FENGSim/docs -A tar.gz
-    gh release download 25.12 -R FENGSim/report -A tar.gz
-    gh release download 25.12 -R FENGSim/fengsim.github.io -A tar.gz
+#    gh release download 26.06 -R FENGSim/docs -A tar.gz
+#    gh release download 26.06 -R FENGSim/report -A tar.gz
+#    gh release download 26.06 -R FENGSim/fengsim.github.io -A tar.gz
 fi
 
-FILE1="FENGSim-25.12.tar.gz"
-FILE2="MultiX-25.12.tar.gz"
-FILE3="CFD-25.12.tar.gz"
-FILE4="CEM-25.12.tar.gz"
-FILE5="Particles-25.12.tar.gz"
-FILE6="DAE-25.12.tar.gz"
-FILE7="NLA-25.12.tar.gz"
-FILE8="PS-25.12.tar.gz"
+exit 0
 
-FILE9="docs-25.12.tar.gz"
-FILE10="report-25.12.tar.gz"
-FILE11="fengsim.github.io-25.12.tar.gz"
+FILE1="FENGSim-26.06.tar.gz"
+FILE2="MultiX-26.06.tar.gz"
+FILE3="CFD-26.06.tar.gz"
+FILE4="CEM-26.06.tar.gz"
+FILE5="Particles-26.06.tar.gz"
+FILE6="DAE-26.06.tar.gz"
+FILE7="NLA-26.06.tar.gz"
+FILE8="PS-26.06.tar.gz"
+
+FILE9="docs-26.06.tar.gz"
+FILE10="report-26.06.tar.gz"
+FILE11="fengsim.github.io-26.06.tar.gz"
 
 if [[ -f "$FILE1" ]] && [[ -f "$FILE2" ]] && [[ -f "$FILE3" ]] && [[ -f "$FILE4" ]] && [[ -f "$FILE5" ]] && [[ -f "$FILE6" ]] && [[ -f "$FILE7" ]] && [[ -f "$FILE8" ]] && [[ -f "$FILE9" ]] && [[ -f "$FILE10" ]] && [[ -f "$FILE11" ]]; then
     echo "Everything is Here."
-    zip fengsim-25.12.zip FENGSim-25.12.tar.gz MultiX-25.12.tar.gz CFD-25.12.tar.gz CEM-25.12.tar.gz Particles-25.12.tar.gz DAE-25.12.tar.gz NLA-25.12.tar.gz PS-25.12.tar.gz docs-25.12.tar.gz report-25.12.tar.gz fengsim.github.io-25.12.tar.gz
+    zip fengsim-26.06.zip FENGSim-26.06.tar.gz MultiX-26.06.tar.gz CFD-26.06.tar.gz CEM-26.06.tar.gz Particles-26.06.tar.gz DAE-26.06.tar.gz NLA-26.06.tar.gz PS-26.06.tar.gz docs-26.06.tar.gz report-26.06.tar.gz fengsim.github.io-26.06.tar.gz
 else
     echo "Something is not Here."
 fi
