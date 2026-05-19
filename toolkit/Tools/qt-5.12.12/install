@@ -11,8 +11,8 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
 #sudo update-alternatives --config gcc
 #sudo update-alternatives --config g++
 
-# for ubuntu 24.04 there is a package (xkbcommon 1.6) version is too new, i add a newer version 1.7 it is ok
-# could compile qt 5.12.12 in ubuntu 22.04 docker and use it on the host computer 24.04 is OK, now could compile it in 24.04
+# for ubuntu 24.04 there is a package from apt (xkbcommon 1.6) version is too new, but a newer version 1.7 it is ok
+# could compile qt 5.12.12 in ubuntu 22.04 docker and use it on the host computer 24.04 is also OK, now could compile it in 24.04
 # you need to copy qt.conf to 5.12.12/bin/ and add QT_PLUGIN_PATH=/home/**/FENGSim/toolkit/Tools/qt-5.12.12/5.12.12/plugins using qtcreator
 # apt install qtcreator and add qmake in 5.12.12/bin
 
