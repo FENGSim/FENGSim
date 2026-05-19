@@ -20,6 +20,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
 #tar -xJf qt-everywhere-src-5.12.12.tar.xz
 
 cd libxkbcommon-1.7.0
+rm -rf build
 #find ./ -name ".git*" \( -type d -o -type f \) -exec rm -rf {} \;
 mkdir build
 cd build
@@ -30,20 +31,22 @@ meson setup --prefix=/usr \
             ..
 ninja
 sudo ninja install
-cd ../../
+cd ..
+cd ..
 
 cd qt-everywhere-src-5.12.12
 mkdir build
 cd build
-./../configure --prefix=./../../5.12.12 -xcb -xcb-xlib -xcb-xinput -nomake examples -nomake tests -skip qtwebengine -skip qtmultimedia -skip qtvirtualkeyboard -skip qtlocation
-  
+./../configure --prefix=./../../5.12.12 -xcb -xcb-xlib -xcb-xinput -nomake examples -nomake tests -skip qtwebengine -skip qtmultimedia -skip qtvirtualkeyboard -skip qtlocation  
 make -j8
 make install
 cd ..
 cd ..
+
 cp qt.conf 5.12.12/bin
 sed -i 9c"<value type=\"QString\" key=\"QMakePath\">"$PWD/5.12.12/bin/qmake"</value>" qtversion.xml
-cp qtversion.xml $HOME/.conf/QtProject/qtcreator
+mkdir -p $HOME/.conf/QtProject/qtcreator
+cp qtversion.xml $HOME/.config/QtProject/qtcreator
 cp ../../../starter/FENGSim/FENGSim.pro.shared_2 ../../../starter/FENGSim/FENGSim.pro.shared
 
 #-icu ICU_PREFIX=$HOME/software/qt/origin/icu/usr/local ICU_LIBS="-licui18n -licuuc -licudata"
