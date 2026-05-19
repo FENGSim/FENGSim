@@ -2,22 +2,41 @@ sudo apt -y install wget cmake make gcc g++ gcc-9 g++-9 libxcb* libx11-xcb-dev l
 
 sudo apt -y install libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev freeglut3-dev mesa-utils libdrm-dev libgles2-mesa-dev build-essential pkg-config xorg xorg-dev
 
+sudo apt -y install meson ninja-build bison flex libxml2-dev
+
+sudo apt -y install libegl1-mesa-dev libxcomposite-dev
+
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
 #sudo update-alternatives --config gcc
 #sudo update-alternatives --config g++
 
-# for ubuntu 24.04 there is a package (xkbcommon) version is too new, please use ubuntu 22.04 and 20.04 is OK
-# could compile qt 5.12.12 in ubuntu 22.04 docker and use it on the host computer 24.04 is OK
-# you need to copy qt.conf to 5.12.12/bin/ and add QT_PLUGIN_PATH=./../../toolkit/Tools/qt-5.12.12/5.12.12/plugins using qtcreator
+# for ubuntu 24.04 there is a package (xkbcommon 1.6) version is too new, i add a newer version 1.7 it is ok
+# could compile qt 5.12.12 in ubuntu 22.04 docker and use it on the host computer 24.04 is OK, now could compile it in 24.04
+# you need to copy qt.conf to 5.12.12/bin/ and add QT_PLUGIN_PATH=/home/**/FENGSim/toolkit/Tools/qt-5.12.12/5.12.12/plugins using qtcreator
 # apt install qtcreator and add qmake in 5.12.12/bin
 
 #wget https://download.qt.io/archive/qt/5.12/5.12.12/single/qt-everywhere-src-5.12.12.tar.xz
 #tar -xJf qt-everywhere-src-5.12.12.tar.xz
+
+cd libxkbcommon-1.7.0
+#find ./ -name ".git*" \( -type d -o -type f \) -exec rm -rf {} \;
+mkdir build
+cd build
+meson setup --prefix=/usr \
+            --buildtype=release \
+            -Denable-docs=false \
+            -Denable-wayland=false \
+            ..
+ninja
+sudo ninja install
+cd ../../
+
 cd qt-everywhere-src-5.12.12
 mkdir build
 cd build
 ./../configure --prefix=./../../5.12.12 -xcb -xcb-xlib -xcb-xinput -nomake examples -nomake tests -skip qtwebengine -skip qtmultimedia -skip qtvirtualkeyboard -skip qtlocation
+  
 make -j8
 make install
 cd ..
