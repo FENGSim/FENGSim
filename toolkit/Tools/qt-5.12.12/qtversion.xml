@@ -6,7 +6,7 @@
   <variable>QtVersion.1</variable>
   <valuemap type="QVariantMap">
    <value type="int" key="Id">3</value>
-   <value type="QString" key="QMakePath">/home/jiping/FENGSim/toolkit/Tools/qt-5.12.12/5.12.12/bin/qmake</value>
+<value type="QString" key="QMakePath">/home/jiping/FENGSim/toolkit/Tools/qt-5.12.12/5.12.12/bin/qmake</value>
    <value type="QString" key="QtVersion.Type">Qt4ProjectManager.QtVersion.Desktop</value>
    <value type="QString" key="autodetectionSource"></value>
    <value type="bool" key="isAutodetected">false</value>

@@ -44,5 +44,6 @@ cd ..
 cp qt.conf 5.12.12/bin
 sed -i 9c"<value type=\"QString\" key=\"QMakePath\">"$PWD/5.12.12/bin/qmake"</value>" qtversion.xml
 cp qtversion.xml $HOME/.conf/QtProject/qtcreator
+cp ../../../starter/FENGSim/FENGSim.pro.shared_2 ../../../starter/FENGSim/FENGSim.pro.shared
 
 #-icu ICU_PREFIX=$HOME/software/qt/origin/icu/usr/local ICU_LIBS="-licui18n -licuuc -licudata"
