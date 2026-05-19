@@ -1,4 +1,4 @@
-sudo apt -y install wget cmake make gcc g++ gcc-9 g++-9 libxcb* libx11-xcb-dev libxkbcommon-dev libxkbcommon-x11-dev libgl1-mesa-dev libglu1-mesa-dev python3 python3-pip python-is-python3
+sudo apt -y install wget cmake make gcc g++ gcc-9 g++-9 libxcb* libx11-xcb-dev libxkbcommon-dev libxkbcommon-x11-dev libgl1-mesa-dev libglu1-mesa-dev python3 python3-pip python-is-python3 qtcreator
 
 sudo apt -y install libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev freeglut3-dev mesa-utils libdrm-dev libgles2-mesa-dev build-essential pkg-config xorg xorg-dev
 
