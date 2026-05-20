@@ -222,3 +222,4 @@ QT += svg
 DISTFILES += \
     figure/cad_wind/tree.png
 
+DESTDIR = $$PWD/../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug
