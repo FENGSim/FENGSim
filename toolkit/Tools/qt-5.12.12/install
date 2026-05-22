@@ -19,7 +19,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
 # apt install qtcreator and add qmake in 5.12.12/bin
 
 #wget https://download.qt.io/archive/qt/5.12/5.12.12/single/qt-everywhere-src-5.12.12.tar.xz
-tar -xJf qt-everywhere-src-5.12.12.tar.xz
+#tar -xJf qt-everywhere-src-5.12.12.tar.xz
 
 cd libxkbcommon-1.7.0
 rm -rf build
@@ -40,7 +40,7 @@ cd qt-everywhere-src-5.12.12
 mkdir build
 cd build
 ./../configure --prefix=./../../5.12.12 -xcb -xcb-xlib -xcb-xinput -nomake examples -nomake tests -skip qtwebengine -skip qtmultimedia -skip qtvirtualkeyboard -skip qtlocation  
-make -j8
+make -j16
 make install
 cd ..
 cd ..
@@ -51,6 +51,3 @@ mkdir -p $HOME/.config/QtProject/qtcreator
 cp qtversion.xml $HOME/.config/QtProject/qtcreator
 mkdir ../../../starter/build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug
 cp qt2.conf ../../../starter/build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/qt.conf
-#cp ../../../starter/FENGSim/FENGSim.pro.shared_2 ../../../starter/FENGSim/FENGSim.pro.shared
-
-#-icu ICU_PREFIX=$HOME/software/qt/origin/icu/usr/local ICU_LIBS="-licui18n -licuuc -licudata"
