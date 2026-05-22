@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <nvml.h>
 #include <cuda_runtime.h>
 
 #define N 1024  // matrix N x N
@@ -35,8 +36,23 @@ bool verifyResult(float *C, int n, float expected) {
     return true;
 }
 
+void printGPUUtil() {
+    nvmlInit();
+    nvmlDevice_t device;
+    nvmlDeviceGetHandleByIndex(0, &device);
+    
+    nvmlUtilization_t util;
+    nvmlDeviceGetUtilizationRates(device, &util);
+    
+    printf("GPU GPU-Util: %d%%, Memory-Usage: %d%%\n", util.gpu, util.memory);
+    
+    nvmlShutdown();
+}
+
 int main()
 {
+
+    printGPUUtil();		
     size_t bytes = N * N * sizeof(float);
     
     // allocate host memory
@@ -94,6 +110,7 @@ int main()
     cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
     cudaEventDestroy(start);
     cudaEventDestroy(stop);
-    
+
+    printGPUUtil();		
     return 0;
 }

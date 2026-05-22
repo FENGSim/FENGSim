@@ -20,3 +20,4 @@ set(CMAKE_CUDA_ARCHITECTURES 61)
 
 # Add executable
 add_executable(test test.cu)
+target_link_libraries(test nvidia-ml)
