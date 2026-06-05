@@ -2,7 +2,7 @@
 
 The FENGSim project is more than open source; it's a bold declaration of freedom. It champions the brave, persistent, and innovative spirit that breaks boundaries. Too many engineers and researchers see their potential stifled by unequal resource distribution. FENGSim shatters these barriers, unleashing that potential by providing the freedom and support for all to build, explore, and create. Join us in this mission.
 
-FENGSim serves as a software development kit (SDK) for high-fidelity numerical simulation and adaptive processing, integrating a variety of mathematical libraries. Central to the project are multi-x couplers tailored for intricate applications. It also incorporates the CAX software framework along with practical examples. **We also aim for FENGSim to function as a high-fidelity physics engine in NVIDIA Omniverse, enabling reinforcement learning.** 
+FENGSim is a software development kit (SDK) designed for high-fidelity numerical simulation and adaptive manufacturing, integrating a range of mathematical libraries. At its core, the project features multi-x couplers tailored for complex applications, along with the CAX software framework and practical usage examples. **We further envision FENGSim serving as a GPU-accelerated, high-fidelity physics engine within NVIDIA Omniverse to enable reinforcement learning.** Moreover, FENGSim offers tools for managing library dependencies and package management.
 
 Four levels of mastery in product design and manufacturing:
 
@@ -12,8 +12,6 @@ Four levels of mastery in product design and manufacturing:
   * Mastering the physical models, mathematical algorithms, and validating them against experiments—this represents the highest tier of research capability.
 
 FENGSim is engineered for this fourth, and highest, level.
-
-Moreover, FENGSim offers tools for managing library dependencies, package management, and continuous integration and continuous deployment (CICD) processes, which include compiling, code merging, version control, testing, and deployment. The project will also feature interfaces for the integration of machinery and sensors, covering drivers, communication, and control applications.
 
 To install FENGSim on Ubuntu 24.04:
 
