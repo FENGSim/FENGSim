@@ -85,16 +85,20 @@ class sacia_align {
 	std::cout << "getMaximumIterations: " << reg.getMaximumIterations() << std::endl;
 	std::cout << "getCorrespondenceRandomness: " << reg.getCorrespondenceRandomness() << std::endl;
 	
+	/*!
+	  Register
+	*/
 	reg.setInputSource (cloud_source_ptr);
 	reg.setInputTarget (cloud_target_ptr);
 	reg.setSourceFeatures (features_source.makeShared ());
 	reg.setTargetFeatures (features_target.makeShared ());    
-	// Register
 	reg.align (cloud_sacia);
 
-	for (int i = 0; i < 4; i++)
-	    for (int j = 0; j < 4; j++)
+	for (int i = 0; i < 4; i++) {
+	    for (int j = 0; j < 4; j++) {
 	        transform(i,j) = reg.getFinalTransformation()(i,j);
+	    }
+	}
 
 	std::cout << "sacia fitnessscore: " << reg.getFitnessScore () << std::endl;
 	return reg.getFitnessScore ();

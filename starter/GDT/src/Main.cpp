@@ -9,10 +9,10 @@ int main (int argc, char** argv) {
     std::cout << "sacia iterative num: " << sacia_itnum << std::endl;
     
     PointCloud<PointXYZ> _cloud_source, cloud_source,
-	_cloud_target, cloud_target,
-	cloud_sacia, cloud_icp;
-    import_mesh2pc("./data/mesh/fengsim_mesh.vtk", _cloud_target);
-    import_pc("./data/meas/fengsim_meas_source.vtk", _cloud_source);
+	                 _cloud_target, cloud_target,
+	                 cloud_sacia, cloud_icp;
+    import_mesh2pc("./data/mesh/fengsim_mesh.vtk",_cloud_target);
+    import_pc("./data/meas/fengsim_meas_source.vtk",_cloud_source);
     std::cout << "source num: " << _cloud_source.size() << std::endl;
     std::cout << "target num: " << _cloud_target.size() << std::endl;
     
@@ -22,15 +22,12 @@ int main (int argc, char** argv) {
     std::cout << "**uniform sampling**" << std::endl;
     UniformSampling<PointXYZ> uniform;
     uniform.setRadiusSearch(uns_radius);  // 1m
-
     uniform.setInputCloud(_cloud_source.makeShared());
     uniform.filter(cloud_source);
-    
     uniform.setInputCloud(_cloud_target.makeShared());
     uniform.filter(cloud_target);
-
-    //export_pc_to_vtk(cloud_source, "./data/meas/fengsim_meas_source_us.vtk");
-    //export_pc_to_vtk(cloud_target, "./data/meas/fengsim_meas_target_us.vtk");
+    //export_pc_to_vtk(cloud_source,"./data/meas/fengsim_meas_source_us.vtk");
+    //export_pc_to_vtk(cloud_target,"./data/meas/fengsim_meas_target_us.vtk");
     std::cout << "source num: " << cloud_source.size() << std::endl;
     std::cout << "target num: " << cloud_target.size() << std::endl;
     
@@ -50,6 +47,9 @@ int main (int argc, char** argv) {
 	double fit = icp.align(cloud_sacia,_cloud_source,cloud_icp);
 	std::cout << fit << std::endl;
 
+	/*!
+	  step 4 export transform matrix
+	*/
 	if (fit<1) {
 	    std::cout << "**registration done.**" << std::endl;
 	    Eigen::Matrix4f transform = sacia.transform.inverse()*icp.transform.inverse();
