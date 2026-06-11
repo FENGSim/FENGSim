@@ -42,7 +42,7 @@ class icp_align {
 	pcl::IterativeClosestPoint<pcl::PointXYZ, pcl::PointXYZ> icp;
 	icp.setMaximumIterations(1000);
 	icp.setTransformationEpsilon(1e-10);
-	icp.setEuclideanFitnessEpsilon(1e-5);
+	icp.setEuclideanFitnessEpsilon(1e-10);
 	
 	icp.setInputSource(cloud_source_ptr);
 	icp.setInputTarget(cloud_target_ptr);
