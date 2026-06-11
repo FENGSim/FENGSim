@@ -10,17 +10,21 @@ double icp_align::align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ
     icp.setMaximumIterations(1000);
     icp.setTransformationEpsilon(1e-10);
     icp.setEuclideanFitnessEpsilon(1e-10);
+    /*!
+      filter nonoverlop parts
+     */
+    icp.setRANSACIterations(500);
     
     icp.setInputSource(cloud_source_ptr);
     icp.setInputTarget(cloud_target_ptr);
     
     icp.align(cloud_icp);
-    for (int i = 0; i < 4; i++) {
-	for (int j = 0; j < 4; j++) {
+    for (int i=0; i<4; i++) {
+	for (int j=0; j<4; j++) {
 	    transform(i,j) = icp.getFinalTransformation()(i,j);
 	}
     }
-    
+
     std::cout << icp.getFinalTransformation() << std::endl;    
     // Check that we have sucessfully converged
     std::cout << "if icp conv: "<< icp.hasConverged() << std::endl;

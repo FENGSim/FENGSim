@@ -55,7 +55,8 @@ double sacia_align::align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointX
     /** \brief Get the maximum distance threshold between two correspondent points in source <-> target. If the 
      * distance is larger than this threshold, the points will be ignored in the alignment process.
      */
-    reg.setMaxCorrespondenceDistance(1e5);
+    //reg.setMaxCorrespondenceDistance(1e5);
+    reg.setMaxCorrespondenceDistance(1e1);
     //reg.setTransformationEpsilon(1);
     reg.setMaximumIterations(itnum);       
     reg.setCorrespondenceRandomness(5000);
