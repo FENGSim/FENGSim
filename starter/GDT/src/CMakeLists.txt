@@ -19,6 +19,6 @@ if(OPENMP_FOUND)
 endif()
 
 include_directories(${CMAKE_BINARY_DIR}/../src)
-add_executable (fengsim_meas Main.cpp Tools.cpp SACIA.cpp ICP.cpp)
+add_executable (fengsim_meas Main.C Tools.C SACIA.C ICP.C)
 target_link_libraries (fengsim_meas ${PCL_LIBRARIES})
 

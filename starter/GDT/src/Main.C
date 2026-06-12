@@ -5,7 +5,7 @@
 
 int main (int argc, char** argv) {  
     double uns_radius = 1;
-    double sacia_itnum = 1000;
+    double sacia_itnum = 4000;
     std::cout << "uniform sampling radius: " << uns_radius << std::endl;
     std::cout << "sacia iterative num: " << sacia_itnum << std::endl;
 
