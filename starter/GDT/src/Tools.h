@@ -1,9 +1,26 @@
-#ifndef _ODT_PCL_TOOLS_H_
-#define _ODT_PCL_TOOLS_H_
+#ifndef _TOOLS_H_
+#define _TOOLS_H_
 
 #include <pcl/point_types.h>
 #include <pcl/common/transforms.h>
 #include <fstream>
+
+struct Parameters {
+    double uns_radius;
+    double sacia_normal_search_radius;
+    double sacia_fpfh_search_radius;
+    int sacia_number_samples;
+    double sacia_min_sample_distance;
+    double sacia_max_correspondence_distance;
+    int sacia_maximum_iterations;
+    int sacia_correspondence_randomness;
+    int icp_maximum_iterations;
+    double icp_max_correspondence_distance;
+    double icp_transformation_epsilon;
+    double icp_euclidean_fitness_epsilon;
+};
+
+void ReadParameters (Parameters& pa);
 
 void export_pc_to_vtk (pcl::PointCloud<pcl::PointXYZ> pc, std::string filename);
 void export_pc_to_vtk (pcl::PointCloud<pcl::PointXYZ>::Ptr pc, std::string filename);

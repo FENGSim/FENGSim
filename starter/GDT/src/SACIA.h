@@ -4,6 +4,7 @@
 */
 
 #include "pcl/point_types.h"
+#include "Tools.h"
 
 using namespace pcl;
 using namespace pcl::io;
@@ -12,5 +13,5 @@ class SACIA {
 public:
     Eigen::Matrix4f transform;
     double Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& cloud_target,
-		  PointCloud<PointXYZ>& cloud_sacia, double radius=1, double itnum=2000);
+		  PointCloud<PointXYZ>& cloud_sacia, Parameters pa);
 };

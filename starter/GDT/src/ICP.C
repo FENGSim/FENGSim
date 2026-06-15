@@ -22,25 +22,22 @@
 
 #include "ICP.h"
 
-double ICP::Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& cloud_target, PointCloud<PointXYZ>& cloud_icp) {
+double ICP::Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& cloud_target, PointCloud<PointXYZ>& cloud_icp, Parameters pa) {
     /*!
       1. import point cloud
     */
     PointCloud<PointXYZ>::Ptr cloud_source_ptr, cloud_target_ptr;
     cloud_source_ptr = cloud_source.makeShared();
     cloud_target_ptr = cloud_target.makeShared();
-
+    
     /*!
       2. icp setting
     */
     pcl::IterativeClosestPoint<pcl::PointXYZ,pcl::PointXYZ> icp;
-    icp.setMaximumIterations(1000);
-    icp.setTransformationEpsilon(1e-10);
-    icp.setEuclideanFitnessEpsilon(1e-10);
-    /*!
-      filter nonoverlop parts
-     */
-    icp.setRANSACIterations(500);    
+    icp.setMaximumIterations(pa.icp_maximum_iterations);
+    icp.setMaxCorrespondenceDistance(pa.icp_max_correspondence_distance);
+    icp.setTransformationEpsilon(pa.icp_transformation_epsilon);
+    icp.setEuclideanFitnessEpsilon(pa.icp_euclidean_fitness_epsilon);
     icp.setInputSource(cloud_source_ptr);
     icp.setInputTarget(cloud_target_ptr);
 
@@ -58,7 +55,7 @@ double ICP::Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& clo
 	}
     }
 
-    std::cout << icp.getFinalTransformation() << std::endl;    
+    //std::cout << icp.getFinalTransformation() << std::endl;    
     // Check that we have sucessfully converged
     std::cout << "if icp conv: "<< icp.hasConverged() << std::endl;
     // Test that the fitness score is below acceptable threshold

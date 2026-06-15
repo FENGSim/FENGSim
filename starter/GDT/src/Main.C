@@ -2,68 +2,72 @@
 #include "SACIA.h"
 #include "ICP.h"
 #include "Tools.h"
+#include <ctime>
 
-int main (int argc, char** argv) {  
-    double uns_radius = 1;
-    double sacia_itnum = 4000;
-    std::cout << "uniform sampling radius: " << uns_radius << std::endl;
-    std::cout << "sacia iterative num: " << sacia_itnum << std::endl;
-
+int main (int argc, char** argv) {
+    time_t start, end;
+    time(&start);
+	
     /*!
       step 0 import point cloud
     */
-    PointCloud<PointXYZ> _cloud_source, cloud_source,
-	                 _cloud_target, cloud_target,
-	                 cloud_sacia, cloud_icp;
+    std::cout << "**import point clouds**" << std::endl;
+    Parameters pa;
+    ReadParameters(pa);
+    system("mkdir -p data/mesh");
+    system("mkdir -p data/meas");
+    system("cp ./../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/mesh/fengsim_mesh.vtk data/mesh");
+    system("cp ./../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/meas/fengsim_meas_source.vtk data/meas");
+    PointCloud<PointXYZ> _cloud_source, cloud_source, _cloud_target, cloud_target, cloud_sacia, cloud_icp;
     import_mesh("./data/mesh/fengsim_mesh.vtk",_cloud_target);
     import_pc("./data/meas/fengsim_meas_source.vtk",_cloud_source);
-    //std::cout << "source num: " << _cloud_source.size() << std::endl;
-    //std::cout << "target num: " << _cloud_target.size() << std::endl;
+    std::cout << "source num: " << _cloud_source.size() << std::endl;
+    std::cout << "target num: " << _cloud_target.size() << std::endl;
     
     /*!
       step 1 uniform sampling
     */
     std::cout << "**uniform sampling**" << std::endl;
     UniformSampling<PointXYZ> uniform;
-    uniform.setRadiusSearch(uns_radius);  // 1m
+    uniform.setRadiusSearch(pa.uns_radius);
     uniform.setInputCloud(_cloud_source.makeShared());
     uniform.filter(cloud_source);
     uniform.setInputCloud(_cloud_target.makeShared());
     uniform.filter(cloud_target);
-    //export_pc_to_vtk(cloud_source,"./data/meas/fengsim_meas_source_us.vtk");
-    //export_pc_to_vtk(cloud_target,"./data/meas/fengsim_meas_target_us.vtk");
-    //std::cout << "source num: " << cloud_source.size() << std::endl;
-    //std::cout << "target num: " << cloud_target.size() << std::endl;
+    std::cout << "source num: " << cloud_source.size() << std::endl;
+    std::cout << "target num: " << cloud_target.size() << std::endl;
     
-    for (int i=1; i<6; i++) {
-        /*!
-	  step 2 sacia
-	*/
-        std::cout << "**sacia**" << std::endl;
-	SACIA sacia;
-	sacia.Align(cloud_target,cloud_source,cloud_sacia,uns_radius,i*sacia_itnum);
-	
-	/*!
-	  step 3 icp
-	*/
-	std::cout << "**icp**" << std::endl;
-	ICP icp;
-	double fit = icp.Align(cloud_sacia,_cloud_source,cloud_icp);
-	std::cout << fit << std::endl;
+    /*!
+      step 2 sacia
+    */
+    std::cout << "**sacia**" << std::endl;
+    SACIA sacia;
+    sacia.Align(cloud_target,cloud_source,cloud_sacia,pa);
+    export_pc_to_vtk(cloud_source, "./data/meas/1.vtk");
+    export_pc_to_vtk(cloud_sacia, "./data/meas/2.vtk");
+    
+    /*!
+      step 3 icp
+    */
+    std::cout << "**icp**" << std::endl;
+    ICP icp;
+    double fit = icp.Align(cloud_sacia,_cloud_source,cloud_icp,pa);
+    std::cout << fit << std::endl;
+    
+    /*!
+      step 4 export transform matrix
+    */
+    std::cout << "**registration done**" << std::endl;
+    Eigen::Matrix4f transform = sacia.transform.inverse() * icp.transform.inverse();
+    export_matrix(transform, "./data/meas/trans_matrix");
+    export_pc_to_vtk(cloud_icp, "./data/meas/3.vtk");
+    //transformPointCloud (cloud_source, cloud_icp, transform);
+    
+    cloud_sacia.clear();
+    cloud_icp.clear();
 
-	/*!
-	  step 4 stop and export transform matrix
-	*/
-	if (fit<1.0) {
-	    std::cout << "**registration done.**" << std::endl;
-	    Eigen::Matrix4f transform = sacia.transform.inverse() * icp.transform.inverse();
-	    export_matrix(transform, "./data/meas/trans_matrix");
-	    //transformPointCloud (cloud_source, cloud_icp, transform);
-	    //export_pc_to_vtk(cloud_icp, "./data/meas/fengsim_meas_icp.vtk");
-	    break;
-	}
-	cloud_sacia.clear();
-	cloud_icp.clear();
-    }
+    time(&end);
+    double diff = difftime(end, start);
+    std::cout << "time: " << diff << " s" << std::endl;
     return 0;
 }

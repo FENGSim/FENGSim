@@ -5,6 +5,7 @@
 */
 
 #include <pcl/point_types.h>
+#include "Tools.h"
 
 using namespace pcl;
 using namespace pcl::io;
@@ -13,7 +14,7 @@ class ICP {
 public:
     Eigen::Matrix4f transform;
     Eigen::Matrix4f inverse_transform;
-    double Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& cloud_target, PointCloud<PointXYZ>& cloud_icp);
+    double Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& cloud_target, PointCloud<PointXYZ>& cloud_icp, Parameters pa);
     void AlignBack (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& cloud_target, PointCloud<PointXYZ>& cloud_icp);
 };
 

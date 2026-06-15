@@ -9,7 +9,7 @@
 #include "SACIA.h"
 
 double SACIA::Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& cloud_target,
-		     PointCloud<PointXYZ>& cloud_sacia, double radius, double itnum) {
+		     PointCloud<PointXYZ>& cloud_sacia, Parameters pa) {
     /*!
       1. Create shared pointers
     */
@@ -25,7 +25,7 @@ double SACIA::Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& c
     NormalEstimation<PointXYZ, Normal> norm_est;
     //NormalEstimationOMP<PointXYZ, Normal> norm_est(16);
     norm_est.setSearchMethod(tree);
-    norm_est.setRadiusSearch(2.5*radius);
+    norm_est.setRadiusSearch(pa.sacia_normal_search_radius);
     PointCloud<Normal> normals_source, normals_target;
     
     FPFHEstimation<PointXYZ, Normal, FPFHSignature33> fpfh_est;
@@ -33,7 +33,7 @@ double SACIA::Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& c
     //fpfh_est.getNrSubdivisions(n1, n2, n3);
     //std::cout << "fpfh sub num: " << n1 << " " << n2 << " " << n3 << std::endl;
     fpfh_est.setSearchMethod(tree);
-    fpfh_est.setRadiusSearch(10.0*radius);
+    fpfh_est.setRadiusSearch(pa.sacia_fpfh_search_radius);
     PointCloud<FPFHSignature33> features_source, features_target;
     
     /*!
@@ -58,17 +58,16 @@ double SACIA::Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& c
       5. Initialize Sample Consensus Initial Alignment (SAC-IA)
     */
     SampleConsensusInitialAlignment<PointXYZ, PointXYZ, FPFHSignature33> reg;
-    reg.setNumberOfSamples(3);
+    reg.setNumberOfSamples(pa.sacia_number_samples);
     /** \brief Get the minimum distances between samples, as set by the user */
-    reg.setMinSampleDistance (10.0*radius); 
+    reg.setMinSampleDistance(pa.sacia_min_sample_distance); 
     /** \brief Get the maximum distance threshold between two correspondent points in source <-> target. If the 
      * distance is larger than this threshold, the points will be ignored in the alignment process.
      */
-    //reg.setMaxCorrespondenceDistance(1e5);
-    reg.setMaxCorrespondenceDistance(1e5);
-    //reg.setTransformationEpsilon(1);
-    reg.setMaximumIterations(itnum);       
-    reg.setCorrespondenceRandomness(5000);
+    reg.setMaxCorrespondenceDistance(pa.sacia_max_correspondence_distance);
+    //reg.setTransformationEpsilon(1e-10);
+    reg.setMaximumIterations(pa.sacia_maximum_iterations);       
+    reg.setCorrespondenceRandomness(pa.sacia_correspondence_randomness);
     std::cout << "getMinSampleDistance: " << reg.getMinSampleDistance() << std::endl;
     std::cout << "getMaxCorrespondenceDistance: " << reg.getMaxCorrespondenceDistance() << std::endl;
     std::cout << "getNumberOfSamples: " << reg.getNumberOfSamples() << std::endl;

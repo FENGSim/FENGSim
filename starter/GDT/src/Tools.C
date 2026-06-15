@@ -74,7 +74,7 @@ void import_mesh (std::string filename, pcl::PointCloud<pcl::PointXYZ>::Ptr pc) 
         is.getline(L,len);
     double n;
     sscanf(L,"%*s %lf %*s", &n);
-    std::cout << n << std::endl;
+    //std::cout << n << std::endl;
 
     for (int i=0; i<n; i++) {
         is.getline(L,len);
@@ -180,6 +180,62 @@ void voxel_grid (pcl::PointCloud<pcl::PointXYZ>& pc, double t, std::string filen
     }
     out << std::endl;
     out.close();
+}
+
+void ReadParameters (Parameters& pa) {
+    const int len = 256;
+    char L[len];
+    std::ifstream is("./../conf/gdt.conf");
+
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%lf",&(pa.uns_radius));
+    std::cout << "uns_radius=" << pa.uns_radius << std::endl;
+    
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%lf",&(pa.sacia_normal_search_radius));
+    pa.sacia_normal_search_radius *= pa.uns_radius;
+    std::cout << "sacia_normal_search_radius=" << pa.sacia_normal_search_radius << std::endl;
+    
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%lf",&(pa.sacia_fpfh_search_radius));
+    pa.sacia_fpfh_search_radius *= pa.uns_radius;
+    std::cout << "sacia_fpfh_search_radius=" << pa.sacia_fpfh_search_radius << std::endl;
+    
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%d",&(pa.sacia_number_samples));
+    std::cout << "sacia_number_samples=" << pa.sacia_number_samples << std::endl;
+    
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%lf",&(pa.sacia_min_sample_distance));
+    std::cout << "sacia_min_sample_distance=" << pa.sacia_min_sample_distance << std::endl;
+    
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%lf",&(pa.sacia_max_correspondence_distance));
+    std::cout << "sacia_max_correspondence_distance=" << pa.sacia_max_correspondence_distance << std::endl;
+
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%d",&(pa.sacia_maximum_iterations));
+    std::cout << "sacia_maximum_iterations=" << pa.sacia_maximum_iterations << std::endl;
+    
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%d",&(pa.sacia_correspondence_randomness));
+    std::cout << "sacia_correspondence_randomness=" << pa.sacia_correspondence_randomness << std::endl;
+
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%d",&(pa.icp_maximum_iterations));
+    std::cout << "icp_maximum_iterations=" << pa.icp_maximum_iterations << std::endl;
+
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%lf",&(pa.icp_max_correspondence_distance));
+    std::cout << "icp_max_correspondence_distance=" << pa.icp_max_correspondence_distance << std::endl;
+    
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%lf",&(pa.icp_transformation_epsilon));
+    std::cout << "icp_transformation_epsilon=" << pa.icp_transformation_epsilon << std::endl;
+
+    is.getline(L,len);
+    sscanf(L,"%*[^=]=%lf",&(pa.icp_euclidean_fitness_epsilon));
+    std::cout << "icp_euclidean_fitness_epsilon=" << pa.icp_euclidean_fitness_epsilon << std::endl;
 }
 
 #endif
