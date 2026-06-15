@@ -94,7 +94,7 @@ void import_mesh (std::string filename, pcl::PointCloud<pcl::PointXYZ> &pc) {
         is.getline(L,len);
     double n;
     sscanf(L,"%*s %lf %*s", &n);
-    std::cout << n << std::endl;
+    //std::cout << n << std::endl;
 
     for (int i=0; i<n; i++) {
         is.getline(L,len);
@@ -193,12 +193,10 @@ void ReadParameters (Parameters& pa) {
     
     is.getline(L,len);
     sscanf(L,"%*[^=]=%lf",&(pa.sacia_normal_search_radius));
-    pa.sacia_normal_search_radius *= pa.uns_radius;
     std::cout << "sacia_normal_search_radius=" << pa.sacia_normal_search_radius << std::endl;
     
     is.getline(L,len);
     sscanf(L,"%*[^=]=%lf",&(pa.sacia_fpfh_search_radius));
-    pa.sacia_fpfh_search_radius *= pa.uns_radius;
     std::cout << "sacia_fpfh_search_radius=" << pa.sacia_fpfh_search_radius << std::endl;
     
     is.getline(L,len);
