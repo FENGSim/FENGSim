@@ -185,7 +185,7 @@ void voxel_grid (pcl::PointCloud<pcl::PointXYZ>& pc, double t, std::string filen
 void ReadParameters (Parameters& pa) {
     const int len = 256;
     char L[len];
-    std::ifstream is("./../conf/gdt.conf");
+    std::ifstream is("./conf/gdt.conf");
 
     is.getline(L,len);
     sscanf(L,"%*[^=]=%lf",&(pa.uns_radius));

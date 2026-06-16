@@ -1,8 +1,7 @@
 #include "pcl/filters/uniform_sampling.h"
+#include <ctime>
 #include "SACIA.h"
 #include "ICP.h"
-#include "Tools.h"
-#include <ctime>
 
 int main (int argc, char** argv) {
     time_t start, end;
@@ -14,13 +13,9 @@ int main (int argc, char** argv) {
     std::cout << "**import point clouds**" << std::endl;
     Parameters pa;
     ReadParameters(pa);
-    system("mkdir -p data/mesh");
-    system("mkdir -p data/meas");
-    system("cp ./../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/mesh/fengsim_mesh.vtk data/mesh");
-    system("cp ./../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/meas/fengsim_meas_source.vtk data/meas");
     PointCloud<PointXYZ> _cloud_source, cloud_source, _cloud_target, cloud_target, cloud_sacia, cloud_icp;
-    import_mesh("./data/mesh/fengsim_mesh.vtk",_cloud_target);
-    import_pc("./data/meas/fengsim_meas_source.vtk",_cloud_source);
+    import_mesh("./../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/mesh/fengsim_mesh.vtk",_cloud_target);
+    import_pc("./../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/meas/fengsim_meas_source.vtk",_cloud_source);
     std::cout << "source num: " << _cloud_source.size() << std::endl;
     std::cout << "target num: " << _cloud_target.size() << std::endl;
     
@@ -52,7 +47,7 @@ int main (int argc, char** argv) {
     std::cout << "**icp**" << std::endl;
     ICP icp;
     double fit = icp.Align(cloud_sacia,_cloud_source,cloud_icp,pa);
-    std::cout << fit << std::endl;
+    std::cout << "icp fitness: " << fit << std::endl;
     
     /*!
       step 4 export transform matrix
@@ -63,11 +58,8 @@ int main (int argc, char** argv) {
     export_pc_to_vtk(cloud_icp, "./data/meas/3.vtk");
     //transformPointCloud (cloud_source, cloud_icp, transform);
     
-    cloud_sacia.clear();
-    cloud_icp.clear();
-
     time(&end);
     double diff = difftime(end, start);
-    std::cout << "time: " << diff << " s" << std::endl;
+    std::cout << "time: " << diff << "s" << std::endl;
     return 0;
 }

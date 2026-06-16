@@ -68,9 +68,9 @@ double SACIA::Align (PointCloud<PointXYZ>& cloud_source, PointCloud<PointXYZ>& c
     //reg.setTransformationEpsilon(1e-10);
     reg.setMaximumIterations(pa.sacia_maximum_iterations);       
     reg.setCorrespondenceRandomness(pa.sacia_correspondence_randomness);
+    std::cout << "getNumberOfSamples: " << reg.getNumberOfSamples() << std::endl;
     std::cout << "getMinSampleDistance: " << reg.getMinSampleDistance() << std::endl;
     std::cout << "getMaxCorrespondenceDistance: " << reg.getMaxCorrespondenceDistance() << std::endl;
-    std::cout << "getNumberOfSamples: " << reg.getNumberOfSamples() << std::endl;
     std::cout << "getMaximumIterations: " << reg.getMaximumIterations() << std::endl;
     std::cout << "getCorrespondenceRandomness: " << reg.getCorrespondenceRandomness() << std::endl;
     
