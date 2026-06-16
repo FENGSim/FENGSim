@@ -54,7 +54,7 @@ int main (int argc, char** argv) {
     */
     std::cout << "**registration done**" << std::endl;
     Eigen::Matrix4f transform = sacia.transform.inverse() * icp.transform.inverse();
-    export_matrix(transform, "./data/meas/trans_matrix");
+    export_matrix(transform, "./../../build-FENGSim-Desktop_Qt_5_12_12_GCC_64bit-Debug/data/meas/trans_matrix");
     export_pc_to_vtk(cloud_icp, "./data/meas/3.vtk");
     //transformPointCloud (cloud_source, cloud_icp, transform);
     
