@@ -2396,11 +2396,12 @@ void MainWindow::MeasureGDT()
 void MeasureThread2::run () {
     std::cout << "begin registration" << std::endl;
     QProcess *proc = new QProcess();
-    proc->setWorkingDirectory(path);
+    //proc->setWorkingDirectory(path);
+    proc->setWorkingDirectory("../GDT/build");
     if (measure_exe_id == 2)
     {
         std::cout << "surface profile run in " << path.toStdString() << std::endl;
-        proc->start("../GDT/build/fengsim_meas");
+        proc->start("fengsim_meas");
     }
     else if (measure_exe_id == 3)
     {

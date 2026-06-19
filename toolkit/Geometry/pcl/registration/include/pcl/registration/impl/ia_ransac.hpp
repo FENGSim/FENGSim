@@ -232,7 +232,7 @@ SampleConsensusInitialAlignment<PointSource, PointTarget, FeatureT>::computeTran
   for (; i_iter < max_iterations_; ++i_iter)
   {
     double process = double(i_iter+1) / double(max_iterations_);
-    std::cout << process << " ";
+    std::cout << "\rProgress: " << process << std::flush;
     std::ofstream out("./data/meas/sacia_pro.txt");
     out << process << std::endl;
     // Draw nr_samples_ random samples
