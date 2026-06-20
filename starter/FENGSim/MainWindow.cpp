@@ -2573,7 +2573,7 @@ void MainWindow::MeasureSACIAPro()
     if (measure_exe_id==2)
     {
         ifstream is;
-        is.open((meas_path + QString("/data/meas/sacia_pro.txt")).toStdString().c_str());
+        is.open((meas_path + QString("/../GDT/build/data/meas/sacia_pro.txt")).toStdString().c_str());
         const int len = 256;
         char L[len];
         double p;
