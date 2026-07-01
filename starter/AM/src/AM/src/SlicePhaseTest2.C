@@ -1,51 +1,48 @@
 #include "SlicePhaseTest.h"
 
+#include "vtkPoints.h"
+#include "vtkSmartPointer.h"
+#include "vtkPolygon.h"
+#include "vtkContourTriangulator.h"
+#include "vtkCellArray.h"
+#include "vtkPolyLine.h"
+#include "vtkPolyData.h"
+#include "vtkPolyDataWriter.h"
 
-void PolygonsPart2VTK (cura::PolygonsPart pp) {
-    /*vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
-    for (int i=0; i<pp.size(); i++) {
-	for (int j=0; j<pp[i].size(); j++) {
-	    points->InsertNextPoint(pp[i][j].X,pp[i][j].Z,0.0);
+void PolygonsPart2VTK (cura::PolygonsPart pp, double z, std::vector<std::vector<cura::PolygonsPart>> ppp, cura::Slicer slicer) {
+    int n = 0;
+    vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
+    vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+    for (int i0=0; i0<ppp.size(); i0++) {
+	for (int i1=0; i1<ppp[i0].size(); i1++) {
+	    for (int i=0; i<ppp[i0][i1].size(); i++) {
+		vtkSmartPointer<vtkPolyLine> poly = vtkSmartPointer<vtkPolyLine>::New();
+		poly->GetPointIds()->SetNumberOfIds(ppp[i0][i1][i].size()+1);
+		for (int j=0; j<ppp[i0][i1][i].size(); j++) {
+		    points->InsertNextPoint(ppp[i0][i1][i][j].X/1000.0,ppp[i0][i1][i][j].Y/1000.0,slicer.layers[i0].z/1000.0);
+		    poly->GetPointIds()->SetId(j,n);
+		    n++;
+		}
+		points->InsertNextPoint(ppp[i0][i1][i][0].X/1000.0,ppp[i0][i1][i][0].Y/1000.0,slicer.layers[i0].z/1000.0);
+		poly->GetPointIds()->SetId(ppp[i0][i1][i].size(),n);
+		n++;
+		lines->InsertNextCell(poly);
+	    }
 	}
     }
-    
-    vector<vtkSmartPointer<vtkPolygon>> poly;
-    */
-/*
-outer->GetPointIds()->SetNumberOfIds(4);
-outer->GetPointIds()->SetId(0, 0);
-outer->GetPointIds()->SetId(1, 1);
-outer->GetPointIds()->SetId(2, 2);
-outer->GetPointIds()->SetId(3, 3);
-
-vtkSmartPointer<vtkPolygon> inner = vtkSmartPointer<vtkPolygon>::New();
-inner->GetPointIds()->SetNumberOfIds(4);
-inner->GetPointIds()->SetId(0, 4);
-inner->GetPointIds()->SetId(1, 5); // 顺时针
-inner->GetPointIds()->SetId(2, 6);
-inner->GetPointIds()->SetId(3, 7);
-
-// 3. 组装数据集
-vtkSmartPointer<vtkCellArray> cells = vtkSmartPointer<vtkCellArray>::New();
-cells->InsertNextCell(outer);
-cells->InsertNextCell(inner);
-
-vtkSmartPointer<vtkPolyData> polyData = vtkSmartPointer<vtkPolyData>::New();
-polyData->SetPoints(points);
-polyData->SetPolys(cells);
-
-// 4. Delaunay三角剖分
-vtkSmartPointer<vtkDelaunay2D> delaunay = vtkSmartPointer<vtkDelaunay2D>::New();
-delaunay->SetInputData(polyData);
-delaunay->SetSourceData(polyData);
-delaunay->Update();
-
-// 5. 导出VTK文件
-vtkSmartPointer<vtkPolyDataWriter> writer = vtkSmartPointer<vtkPolyDataWriter>::New();
-writer->SetFileName("result.vtk");
-writer->SetInputConnection(delaunay->GetOutputPort());
-writer->Write();
-*/
+    vtkSmartPointer<vtkPolyData> polyData = vtkSmartPointer<vtkPolyData>::New();
+    polyData->SetPoints(points);
+    polyData->SetLines(lines);
+    vtkSmartPointer<vtkContourTriangulator> triangulator = 
+	vtkSmartPointer<vtkContourTriangulator>::New();
+    triangulator->SetInputData(polyData);
+    triangulator->Update();
+    vtkPolyData* outputMesh = triangulator->GetOutput();
+    vtkSmartPointer<vtkPolyDataWriter> writer = 
+	vtkSmartPointer<vtkPolyDataWriter>::New();
+    writer->SetFileName("output.vtk");
+    writer->SetInputData(outputMesh);
+    writer->Write();
 }
 
 
@@ -58,6 +55,7 @@ void Export2VTK (std::string vtkfile, std::vector<std::vector<cura::PolygonsPart
     for(int i=0; i<slicer.layers.size(); i++) {
 	for (int j=0; j<ppp[i].size(); j++) {
 	    for (int k=0; k<ppp[i][j].size(); k++) {
+		PolygonsPart2VTK(ppp[i][j],slicer.layers[i].z/scale,ppp,slicer);
 		n += ppp[i][j][k].size();
 		polynum++;
 	    }
