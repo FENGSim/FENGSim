@@ -9,7 +9,6 @@
 #endif
 
 void SlicePhaseTestMain (int argc, char** argv);
-void SlicePhaseTest2Main (int argc, char** argv);
 void InfillTestMain ();
 void AMMain ();
 void PoissonMain ();
@@ -30,7 +29,6 @@ int main (int argc, char** argv) {
     string Model = "test";
     ReadConfig(Settings,"Model",Model);
     if (Model == "SlicePhaseTest") SlicePhaseTestMain(argc, argv);
-    if (Model == "SlicePhaseTest2") SlicePhaseTest2Main(argc, argv);
     if (Model == "InfillTest") InfillTestMain();
     if (Model == "Poisson") PoissonMain();
     if (Model == "Heat") HeatMain();

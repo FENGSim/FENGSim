@@ -83,6 +83,35 @@ void SlicePhaseTestMain (int argc, char** argv) {
 	      << " " << num_layers
 	      << " "  << layer_thickness << std::endl;
 
+
+    std::vector<std::vector<cura::PolygonsPart>> ppp;
+    for(int i=0; i<slicer.layers.size(); i++) {
+	const cura::SlicerLayer& layer = slicer.layers[i];
+	std::vector<cura::PolygonsPart> pp(layer.polygons.splitIntoParts(false));
+	ppp.push_back(pp);
+    }
+    Export2VTK(vtkfile,ppp,slicer);
+
+/*
+    	for (int j=0; j<pp.size(); j++) {
+	    std::cout << "  polygonspart: " << j << std::endl;
+	    for (int k=0; k<pp[j].size(); k++) {
+		std::cout << "    polygon: " << k << std::endl;
+		cura::Polygon sliced_polygon = pp[j][k];
+		for(int l=0; l<sliced_polygon.size(); l++) {
+		    std::cout << "    " << sliced_polygon[l].X / 1000.0 << " "
+			      << sliced_polygon[l].Y / 1000.0 << " "
+			      << layer.z / 1000.0 << std::endl;
+		}
+	    }
+	}
+	std::cout << std::endl;
+*/
+
+
+    
+
+    return;
     /*!
       Export slices for visualization.
     */
@@ -104,108 +133,4 @@ void SlicePhaseTestMain (int argc, char** argv) {
     Export2Cli4Mesh(clifile4meshing,slicer,initial_layer_thickness,layer_thickness,cube_mesh.getAABB().min.z);
 }
 
-#include "../../../../../toolkit/Geometry/cura_engine/src/FffProcessor.h"
-#include "../../../../../toolkit/Geometry/cura_engine/src/sliceDataStorage.h"
-#include "../../../../../toolkit/Geometry/cura_engine/src/progress/Progress.h"
-#include "../../../../../toolkit/Geometry/cura_engine/src/communication/Communication.h"
-#include "../../../../../toolkit/Geometry/cura_engine/src/utils/logoutput.h"
 
-void SlicePhaseTest2Main (int argc, char** argv) {
-    //cura::Application::getInstance().run(argc, argv);
-    
-    std::ifstream is;
-    is.open(std::string("./AM/conf/slicing.conf").c_str());
-    const int len = 512;
-    char L[len];
-    is.getline(L,len);
-    is.getline(L,len);
-    std::string stlfile = L;
-    is.getline(L,len);
-    std::string vtkfile = L;
-    is.getline(L,len);
-    std::string vtkfile4pathplanning = L;
-    is.getline(L,len);
-    std::string clifile4meshing = L;
-    is.getline(L,len);
-    double layer_height_0 = 0.2;
-    sscanf(L,"%lf",&layer_height_0);
-    is.getline(L,len);
-    double layer_height = 0.25;
-    sscanf(L,"%lf",&layer_height);
-    
-    std::cout << stlfile << std::endl;
-    std::cout << vtkfile << std::endl;
-    std::cout << vtkfile4pathplanning << std::endl;
-    std::cout << clifile4meshing << std::endl;
-    std::cout << layer_height_0 << std::endl;
-    std::cout << layer_height << std::endl;
-    
-    /*!
-      Configuration
-    */
-    cura::Application::getInstance().current_slice = new cura::Slice(1);
-    /*!
-      And a few settings that we want to default.
-    */
-    cura::Scene& scene = cura::Application::getInstance().current_slice->scene;    
-    scene.settings.add("slicing_tolerance","middle");
-    scene.settings.add("layer_height_0",std::to_string(layer_height_0));
-    scene.settings.add("layer_height",std::to_string(layer_height));
-    scene.settings.add("magic_mesh_surface_mode","normal");
-    scene.settings.add("meshfix_extensive_stitching","false");
-    scene.settings.add("meshfix_keep_open_polygons","false");
-    scene.settings.add("minimum_polygon_circumference","1");
-    //scene.settings.add("meshfix_maximum_resolution","0.00001");
-    //scene.settings.add("meshfix_maximum_deviation","0.00001");
-    scene.settings.add("meshfix_maximum_resolution","0.001");
-    scene.settings.add("meshfix_maximum_deviation","0.001");
-    scene.settings.add("xy_offset","0");
-    scene.settings.add("xy_offset_layer_0","0");
-    scene.settings.add("prime_tower_enable","false");
-    scene.settings.add("machine_height","5000");
-    scene.settings.add("machine_depth","5000");
-    scene.settings.add("machine_width","25000");
-    scene.settings.add("machine_center_is_zero","true");
-    scene.settings.add("infill_mesh","false");
-    scene.settings.add("cutting_mesh","false");
-    scene.settings.add("anti_overhang_mesh","false");
-    scene.settings.add("adaptive_layer_height_enabled","false");
-    scene.settings.add("support_mesh","false");
-    scene.settings.add("support_infill_extruder_nr","0");
-    scene.settings.add("mold_enabled","false");
-    scene.settings.add("conical_overhang_enabled","false");
-    scene.settings.add("carve_multiple_volumes","0.0001");
-    
-    
-    
-    /*!
-      Import stl mesh.
-    */
-    cura::MeshGroup& mesh_group = scene.mesh_groups.back();    
-    const cura::FMatrix3x3 transformation;
-    cura::loadMeshIntoMeshGroup(&mesh_group,stlfile.c_str(),transformation,scene.settings);
-    //cura::Mesh& cube_mesh = mesh_group.meshes[0];
-    std::cout << "mesh_group.meshes: " << mesh_group.meshes.size() << std::endl;
-    cura::Mesh& cube_mesh = mesh_group.meshes[0];
-    std::cout << cube_mesh.getAABB().min.x << " " << cube_mesh.getAABB().max.x << std::endl;
-    std::cout << cube_mesh.getAABB().min.y << " " << cube_mesh.getAABB().max.y << std::endl;
-    std::cout << cube_mesh.getAABB().min.z << " " << cube_mesh.getAABB().max.z << std::endl;
-    
-    cura::FffProcessor* fff_processor = cura::FffProcessor::getInstance();
-    std::cout << "fff_processor = " << fff_processor << std::endl;
-    fff_processor->time_keeper.restart();
-    cura::TimeKeeper time_keeper_total;
-    cura::SliceDataStorage storage;
-    
-    if (!fff_processor->polygon_generator.generateAreas(storage, &mesh_group, fff_processor->time_keeper)) {
-	return;
-    }
-    return;
-    cura::Progress::messageProgressStage(cura::Progress::Stage::EXPORT, &fff_processor->time_keeper);
-    fff_processor->gcode_writer.writeGCode(storage, fff_processor->time_keeper);
-
-    cura::Progress::messageProgress(cura::Progress::Stage::FINISH, 1, 1); // 100% on this meshgroup
-    cura::Application::getInstance().communication->flushGCode();
-    cura::Application::getInstance().communication->sendOptimizedLayerData();
-    cura::log("Total time elapsed %5.2fs.\n", time_keeper_total.restart());
-}

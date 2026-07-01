@@ -1,5 +1,131 @@
 #include "SlicePhaseTest.h"
 
+
+void PolygonsPart2VTK (cura::PolygonsPart pp) {
+    /*vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+    for (int i=0; i<pp.size(); i++) {
+	for (int j=0; j<pp[i].size(); j++) {
+	    points->InsertNextPoint(pp[i][j].X,pp[i][j].Z,0.0);
+	}
+    }
+    
+    vector<vtkSmartPointer<vtkPolygon>> poly;
+    */
+/*
+outer->GetPointIds()->SetNumberOfIds(4);
+outer->GetPointIds()->SetId(0, 0);
+outer->GetPointIds()->SetId(1, 1);
+outer->GetPointIds()->SetId(2, 2);
+outer->GetPointIds()->SetId(3, 3);
+
+vtkSmartPointer<vtkPolygon> inner = vtkSmartPointer<vtkPolygon>::New();
+inner->GetPointIds()->SetNumberOfIds(4);
+inner->GetPointIds()->SetId(0, 4);
+inner->GetPointIds()->SetId(1, 5); // 顺时针
+inner->GetPointIds()->SetId(2, 6);
+inner->GetPointIds()->SetId(3, 7);
+
+// 3. 组装数据集
+vtkSmartPointer<vtkCellArray> cells = vtkSmartPointer<vtkCellArray>::New();
+cells->InsertNextCell(outer);
+cells->InsertNextCell(inner);
+
+vtkSmartPointer<vtkPolyData> polyData = vtkSmartPointer<vtkPolyData>::New();
+polyData->SetPoints(points);
+polyData->SetPolys(cells);
+
+// 4. Delaunay三角剖分
+vtkSmartPointer<vtkDelaunay2D> delaunay = vtkSmartPointer<vtkDelaunay2D>::New();
+delaunay->SetInputData(polyData);
+delaunay->SetSourceData(polyData);
+delaunay->Update();
+
+// 5. 导出VTK文件
+vtkSmartPointer<vtkPolyDataWriter> writer = vtkSmartPointer<vtkPolyDataWriter>::New();
+writer->SetFileName("result.vtk");
+writer->SetInputConnection(delaunay->GetOutputPort());
+writer->Write();
+*/
+}
+
+
+
+void Export2VTK (std::string vtkfile, std::vector<std::vector<cura::PolygonsPart>> ppp, cura::Slicer slicer) {
+    double scale = 1000;
+    
+    int n = 0;
+    int polynum = 0;
+    for(int i=0; i<slicer.layers.size(); i++) {
+	for (int j=0; j<ppp[i].size(); j++) {
+	    for (int k=0; k<ppp[i][j].size(); k++) {
+		n += ppp[i][j][k].size();
+		polynum++;
+	    }
+	}
+    }
+    std::ofstream out;
+    out.open(vtkfile.c_str()); 
+    out <<"# vtk DataFile Version 2.0" << std::endl;
+    out << "slices example" << std::endl;
+    out << "ASCII" << std::endl;
+    out << "DATASET POLYDATA" << std::endl;
+    out << "POINTS " << n << " float" << std::endl;
+    /*
+    for(int i=0; i<slicer.layers.size(); i++) {
+
+	for (int j=0; j<layer.polygons.size(); j++) {
+	    cura::Polygon sliced_polygon = layer.polygons[j];
+	    for(int k=0; k<sliced_polygon.size(); k++) {
+		out << sliced_polygon[k].X / scale << " "
+		    << sliced_polygon[k].Y / scale << " "
+		    << layer.z / scale << std::endl;
+	    }
+	}
+	}*/
+    for(int i=0; i<slicer.layers.size(); i++) {
+	const cura::SlicerLayer& layer = slicer.layers[i];
+	for (int j=0; j<ppp[i].size(); j++) {
+	    for (int k=0; k<ppp[i][j].size(); k++) {
+		for (int l=0; l<ppp[i][j][k].size(); l++) {
+		    out << ppp[i][j][k][l].X / scale << " "
+			<< ppp[i][j][k][l].Y / scale << " "
+			<< layer.z / scale << std::endl;
+		}
+	    }
+	}
+    }
+    
+    int m = 0;
+    out << "POLYGONS " << polynum << " " << polynum + n  << std::endl;
+/*    for(int i = 0; i < slicer.layers.size(); i++) {
+	const cura::SlicerLayer& layer = slicer.layers[i];
+	for (int j = 0; j < layer.polygons.size(); j++) {
+	    cura::Polygon sliced_polygon = layer.polygons[j];
+	    out << sliced_polygon.size();
+	    for(int k = 0; k < sliced_polygon.size(); k++) {
+		out << " " << m;
+		m++;
+	    }
+	    out << std::endl;
+	}
+    }
+    out.close();
+  */
+    for(int i=0; i<slicer.layers.size(); i++) {
+	for (int j=0; j<ppp[i].size(); j++) {
+	    for (int k=0; k<ppp[i][j].size(); k++) {
+		out << ppp[i][j][k].size();
+		for (int l=0; l<ppp[i][j][k].size(); l++) {
+		    out << " " << m;
+		    m++;
+		}
+		out << std::endl;
+	    }
+	}
+    }
+    out.close();
+}
+
 void Export2VTK (std::string vtkfile, cura::Slicer slicer, const cura::coord_t initial_layer_thickness, const cura::coord_t layer_thickness) {
     double scale = 1000;
     
