@@ -6,7 +6,6 @@ set(CMAKE_CXX_COMPILER /usr/bin/g++-10)
 find_package(MPI)
 if(MPI_FOUND)
   message("MPI FOUND")
-  message(${MPI_LIBRARIES})
   include_directories(${MPI_INCLUDE_DIRS})
   link_directories(${MPI_LIBRARY_DIRS})
   add_definitions(${MPI_DEFINITIONS})
@@ -17,8 +16,6 @@ set(VTK_DIR ${CMAKE_BINARY_DIR}/../../../toolkit/Geometry/install/vtk_install/li
 find_package(VTK)
 if(VTK_FOUND)
   message("VTK FOUND")
-  message(${VTK_LIBRARIES})
-  message("${VTK_LIBRARY_DIRS}")
   include_directories(${VTK_INCLUDE_DIRS})
   link_directories(${VTK_LIBRARY_DIRS})
 endif()
@@ -30,6 +27,7 @@ include_directories("M++/src")
 include_directories(${CMAKE_BINARY_DIR}/../../../toolkit/Geometry/install/tetgen_install/include)
 
 aux_source_directory(AM/src am_DIR_SRCS)
+
 add_executable (multix ${am_DIR_SRCS} M++/src/Identify.C M++/src/MatrixGraph.C M++/src/Algebra.C M++/src/Shape.C M++/src/Point.C M++/src/Parallel.C M++/src/Time.C M++/src/ctools.C M++/src/IO.C M++/src/Mesh.C M++/src/Cell.C M++/src/Distribution.C M++/src/Plot.C M++/src/Quadrature.C M++/src/DoF.C M++/src/Sparse.C M++/src/Interface.C M++/src/Discretization.C M++/src/LinearSolver.C M++/src/DD.C M++/src/Preconditioner.C M++/src/TimeSeries.C M++/src/ESolver.C M++/src/Transfer.C M++/src/Element.C M++/src/FaceElement.C M++/src/Newton.C M++/src/Newmark.C M++/src/Euler.C M++/src/Small.C M++/src/Schur.C)
 
 target_link_libraries (multix /usr/lib/x86_64-linux-gnu/libblas.so /usr/lib/x86_64-linux-gnu/liblapack.so ${MPI_LIBRARIES} /usr/lib/x86_64-linux-gnu/libsuperlu.so ${CMAKE_BINARY_DIR}/../../../toolkit/Geometry/install/tetgen_install/lib/libtetgen.so ${VTK_LIBRARIES})
@@ -42,7 +40,11 @@ target_link_libraries (multix ${CMAKE_BINARY_DIR}/../../../toolkit/Tools/install
 target_link_libraries (multix ${CMAKE_BINARY_DIR}/../../../toolkit/Tools/install/protobuf_install/lib/libprotoc.so)
 target_link_libraries (multix ${CMAKE_BINARY_DIR}/../../../toolkit/Tools/install/libarcus_install/lib/libArcus.so)
 target_link_libraries (multix /usr/lib/x86_64-linux-gnu/libgomp.so.1)
-target_link_libraries (multix /usr/lib/x86_64-linux-gnu/libgomp.so.1)
+
+target_link_options(multix PRIVATE
+    -Wl,--disable-new-dtags # no RUNPATH, use RPATH, check the difference between RUNPATH and RPATH
+    -Wl,-rpath,${CMAKE_BINARY_DIR}/../../../toolkit/Geometry/install/vtk_install/lib
+)
 
 file(COPY "../log" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "../data/vtk" DESTINATION ${CMAKE_BINARY_DIR}/data)
