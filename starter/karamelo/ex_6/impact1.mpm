@@ -1,0 +1,89 @@
+#####################################################
+#               UNITS: GPa, mm, ms, oC              #
+#####################################################
+# Metal cutting from Ambati et all
+# Application of material point methods for cutting process simulations
+
+# material properties for the steel plate
+
+E   = 210
+nu  = 0.3
+rho = 1
+
+K = E/(3*(1-2*nu))
+G = E/(2*(1+nu))
+
+# Johnson-Cook flow parameters
+sigmay = 792e-3
+B      = 510e-3
+C      = 0.014
+epsdot0= 1.0
+n      = 0.26
+m      = 1.03
+
+# Johnson-Cook damage parameters
+d1 = 0.636
+d2 = 1.936
+d3 = -2.969
+d4 = 0
+d5 = 0
+
+# temperature: eos and plastic work
+S = 1.5
+c0 = 5030
+Gamma = 0
+chi = 0.9
+cp = 0
+cv = 510
+alpha = 0
+kappa = 44e-06
+Tr = 25
+Tm = 1300
+
+# problem dimensions
+L = 1
+H = 1
+
+FLIP=0.0
+method(tlmpm, FLIP, linear, FLIP)
+
+N = 16
+cellsize = L/N
+dimension(2,0,1,0,1,cellsize)
+
+# -----------MATERIALS ----------------#
+# EOS, strengh, damage and temperature
+
+eos(eoss, shock, rho, K, c0, S, Gamma, cv, Tr, 0, 0)
+
+strength(strengthjc, johnson_cook, G, sigmay, B, n, epsdot0, C, m, Tr, Tm)
+
+temperature(tpw, plastic_work, chi, cp, kappa, alpha, Tr, Tm)
+
+#damage(damagejc, damage_johnson_cook, d1, d2, d3, d4, d5, epsdot0, Tr, Tm)
+
+#material(mat, eos-strength, eoss, strengthjc, damagejc, tpw)
+material(mat, eos-strength, eoss, strengthjc, tpw)
+
+# -----------SOLIDS ----------------#
+# defined using: geometry, material, PPC per 1 direction
+region(work-piece, block, 0, 1, 0, 1)
+solid(piece, region, work-piece, 1, mat, cellsize, 0)
+
+# initial conditions
+group(gpart, particles, region, work-piece, solid, piece)
+fix(v0part, initial_velocity_particles, gpart, 2500.0, 0, NULL)
+
+# boundary conditions
+region(bc, block, 1, INF, -INF, INF)
+group(gbc, nodes, region, bc, solid, piece)
+fix(BC, velocity_nodes, gbc, 0, 0, NULL)
+
+# output
+dumping_interval = 20
+dump(dump1, all, particle, dumping_interval, dump_p.*.LAMMPS, x, y, z)
+dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
+
+# run
+set_dt(0.000001)
+run_time(0.001)
