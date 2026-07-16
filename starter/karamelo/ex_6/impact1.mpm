@@ -72,7 +72,7 @@ solid(piece, region, work-piece, 1, mat, cellsize, 0)
 
 # initial conditions
 group(gpart, particles, region, work-piece, solid, piece)
-fix(v0part, initial_velocity_particles, gpart, 2500.0, 0, NULL)
+fix(v0part, initial_velocity_particles, gpart, 10000.0, 0, NULL)
 
 # boundary conditions
 region(bc, block, 1, INF, -INF, INF)
