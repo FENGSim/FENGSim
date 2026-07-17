@@ -35,5 +35,6 @@ dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
 
 # run
 set_dt(0.001)
-run_time(1)
+run(1000)
+#run_time(1)
 
