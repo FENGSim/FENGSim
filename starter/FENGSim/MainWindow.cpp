@@ -1583,7 +1583,7 @@ void MainWindow::AMStlModelToSlices()
 
     QProcess *proc = new QProcess();
     proc->setWorkingDirectory( "./../AM/build" );
-    proc->start("./AMSolver");
+    proc->start("./multix");
 
     if (proc->waitForFinished(-1)) {
         //MM.ClearSlices();
@@ -2882,7 +2882,7 @@ void MainWindow::AMSTL2Slices()
 
     QProcess *proc = new QProcess();
     proc->setWorkingDirectory((meas_path+QString("/../AM/build")));
-    proc->start("./AMSolver");
+    proc->start("./multix");
 
     if (proc->waitForFinished(-1)) {
         //MM.ClearSlices();
@@ -2935,7 +2935,7 @@ void MainWindow::AMSlices2PathPlanning()
 
     QProcess *proc = new QProcess();
     proc->setWorkingDirectory((meas_path+QString("/../AM/build/")));
-    proc->start("./AMSolver");
+    proc->start("./multix");
 
     if (proc->waitForFinished(-1)) {
         //MM.ClearSlices();
