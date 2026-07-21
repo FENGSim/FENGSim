@@ -40,12 +40,10 @@ void PolygonsPart2VTK (cura::PolygonsPart pp, double z, std::vector<std::vector<
     vtkPolyData* outputMesh = triangulator->GetOutput();
     vtkSmartPointer<vtkPolyDataWriter> writer = 
 	vtkSmartPointer<vtkPolyDataWriter>::New();
-    writer->SetFileName("output.vtk");
+    writer->SetFileName("data/vtk/slices.vtk");
     writer->SetInputData(outputMesh);
     writer->Write();
 }
-
-
 
 void Export2VTK (std::string vtkfile, std::vector<std::vector<cura::PolygonsPart>> ppp, cura::Slicer slicer) {
     double scale = 1000;

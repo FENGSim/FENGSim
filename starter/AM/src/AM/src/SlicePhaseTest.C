@@ -90,7 +90,7 @@ void SlicePhaseTestMain (int argc, char** argv) {
 	std::vector<cura::PolygonsPart> pp(layer.polygons.splitIntoParts(false));
 	ppp.push_back(pp);
     }
-    Export2VTK(vtkfile,ppp,slicer);
+    Export2VTK("data/vtk/hole.vtk",ppp,slicer);
 
 /*
     	for (int j=0; j<pp.size(); j++) {
@@ -111,7 +111,7 @@ void SlicePhaseTestMain (int argc, char** argv) {
 
     
 
-    return;
+    //return;
     /*!
       Export slices for visualization.
     */
