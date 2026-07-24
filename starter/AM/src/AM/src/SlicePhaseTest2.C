@@ -53,7 +53,7 @@ void Export2VTK (std::string vtkfile, std::vector<std::vector<cura::PolygonsPart
     for(int i=0; i<slicer.layers.size(); i++) {
 	for (int j=0; j<ppp[i].size(); j++) {
 	    for (int k=0; k<ppp[i][j].size(); k++) {
-		PolygonsPart2VTK(ppp[i][j],slicer.layers[i].z/scale,ppp,slicer);
+		//PolygonsPart2VTK(ppp[i][j],slicer.layers[i].z/scale,ppp,slicer);
 		n += ppp[i][j][k].size();
 		polynum++;
 	    }
