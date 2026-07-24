@@ -254,6 +254,17 @@ namespace cura {
 	std::vector<double> heights;
 	VtkToPolygons(clifile.c_str(),shapes,heights);
 	std::cout << "layers: " << shapes.size() << std::endl;
+
+
+	// std::vector<std::vector<cura::PolygonsPart>> ppp;
+	// for(int i=0; i<slicer.layers.size(); i++) {
+	//     const cura::SlicerLayer& layer = slicer.layers[i];
+	//     std::vector<cura::PolygonsPart> pp(layer.polygons.splitIntoParts(false));
+	//     ppp.push_back(pp);
+	// }
+	// Export2VTK("data/vtk/hole.vtk",ppp,slicer);
+
+
 	
 	/*
 	  if (!readTestPolygons(polygon_filenames, shapes))

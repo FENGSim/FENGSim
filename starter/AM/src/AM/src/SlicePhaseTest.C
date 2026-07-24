@@ -82,36 +82,16 @@ void SlicePhaseTestMain (int argc, char** argv) {
 	      << " " << cube_mesh.getAABB().max.z
 	      << " " << num_layers
 	      << " "  << layer_thickness << std::endl;
-
-
+    
     std::vector<std::vector<cura::PolygonsPart>> ppp;
     for(int i=0; i<slicer.layers.size(); i++) {
 	const cura::SlicerLayer& layer = slicer.layers[i];
 	std::vector<cura::PolygonsPart> pp(layer.polygons.splitIntoParts(false));
 	ppp.push_back(pp);
     }
-    Export2VTK("data/vtk/hole.vtk",ppp,slicer);
+    Export2VTK(vtkfile,ppp,slicer);
 
-/*
-    	for (int j=0; j<pp.size(); j++) {
-	    std::cout << "  polygonspart: " << j << std::endl;
-	    for (int k=0; k<pp[j].size(); k++) {
-		std::cout << "    polygon: " << k << std::endl;
-		cura::Polygon sliced_polygon = pp[j][k];
-		for(int l=0; l<sliced_polygon.size(); l++) {
-		    std::cout << "    " << sliced_polygon[l].X / 1000.0 << " "
-			      << sliced_polygon[l].Y / 1000.0 << " "
-			      << layer.z / 1000.0 << std::endl;
-		}
-	    }
-	}
-	std::cout << std::endl;
-*/
-
-
-    
-
-    //return;
+    return;
     /*!
       Export slices for visualization.
     */
