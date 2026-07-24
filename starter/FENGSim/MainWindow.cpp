@@ -2873,9 +2873,9 @@ void MainWindow::AMSTL2Slices()
     out.open("./../AM/build/AM/conf/slicing.conf");
     out << "Model = SlicePhaseTest" << endl;
     out << meas_path.toStdString() << "/data/am/am.stl"  << endl;
-    out << meas_path.toStdString() << "/data/am/slices.vtk" << endl;
-    out << meas_path.toStdString() << "/data/am/slices4pathplanning.vtk" << endl;
-    out << meas_path.toStdString() << "/data/am/slices4meshing.cli" << endl;
+    out << meas_path.toStdString() << "/../AM/build/data/vtk/slices.vtk" << endl;
+    out << meas_path.toStdString() << "/../AM/build/data/vtk/slices4pathplanning.vtk" << endl;
+    out << meas_path.toStdString() << "/../AM/build/data/vtk/slices4meshing.cli" << endl;
     out << additive_manufacturing_dock->ui->doubleSpinBox->text().toDouble() << endl;
     out << additive_manufacturing_dock->ui->doubleSpinBox_2->text().toDouble() << endl;
     out.close();
