@@ -53,7 +53,6 @@ void Export2VTK (std::string vtkfile, std::vector<std::vector<cura::PolygonsPart
     for(int i=0; i<slicer.layers.size(); i++) {
 	for (int j=0; j<ppp[i].size(); j++) {
 	    for (int k=0; k<ppp[i][j].size(); k++) {
-		PolygonsPart2VTK(ppp[i][j],slicer.layers[i].z/scale,ppp,slicer);
 		n += ppp[i][j][k].size();
 		polynum++;
 	    }
@@ -66,18 +65,7 @@ void Export2VTK (std::string vtkfile, std::vector<std::vector<cura::PolygonsPart
     out << "ASCII" << std::endl;
     out << "DATASET POLYDATA" << std::endl;
     out << "POINTS " << n << " float" << std::endl;
-    /*
-    for(int i=0; i<slicer.layers.size(); i++) {
 
-	for (int j=0; j<layer.polygons.size(); j++) {
-	    cura::Polygon sliced_polygon = layer.polygons[j];
-	    for(int k=0; k<sliced_polygon.size(); k++) {
-		out << sliced_polygon[k].X / scale << " "
-		    << sliced_polygon[k].Y / scale << " "
-		    << layer.z / scale << std::endl;
-	    }
-	}
-	}*/
     for(int i=0; i<slicer.layers.size(); i++) {
 	const cura::SlicerLayer& layer = slicer.layers[i];
 	for (int j=0; j<ppp[i].size(); j++) {
@@ -93,20 +81,6 @@ void Export2VTK (std::string vtkfile, std::vector<std::vector<cura::PolygonsPart
     
     int m = 0;
     out << "POLYGONS " << polynum << " " << polynum + n  << std::endl;
-/*    for(int i = 0; i < slicer.layers.size(); i++) {
-	const cura::SlicerLayer& layer = slicer.layers[i];
-	for (int j = 0; j < layer.polygons.size(); j++) {
-	    cura::Polygon sliced_polygon = layer.polygons[j];
-	    out << sliced_polygon.size();
-	    for(int k = 0; k < sliced_polygon.size(); k++) {
-		out << " " << m;
-		m++;
-	    }
-	    out << std::endl;
-	}
-    }
-    out.close();
-  */
     for(int i=0; i<slicer.layers.size(); i++) {
 	for (int j=0; j<ppp[i].size(); j++) {
 	    for (int k=0; k<ppp[i][j].size(); k++) {

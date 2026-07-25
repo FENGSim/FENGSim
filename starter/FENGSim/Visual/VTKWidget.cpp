@@ -2732,11 +2732,11 @@ void VTKWidget::AMSetSTLVisible(bool t)
 void VTKWidget::AMImportSlices()
 {
     fstream _file;
-    _file.open("./data/am/slices.vtk", ios::in);
+    _file.open("./../AM/build/data/vtk/slices.vtk", ios::in);
     if (!_file) return;
     // read a vtk file
     vtkSmartPointer<vtkPolyDataReader> reader = vtkSmartPointer<vtkPolyDataReader>::New();
-    reader->SetFileName("./data/am/slices.vtk");
+    reader->SetFileName("./../AM/build/data/vtk/slices.vtk");
     reader->Update();
     // mapper
     vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
