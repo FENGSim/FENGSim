@@ -45,6 +45,7 @@ L = 1
 H = 1
 
 FLIP=0.0
+#method(tlmpm, FLIP, linear, FLIP, thermo-mechanical)
 method(tlmpm, FLIP, linear, FLIP)
 
 N = 16
