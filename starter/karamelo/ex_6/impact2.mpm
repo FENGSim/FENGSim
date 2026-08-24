@@ -33,7 +33,7 @@ S = 1.5
 c0 = 5030
 Gamma = 0
 chi = 0.9
-cp = 0
+cp = 510
 cv = 510
 alpha = 0
 kappa = 44e-06
@@ -45,8 +45,8 @@ L = 1
 H = 1
 
 FLIP=0.0
-#method(tlmpm, FLIP, linear, FLIP, thermo-mechanical)
-method(tlmpm, FLIP, linear, FLIP)
+method(tlmpm, FLIP, linear, FLIP, thermo-mechanical)
+#method(tlmpm, FLIP, linear, FLIP)
 
 N = 16
 cellsize = L/N
