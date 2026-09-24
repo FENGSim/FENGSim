@@ -422,6 +422,8 @@ private:
     int mbd_speed = 0;
     QTimer* mbd_timer =  new QTimer;
     QString mbd_file_name;
+    vector<double> mbd_cart_pole_data;
+    int mbd_cart_pole_id = 0;
 public:
     RobotDockWidget* robot_dock;
 public slots:
@@ -433,6 +435,10 @@ public slots:
     void mbdImportMeasureResults () {
         vtk_widget->mbdImportMeasureResults(QString("./../wheel/data/source.stl"));
     }
+
+    void mbdOpenCartPoleResults ();
+    void mbdCartPoleResultsShow ();
+
 
 
     // *******************************************************

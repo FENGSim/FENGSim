@@ -29,6 +29,7 @@
 #include "vtkVoxelGrid.h"
 #include "vtkScalarBarActor.h"
 #include "vtkPlaneSource.h"
+#include "vtkCubeSource.h"
 
 
 class VTKWidget : public QVTKOpenGLWidget
@@ -445,6 +446,18 @@ private:
     vtkNew<vtkPolyDataMapper> mapper4;
     vtkNew<vtkPolyDataMapper> mapper5;
     vtkNew<vtkPolyDataMapper> mapper6;
+
+    vtkSmartPointer<vtkCubeSource> mbd_cartpole_rail;
+    vtkSmartPointer<vtkActor> mbd_cartpole_railActor;
+    vtkSmartPointer<vtkCubeSource> mbd_cartpole_box;
+    vtkSmartPointer<vtkActor> mbd_cartpole_boxActor;
+    vtkSmartPointer<vtkCylinderSource> mbd_cartpole_cylinder;
+    vtkSmartPointer<vtkActor> mbd_cartpole_cylinderActor;
+    vtkSmartPointer<vtkPlaneSource> mbd_cartpole_ground;
+    vtkSmartPointer<vtkActor> mbd_cartpole_groundActor;
+    vtkSmartPointer<vtkTextActor> mbd_cartpole_hud;
+    vtkSmartPointer<vtkTextActor> mbd_cartpole_hud2;
+
 public:
     void mbdmodel () {
         reader0->SetFileName("../mbdyn/robot/stage1.stl");
@@ -466,6 +479,10 @@ public:
     void mbdImportResults (int n, QString file_name);
     void mbdPath ();
     void mbdImportMeasureResults (QString file_name, double x=0, double y=0);
+    void mbdCartPoleResultsInit ();
+    void mbdCartPoleResultsUpdate (double position, double angle);
+    void mbdCartPoleResultsString (QString content);
+    void mbdCartPoleTureOrFalse (int a);
 
 
     /* !

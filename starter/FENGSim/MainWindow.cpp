@@ -340,6 +340,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(robot_dock->ui->pushButton_7, SIGNAL(clicked()), this, SLOT(RobotSolver()));
     connect(robot_dock->ui->pushButton_8, SIGNAL(clicked()), this, SLOT(mbdImportResults()));
     connect(robot_dock->ui->pushButton_5, SIGNAL(clicked()), this, SLOT(mbdImportMeasureResults()));
+    connect(robot_dock->ui->pushButton_10, SIGNAL(clicked()), this, SLOT(mbdOpenCartPoleResults()));
+    connect(robot_dock->ui->pushButton_9, SIGNAL(clicked()), this, SLOT(mbdCartPoleResultsShow()));
 
 
     // *******************************************************
@@ -3713,6 +3715,42 @@ void MainWindow::RobotSolver() {
     td1->start();
     connect(td1, SIGNAL(finished()), this, SLOT(mbdImportResults()));
 }
+
+void MainWindow::mbdOpenCartPoleResults () {
+    QString cartpole_file_name = QFileDialog::getOpenFileName(this,tr("Open File"),"../../starter/mbdyn",
+                                                              tr("MBD Files (*.txt)")
+                                                              , 0 , QFileDialog::DontUseNativeDialog);
+    std::cout << cartpole_file_name.toStdString().c_str() << std::endl;
+    vtk_widget->mbdCartPoleResultsInit();
+
+    mbd_cart_pole_data.clear();
+    std::ifstream is(cartpole_file_name.toStdString());
+    const int len = 256;
+    char L[len];
+    while(is.getline(L,len)) {
+        double z[6];
+        sscanf(L,"%lf %lf %lf %lf %lf %lf",z,z+1,z+2,z+3,z+4,z+5);
+        for (int i=0; i<6; i++) {
+            mbd_cart_pole_data.push_back(z[i]);
+        }
+    }
+    std::cout << mbd_cart_pole_data.size() << std::endl;
+}
+
+void MainWindow::mbdCartPoleResultsShow() {
+    if (mbd_cart_pole_id==mbd_cart_pole_data.size()/6-1) return;
+    vtk_widget->mbdCartPoleResultsUpdate(mbd_cart_pole_data[mbd_cart_pole_id*6+4],mbd_cart_pole_data[mbd_cart_pole_id*6+3]/3.1415*90);
+    vtk_widget->mbdCartPoleResultsString(QString("Multi-body, MLP, Reinforce Learning, Episode=")+
+                                         QString::number(mbd_cart_pole_data[mbd_cart_pole_id*6+1])+
+            QString(", Time Step=")+
+            QString::number(mbd_cart_pole_data[mbd_cart_pole_id*6+2])
+            );
+    if (mbd_cart_pole_data[mbd_cart_pole_id*6+5]==0) vtk_widget->mbdCartPoleTureOrFalse(0);
+    else if (mbd_cart_pole_data[mbd_cart_pole_id*6+5]==1) vtk_widget->mbdCartPoleTureOrFalse(1);
+    mbd_cart_pole_id++;
+    mbd_timer->singleShot(1, this, SLOT(mbdCartPoleResultsShow()));
+}
+
 
 // *******************************************************
 // *******************************************************

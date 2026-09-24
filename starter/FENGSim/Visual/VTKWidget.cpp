@@ -3309,7 +3309,7 @@ void VTKWidget::mbdImportMeasureResults (QString file_name, double x, double y) 
     transform->SetMatrix(T3);
 
     vtkSmartPointer<vtkVoxelGrid> us =  vtkSmartPointer<vtkVoxelGrid>::New();
-        us->SetInputConnection(reader6->GetOutputPort());
+    us->SetInputConnection(reader6->GetOutputPort());
     us->SetConfigurationStyleToLeafSize();
     us->SetLeafSize(3,3,3);
     us->Update();
@@ -3340,6 +3340,195 @@ void VTKWidget::mbdImportMeasureResults (QString file_name, double x, double y) 
     mbd_simulation_actor_6->SetPickable(false);
     mbd_simulation_actor_6->SetSelected(false);
     renderer->AddActor(mbd_simulation_actor_6);
+    GetRenderWindow()->Render();
+}
+
+#include "vtkImageData.h"
+vtkSmartPointer<vtkImageData> MakeCheckerTexture(int size=64, int cell=8) {
+    vtkSmartPointer<vtkImageData> img = vtkSmartPointer<vtkImageData>::New();
+    img->SetDimensions(size, size, 1);
+    img->AllocateScalars(VTK_UNSIGNED_CHAR, 3);
+    for (int y = 0; y < size; ++y) {
+        for (int x = 0; x < size; ++x) {
+            bool dark = ((x / cell) + (y / cell)) % 2 == 0;
+            unsigned char c = dark ? 200 : 240;
+            unsigned char* p = static_cast<unsigned char*>(img->GetScalarPointer(x, y, 0));
+            p[0] = c;
+            p[1] = c;
+            p[2] = static_cast<unsigned char>(c + 15);
+        }
+    }
+    return img;
+}
+
+void VTKWidget::mbdCartPoleResultsInit () {
+    //  ---------- 1. rail ----------
+    mbd_cartpole_rail = vtkSmartPointer<vtkCubeSource>::New();
+    mbd_cartpole_rail->SetXLength(5.0);
+    mbd_cartpole_rail->SetYLength(0.1);
+    mbd_cartpole_rail->SetZLength(0.1);
+    mbd_cartpole_rail->SetCenter(0,0,0);     // ★ 中心 = 杆端点 (0,0,0)
+    mbd_cartpole_rail->Update();
+    vtkSmartPointer<vtkPolyDataMapper> railMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    railMapper->SetInputConnection(mbd_cartpole_rail->GetOutputPort());
+    mbd_cartpole_railActor = vtkSmartPointer<vtkActor>::New();
+    mbd_cartpole_railActor->SetMapper(railMapper);
+    mbd_cartpole_railActor->GetProperty()->SetColor(0.75,0.65,0.25);
+    mbd_cartpole_railActor->GetProperty()->SetEdgeVisibility(false);
+    mbd_cartpole_railActor->GetProperty()->SetEdgeColor(0.15,0.12,0.05);
+    mbd_cartpole_railActor->GetProperty()->SetLineWidth(1.5);
+    mbd_cartpole_railActor->GetProperty()->SetOpacity(0.5);
+
+    //  ---------- 2. box ----------
+    mbd_cartpole_box = vtkSmartPointer<vtkCubeSource>::New();
+    mbd_cartpole_box->SetXLength(0.3);
+    mbd_cartpole_box->SetYLength(0.1);
+    mbd_cartpole_box->SetZLength(0.3);
+    mbd_cartpole_box->SetCenter(0, 0, 0);     // ★ 中心 = 杆端点 (0,0,0)
+    mbd_cartpole_box->Update();
+    vtkSmartPointer<vtkPolyDataMapper> boxMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    boxMapper->SetInputConnection(mbd_cartpole_box->GetOutputPort());
+    mbd_cartpole_boxActor = vtkSmartPointer<vtkActor>::New();
+    mbd_cartpole_boxActor->SetMapper(boxMapper);
+    mbd_cartpole_boxActor->GetProperty()->SetColor(0.75,0.65,0.25);
+    mbd_cartpole_boxActor->GetProperty()->SetEdgeVisibility(false);
+    mbd_cartpole_boxActor->GetProperty()->SetEdgeColor(0.15,0.12,0.05);
+    mbd_cartpole_boxActor->GetProperty()->SetLineWidth(1.5);
+
+    //  ---------- 3. cylinder ----------
+    mbd_cartpole_cylinder = vtkSmartPointer<vtkCylinderSource>::New();
+    mbd_cartpole_cylinder->SetRadius(0.05);
+    mbd_cartpole_cylinder->SetHeight(1);
+    mbd_cartpole_cylinder->SetResolution(40);
+    mbd_cartpole_cylinder->SetCenter(0, 0, 0);
+    mbd_cartpole_cylinder->Update();
+
+    vtkSmartPointer<vtkTransform> translateToEnd = vtkSmartPointer<vtkTransform>::New();
+    translateToEnd->Translate(0, 1 / 2.0, 0);
+
+    vtkSmartPointer<vtkTransformPolyDataFilter> translateFilter = vtkSmartPointer<vtkTransformPolyDataFilter>::New();
+    translateFilter->SetInputConnection(mbd_cartpole_cylinder->GetOutputPort());
+    translateFilter->SetTransform(translateToEnd);
+    translateFilter->Update();
+
+    vtkSmartPointer<vtkPolyDataMapper> rodMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    rodMapper->SetInputConnection(translateFilter->GetOutputPort());
+
+    mbd_cartpole_cylinderActor = vtkSmartPointer<vtkActor>::New();
+    mbd_cartpole_cylinderActor->SetMapper(rodMapper);
+    mbd_cartpole_cylinderActor->GetProperty()->SetColor(0.9, 0.25, 0.2);
+
+    //  ---------- 4. reference line ----------
+    //    vtkSmartPointer<vtkLineSource> refLine = vtkSmartPointer<vtkLineSource>::New();
+    //    refLine->SetPoint1(0, 0, 0);
+    //    refLine->SetPoint2(0, 1, 0);
+    //    vtkSmartPointer<vtkPolyDataMapper> refMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    //    refMapper->SetInputConnection(refLine->GetOutputPort());
+    //    vtkSmartPointer<vtkActor> refActor = vtkSmartPointer<vtkActor>::New();
+    //    refActor->SetMapper(refMapper);
+    //    refActor->GetProperty()->SetColor(0.6, 0.6, 0.6);
+    //    refActor->GetProperty()->SetLineWidth(2.0);
+    //    refActor->GetProperty()->SetOpacity(0.6);
+
+    //  ---------- 5. ground line ----------
+    //    vtkSmartPointer<vtkLineSource> ground = vtkSmartPointer<vtkLineSource>::New();
+    //    ground->SetPoint1(-2.0, 0, 0);
+    //    ground->SetPoint2( 2.0, 0, 0);
+    //    vtkSmartPointer<vtkPolyDataMapper> groundMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    //    groundMapper->SetInputConnection(ground->GetOutputPort());
+    //    vtkSmartPointer<vtkActor> groundActor = vtkSmartPointer<vtkActor>::New();
+    //    groundActor->SetMapper(groundMapper);
+    //    groundActor->GetProperty()->SetColor(0.3, 0.3, 0.3);
+    //    groundActor->GetProperty()->SetLineWidth(3.0);
+
+
+    // ---------- 5. ground plane ----------
+    mbd_cartpole_ground = vtkSmartPointer<vtkPlaneSource>::New();
+    mbd_cartpole_ground->SetXResolution(1);
+    mbd_cartpole_ground->SetYResolution(1);
+    mbd_cartpole_ground->SetOrigin(-6.0, 0.0, -6.0);   // 左上角
+    mbd_cartpole_ground->SetPoint1( 6.0, 0.0, -6.0);   // 沿 X 方向
+    mbd_cartpole_ground->SetPoint2(-6.0, 0.0,  6.0);   // 沿 Z 方向（Y 恒定 = 0）
+    mbd_cartpole_ground->Update();
+    vtkSmartPointer<vtkPolyDataMapper> groundMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    groundMapper->SetInputConnection(mbd_cartpole_ground->GetOutputPort());
+    mbd_cartpole_groundActor = vtkSmartPointer<vtkActor>::New();
+    mbd_cartpole_groundActor->SetMapper(groundMapper);
+    mbd_cartpole_groundActor->GetProperty()->SetColor(1.0, 1.0, 1.0);
+    mbd_cartpole_groundActor->GetProperty()->SetOpacity(0.5);
+
+    vtkSmartPointer<vtkTexture> texture = vtkSmartPointer<vtkTexture>::New();
+    texture->SetInputData(MakeCheckerTexture(64, 8));
+    texture->InterpolateOff();
+    texture->RepeatOn();
+    mbd_cartpole_groundActor->SetTexture(texture);
+
+    // ---------- 6. text ----------
+    mbd_cartpole_hud = vtkSmartPointer<vtkTextActor>::New();
+    mbd_cartpole_hud->SetPosition(10, 10);
+    mbd_cartpole_hud->GetTextProperty()->SetFontSize(50);
+    mbd_cartpole_hud->GetTextProperty()->SetColor(1.0, 1.0, 1.0);
+    mbd_cartpole_hud->SetInput("Multi-body, MLP, Reinforce Learning");
+
+    mbd_cartpole_hud2 = vtkSmartPointer<vtkTextActor>::New();
+    mbd_cartpole_hud2->SetPosition(10, 60);
+    mbd_cartpole_hud2->GetTextProperty()->SetFontSize(50);
+    mbd_cartpole_hud2->GetTextProperty()->SetColor(1.0, 0.0, 0.0);
+    mbd_cartpole_hud2->SetInput("FALSE");
+
+    textActor->SetVisibility(0);
+    renderer->AddActor(mbd_cartpole_railActor);
+    renderer->AddActor(mbd_cartpole_boxActor);
+    renderer->AddActor(mbd_cartpole_cylinderActor);
+    //renderer->AddActor(refActor);
+    renderer->AddActor(mbd_cartpole_groundActor);
+    renderer->AddActor(mbd_cartpole_hud);
+    renderer->AddActor(mbd_cartpole_hud2);
+}
+
+void VTKWidget::mbdCartPoleTureOrFalse (int a) {
+    if (a==0) {
+        mbd_cartpole_hud2->GetTextProperty()->SetColor(0.0, 1.0, 0.0);
+        mbd_cartpole_hud2->SetInput("TRUE");
+    }
+    else if (a==1) {
+        mbd_cartpole_hud2->GetTextProperty()->SetColor(1.0, 0.0, 0.0);
+        mbd_cartpole_hud2->SetInput("FALSE");
+    }
+}
+
+void VTKWidget::mbdCartPoleResultsUpdate (double position, double angle) {
+    /*!
+     1. box moving
+    */
+    vtkSmartPointer<vtkTransform> cubeTransform = vtkSmartPointer<vtkTransform>::New();
+    cubeTransform->Translate(position,0,0);
+    vtkSmartPointer<vtkTransformPolyDataFilter> cubeFilter = vtkSmartPointer<vtkTransformPolyDataFilter>::New();
+    cubeFilter->SetInputConnection(mbd_cartpole_box->GetOutputPort());
+    cubeFilter->SetTransform(cubeTransform);
+    cubeFilter->Update();
+    vtkSmartPointer<vtkPolyDataMapper> cubeMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    cubeMapper->SetInputConnection(cubeFilter->GetOutputPort());
+    mbd_cartpole_boxActor->SetMapper(cubeMapper);
+    /*!
+     2. cylinder
+    */
+    vtkSmartPointer<vtkTransform> cylinderTransform = vtkSmartPointer<vtkTransform>::New();
+    cylinderTransform->Translate(position,0,0);
+    cylinderTransform->RotateWXYZ(angle,0,0,1);
+    cylinderTransform->Translate(0,1/2.0,0);
+    vtkSmartPointer<vtkTransformPolyDataFilter> cylinderFilter = vtkSmartPointer<vtkTransformPolyDataFilter>::New();
+    cylinderFilter->SetInputConnection(mbd_cartpole_cylinder->GetOutputPort());
+    cylinderFilter->SetTransform(cylinderTransform);
+    cylinderFilter->Update();
+    vtkSmartPointer<vtkPolyDataMapper> cylinderMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    cylinderMapper->SetInputConnection(cylinderFilter->GetOutputPort());
+    mbd_cartpole_cylinderActor->SetMapper(cylinderMapper);
+    GetRenderWindow()->Render();
+}
+
+void VTKWidget::mbdCartPoleResultsString(QString content) {
+    mbd_cartpole_hud->SetInput(content.toStdString().c_str());
     GetRenderWindow()->Render();
 }
 
