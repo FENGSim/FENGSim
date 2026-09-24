@@ -422,8 +422,9 @@ private:
     int mbd_speed = 0;
     QTimer* mbd_timer =  new QTimer;
     QString mbd_file_name;
-    vector<double> mbd_cart_pole_data;
-    int mbd_cart_pole_id = 0;
+    vector<double> mbd_cartpole_data;
+    int mbd_cartpole_id = 0;
+    int mbd_cartpole_false = 0;
 public:
     RobotDockWidget* robot_dock;
 public slots:

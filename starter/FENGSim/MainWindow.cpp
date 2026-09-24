@@ -3723,7 +3723,7 @@ void MainWindow::mbdOpenCartPoleResults () {
     std::cout << cartpole_file_name.toStdString().c_str() << std::endl;
     vtk_widget->mbdCartPoleResultsInit();
 
-    mbd_cart_pole_data.clear();
+    mbd_cartpole_data.clear();
     std::ifstream is(cartpole_file_name.toStdString());
     const int len = 256;
     char L[len];
@@ -3731,23 +3731,35 @@ void MainWindow::mbdOpenCartPoleResults () {
         double z[6];
         sscanf(L,"%lf %lf %lf %lf %lf %lf",z,z+1,z+2,z+3,z+4,z+5);
         for (int i=0; i<6; i++) {
-            mbd_cart_pole_data.push_back(z[i]);
+            mbd_cartpole_data.push_back(z[i]);
         }
     }
-    std::cout << mbd_cart_pole_data.size() << std::endl;
+    std::cout << mbd_cartpole_data.size() << std::endl;
+
+    for (int i=0; i<mbd_cartpole_data.size()/6; i++) {
+        if (mbd_cartpole_data[i*6+1]==8000) {
+            mbd_cartpole_id = i;
+            break;
+        }
+        if (mbd_cartpole_data[i*6+5]==1) {
+            mbd_cartpole_false++;
+        }
+    }
 }
 
 void MainWindow::mbdCartPoleResultsShow() {
-    if (mbd_cart_pole_id==mbd_cart_pole_data.size()/6-1) return;
-    vtk_widget->mbdCartPoleResultsUpdate(mbd_cart_pole_data[mbd_cart_pole_id*6+4],mbd_cart_pole_data[mbd_cart_pole_id*6+3]/3.1415*90);
+    if (mbd_cartpole_id==mbd_cartpole_data.size()/6-1) return;
+    vtk_widget->mbdCartPoleResultsUpdate(mbd_cartpole_data[mbd_cartpole_id*6+4],mbd_cartpole_data[mbd_cartpole_id*6+3]/3.1415*90);
+    mbd_cartpole_false += mbd_cartpole_data[mbd_cartpole_id*6+5];
+
     vtk_widget->mbdCartPoleResultsString(QString("Multi-body, MLP, Reinforce Learning, Episode=")+
-                                         QString::number(mbd_cart_pole_data[mbd_cart_pole_id*6+1])+
-            QString(", Time Step=")+
-            QString::number(mbd_cart_pole_data[mbd_cart_pole_id*6+2])
+                                         QString::number(mbd_cartpole_data[mbd_cartpole_id*6+1])+
+            QString(", False=")+
+            QString::number(mbd_cartpole_false) +
+            QString(", Step=")+
+            QString::number(mbd_cartpole_data[mbd_cartpole_id*6+2])
             );
-    if (mbd_cart_pole_data[mbd_cart_pole_id*6+5]==0) vtk_widget->mbdCartPoleTureOrFalse(0);
-    else if (mbd_cart_pole_data[mbd_cart_pole_id*6+5]==1) vtk_widget->mbdCartPoleTureOrFalse(1);
-    mbd_cart_pole_id++;
+    mbd_cartpole_id++;
     mbd_timer->singleShot(1, this, SLOT(mbdCartPoleResultsShow()));
 }
 

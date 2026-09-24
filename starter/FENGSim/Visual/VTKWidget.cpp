@@ -3364,7 +3364,7 @@ vtkSmartPointer<vtkImageData> MakeCheckerTexture(int size=64, int cell=8) {
 void VTKWidget::mbdCartPoleResultsInit () {
     //  ---------- 1. rail ----------
     mbd_cartpole_rail = vtkSmartPointer<vtkCubeSource>::New();
-    mbd_cartpole_rail->SetXLength(5.0);
+    mbd_cartpole_rail->SetXLength(4.8);
     mbd_cartpole_rail->SetYLength(0.1);
     mbd_cartpole_rail->SetZLength(0.1);
     mbd_cartpole_rail->SetCenter(0,0,0);     // ★ 中心 = 杆端点 (0,0,0)
@@ -3483,7 +3483,7 @@ void VTKWidget::mbdCartPoleResultsInit () {
     //renderer->AddActor(refActor);
     renderer->AddActor(mbd_cartpole_groundActor);
     renderer->AddActor(mbd_cartpole_hud);
-    renderer->AddActor(mbd_cartpole_hud2);
+    //renderer->AddActor(mbd_cartpole_hud2);
 }
 
 void VTKWidget::mbdCartPoleTureOrFalse (int a) {
