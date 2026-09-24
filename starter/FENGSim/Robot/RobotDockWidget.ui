@@ -458,22 +458,6 @@
        </layout>
       </item>
       <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>25</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <widget class="QLabel" name="label">
         <property name="text">
          <string/>
@@ -482,10 +466,13 @@
          <pixmap resource="RobotWindow.qrc">:/new/robot/fig/hand.png</pixmap>
         </property>
         <property name="scaledContents">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="alignment">
          <set>Qt::AlignHCenter|Qt::AlignTop</set>
+        </property>
+        <property name="margin">
+         <number>11</number>
         </property>
        </widget>
       </item>
@@ -508,8 +495,8 @@
   </layout>
  </widget>
  <resources>
-  <include location="RobotWindow.qrc"/>
   <include location="../AMWindow.qrc"/>
+  <include location="RobotWindow.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -3724,6 +3724,9 @@ void MainWindow::mbdOpenCartPoleResults () {
     vtk_widget->mbdCartPoleResultsInit();
 
     mbd_cartpole_data.clear();
+    mbd_cartpole_id = 0;
+    mbd_cartpole_false = 0;
+
     std::ifstream is(cartpole_file_name.toStdString());
     const int len = 256;
     char L[len];
@@ -3737,7 +3740,7 @@ void MainWindow::mbdOpenCartPoleResults () {
     std::cout << mbd_cartpole_data.size() << std::endl;
 
     for (int i=0; i<mbd_cartpole_data.size()/6; i++) {
-        if (mbd_cartpole_data[i*6+1]==8000) {
+        if (mbd_cartpole_data[i*6+1]==9000) {
             mbd_cartpole_id = i;
             break;
         }
