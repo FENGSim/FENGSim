@@ -68,6 +68,14 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 
 ## Adaptive Processing
 
+### Physical AI
+
+<div align="center">
+<img decoding="async" src="image/cart_pole.png" width="1800">
+</div>
+
+![GIF描述](image/cart_pole.gif)
+
 ### Path Planning
 
 <div align="center">
