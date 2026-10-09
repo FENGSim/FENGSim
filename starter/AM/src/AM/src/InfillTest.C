@@ -223,9 +223,9 @@ namespace cura {
 
 
     
-    void VtkToPolygons (std::string filename, std::vector<Polygons>& layers, std::vector<double>& heights);
-    void ExportPathLinesToVtk (std::string pathfile, std::vector<InfillTestParameters> parameters_list, std::vector<double>& heights);
-    void ExportPathLinesToMbdyn (std::vector<InfillTestParameters> parameters_list, std::vector<double>& heights);
+    void VtkToPolygons (std::string filename, std::vector<Polygons>& layers, std::vector<int>& nums, std::vector<double>& heights);
+    void ExportPathLinesToVtk (std::string pathfile, std::vector<InfillTestParameters> parameters_list, std::vector<int>& nums, std::vector<double>& heights);
+    void ExportPathLinesToMbdyn (std::vector<InfillTestParameters> parameters_list, std::vector<int>& nums, std::vector<double>& heights);
     
     std::vector<InfillTestParameters> generateInfillTests(std::string filename) {
         constexpr bool do_zig_zaggify = true;
@@ -251,10 +251,11 @@ namespace cura {
 	is.close();
 	
         std::vector<Polygons> shapes;
+	std::vector<int> nums;
 	std::vector<double> heights;
-	VtkToPolygons(clifile.c_str(),shapes,heights);
-	std::cout << "layers: " << shapes.size() << std::endl;
-
+	VtkToPolygons(clifile.c_str(),shapes,nums,heights);
+	for (int i=0; i<nums.size(); i++)
+	    std::cout << nums[i] << " " << heights[i] << std::endl;
 
 	// std::vector<std::vector<cura::PolygonsPart>> ppp;
 	// for(int i=0; i<slicer.layers.size(); i++) {
@@ -303,19 +304,20 @@ namespace cura {
         }
 
 	for (int i=0; i<parameters_list.size(); i++) {
-	    //ExportOutLinesToVtk(parameters_list[i].outline_polygons, heights[i], "infill_outlines"+std::to_string(i)+".vtk");
-	    //ExportPathLinesToVtk(parameters_list[i].result_lines, heights[i], "infill_pathlines"+std::to_string(i)+".vtk");
-	    //ExportOutLinesToVtk(parameters_list[i].outline_polygons, heights[i], pathfile+"_outlines"+std::to_string(i)+".vtk");
-	    //ExportPathLinesToVtk(parameters_list[i].result_lines, heights[i], pathfile+"_pathlines"+std::to_string(i)+".vtk");
+	    //ExportOutLinesToVtk(parameters_list[i].outline_polygons, partsheight[i], "infill_outlines"+std::to_string(i)+".vtk");
+	    //ExportPathLinesToVtk(parameters_list[i].result_lines, partsheight[i], "infill_pathlines"+std::to_string(i)+".vtk");
+	    //ExportOutLinesToVtk(parameters_list[i].outline_polygons, partsheight[i], pathfile+"_outlines"+std::to_string(i)+".vtk");
+	    //ExportPathLinesToVtk(parameters_list[i].result_lines, partsheight[i], pathfile+"_pathlines"+std::to_string(i)+".vtk");
 	}
 	
 	// collect all path lines together
-	ExportPathLinesToVtk(pathfile,parameters_list,heights);
-	ExportPathLinesToMbdyn(parameters_list,heights);
+	ExportPathLinesToVtk(pathfile,parameters_list,nums,heights);
+	ExportPathLinesToMbdyn(parameters_list,nums,heights);
 	return parameters_list;
     }
 
-    void ExportPathLinesToVtk (std::string pathfile, std::vector<InfillTestParameters> parameters_list, std::vector<double>& heights) {
+    void ExportPathLinesToVtk (std::string pathfile, std::vector<InfillTestParameters> parameters_list, std::vector<int>& nums, std::vector<double>& heights) {
+	
     	double scale = 1000;
 	
 	int n = 0;
@@ -362,7 +364,7 @@ namespace cura {
 	}
     }
 
-    void ExportPathLinesToMbdyn (std::vector<InfillTestParameters> parameters_list, std::vector<double>& heights) {
+    void ExportPathLinesToMbdyn (std::vector<InfillTestParameters> parameters_list, std::vector<int>& nums, std::vector<double>& heights) {
     	double scale = 1e6;
 	std::ofstream out;
 	out.open("../../mbdyn/robot/ur3.traj");

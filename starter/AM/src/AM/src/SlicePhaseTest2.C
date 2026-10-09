@@ -94,6 +94,15 @@ void Export2VTK (std::string vtkfile, std::vector<std::vector<cura::PolygonsPart
 	}
     }
     out.close();
+
+    out.open("./data/vtk/polygonparts.txt");
+    for(int i=0; i<slicer.layers.size(); i++) {
+	const cura::SlicerLayer& layer = slicer.layers[i];
+	for (int j=0; j<ppp[i].size(); j++) {
+	    out << ppp[i][j].size() << " " << layer.z/1000.0 << endl;
+	}
+    }
+    out.close();
 }
 
 void Export2VTK (std::string vtkfile, cura::Slicer slicer, const cura::coord_t initial_layer_thickness, const cura::coord_t layer_thickness) {
