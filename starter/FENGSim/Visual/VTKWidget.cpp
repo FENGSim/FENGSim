@@ -2786,7 +2786,7 @@ void VTKWidget::AMSetSlicesVisible(bool t)
 void VTKWidget::AMImportPathPlanning()
 {
     fstream _file;
-    _file.open("./data/am/pathplanning.vtk", ios::in);
+    _file.open("./../AM/build/data/vtk/pathplanning.vtk", ios::in);
     if (!_file) return;
     // read a vtk file
     vtkSmartPointer<vtkUnstructuredGridReader> reader = vtkSmartPointer<vtkUnstructuredGridReader>::New();
