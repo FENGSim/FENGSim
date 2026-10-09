@@ -2928,6 +2928,7 @@ void MainWindow::AMSlices2PathPlanning()
     out.close();
     out.open("./../AM/build/AM/conf/pathplanning.conf");
     out << "Model = InfillTest" << endl;
+
     out << meas_path.toStdString() << "/../AM/build/data/vtk/slices.vtk" << endl;
     out << meas_path.toStdString() << "/../AM/build/data/vtk/pathplanning.vtk" << endl;
     out << additive_manufacturing_dock->ui->doubleSpinBox_3->value() << endl;
