@@ -2928,8 +2928,8 @@ void MainWindow::AMSlices2PathPlanning()
     out.close();
     out.open("./../AM/build/AM/conf/pathplanning.conf");
     out << "Model = InfillTest" << endl;
-    out << meas_path.toStdString() << "/data/am/slices4pathplanning.vtk" << endl;
-    out << meas_path.toStdString() << "/data/am/pathplanning.vtk" << endl;
+    out << meas_path.toStdString() << "/../AM/build/data/vtk/slices.vtk" << endl;
+    out << meas_path.toStdString() << "/../AM/build/data/vtk/pathplanning.vtk" << endl;
     out << additive_manufacturing_dock->ui->doubleSpinBox_3->value() << endl;
     out << robot_dock->ui->doubleSpinBox->value() << endl;
     out << robot_dock->ui->doubleSpinBox_2->value() << endl;
@@ -2949,7 +2949,7 @@ void MainWindow::AMSlices2PathPlanning()
         vtk_widget->AMImportPathPlanning();
         additive_manufacturing_dock->ui->pushButton_21->setChecked(true);
         QFile::remove(meas_path+QString("/../../AM/AdditiveManufacturing/conf/geo/pathplanning.vtk"));
-        QFile::copy("./data/am/pathplanning.vtk",
+        QFile::copy("./data/vtk/pathplanning.vtk",
                     meas_path+QString("/../../AM/AdditiveManufacturing/conf/geo/pathplanning.vtk"));
     }
     proc->close();

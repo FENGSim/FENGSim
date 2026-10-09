@@ -2790,7 +2790,7 @@ void VTKWidget::AMImportPathPlanning()
     if (!_file) return;
     // read a vtk file
     vtkSmartPointer<vtkUnstructuredGridReader> reader = vtkSmartPointer<vtkUnstructuredGridReader>::New();
-    reader->SetFileName("./data/am/pathplanning.vtk");
+    reader->SetFileName("./../AM/build/data/vtk/pathplanning.vtk");
     reader->Update();
     // mapper
     vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
