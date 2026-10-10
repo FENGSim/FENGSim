@@ -16,7 +16,7 @@ FENGSim is engineered for this fourth, and highest, level.
 To install FENGSim on Ubuntu 24.04:
 
 ```shell
-	git clone https://github.com/FENGSim/FENGSim.git
+	git clone --depth=1 https://github.com/FENGSim/FENGSim.git
 	cd FENGSim
 	./install
 ```
