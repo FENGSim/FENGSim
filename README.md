@@ -74,7 +74,7 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 <img decoding="async" src="image/cm.jpg" width="1800">
 </div>
 
-## Adaptive Processing
+## Adaptive Manufacturing (Physical AI)
 
 ### Physical AI
 
