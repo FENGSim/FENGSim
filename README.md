@@ -2,7 +2,7 @@
 
 The FENGSim project is more than open source; it's a bold declaration of freedom. It champions the brave, persistent, and innovative spirit that breaks boundaries. Too many engineers and researchers see their potential stifled by unequal resource distribution. FENGSim shatters these barriers, unleashing that potential by providing the freedom and support for all to build, explore, and create. Join us in this mission.
 
-FENGSim is a software development kit (SDK) designed for high-fidelity numerical simulation and adaptive manufacturing, integrating a range of mathematical libraries. At its core, the project features multi-x couplers tailored for complex applications, along with the CAX software framework and practical usage examples. **We further envision FENGSim serving as a GPU-accelerated, high-fidelity physics engine within NVIDIA Omniverse to enable reinforcement learning.** Moreover, FENGSim offers tools for managing library dependencies and package management.
+FENGSim is a software development kit (SDK) built for high-fidelity numerical simulation and adaptive manufacturing, integrating a suite of mathematical libraries. At its core, the project provides multi-X couplers tailored for complex applications, alongside the CAX software framework, reinforcement learning for closed-loop adaptive control, and practical examples spanning machining, additive manufacturing, and composite materials. We further envision FENGSim as a GPU-accelerated, high-fidelity physics engine within NVIDIA Omniverse, enabling physical AI. In addition, FENGSim offers tools for managing library dependencies and package management.
 
 Four levels of mastery in product design and manufacturing:
 
