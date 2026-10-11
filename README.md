@@ -94,9 +94,8 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 
 ### Robotics
 
-<div align="center">
-<img decoding="async" src="image/ur3.jpg" width="1800">
-</div>
+![GIF描述](image/ur32.gif)
+![GIF描述](image/ur3.gif)
 
 ### Metrology
 
