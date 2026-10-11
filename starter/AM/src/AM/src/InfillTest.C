@@ -369,7 +369,7 @@ namespace cura {
 	std::ofstream out;
 	out.open("../../mbdyn/robot/ur3.traj");
 	out << "# point 1(3) --- point 2(3) --- orientation(3) --- velocity(1)" << std::endl;
-	for (int i=0; i<parameters_list.size(); i++) {
+	for (int i=1; i<parameters_list.size(); i++) {
 	    for (int j=0; j<parameters_list[i].result_lines.size(); j++) {
 		for (int k=0; k<(parameters_list[i].result_lines)[j].size()-1; k++) {
 		    out << (parameters_list[i].result_lines)[j][k].X / scale  << " "
