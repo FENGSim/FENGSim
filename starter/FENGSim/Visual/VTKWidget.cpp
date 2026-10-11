@@ -3119,7 +3119,51 @@ void VTKWidget::FEMImportResults(QString filename)
 #include "vtkLineSource.h"
 #include "vtkLine.h"
 
-void VTKWidget::mbdPath () {
+void VTKWidget::mbdPath (double x, double y) {
+    fstream _file;
+    _file.open("./data/am/am.stl", ios::in);
+    if (!_file) return;
+    // read a vtk file
+    vtkSmartPointer<vtkSTLReader> reader = vtkSmartPointer<vtkSTLReader>::New();
+    reader->SetFileName("./data/am/am.stl");
+    reader->Update();
+
+    vtkSmartPointer<vtkTransform> trans = vtkSmartPointer<vtkTransform>::New();
+    trans->PostMultiply();
+    std::cout << -x << " " << -y << std::endl;
+    trans->Scale(1e-3,1e-3,1e-3);
+    trans->Translate(-x,-y,0.0);
+    trans->Scale(-1.0, -1.0, 1.0);
+    vtkSmartPointer<vtkTransformPolyDataFilter> tf = vtkSmartPointer<vtkTransformPolyDataFilter>::New();
+    tf->SetInputConnection(reader->GetOutputPort());
+    tf->SetTransform(trans);
+    tf->Update();
+
+    // mapper
+    vtkSmartPointer<vtkPolyDataMapper> mapper2 = vtkSmartPointer<vtkPolyDataMapper>::New();
+    mapper2->SetInputConnection(tf->GetOutputPort());
+    vtkSmartPointer<vtkLookupTable> lut = vtkSmartPointer<vtkLookupTable>::New();
+    lut->SetHueRange(0.666667,0.0);
+    double * range = reader->GetOutput()->GetScalarRange();
+    lut->Build();
+    mapper2->SetScalarRange(range);
+    mapper2->SetLookupTable(lut);
+    mapper2->Update();
+    // actor
+    vtkSmartPointer<vtkActor> actor2 = vtkSmartPointer<vtkActor>::New();
+    actor2->SetMapper(mapper2);
+    //am_stl_actor->GetProperty()->EdgeVisibilityOn();
+    // actor->GetProperty()->SetFrontfaceCulling(1); // shit this is OK, check it for long time
+    //actor2->GetProperty()->SetRepresentationToWireframe();
+    actor2->GetProperty()->SetOpacity(0.3);
+    actor2->GetProperty()->SetColor(1,1,1);
+    //am_stl_actor->GetProperty()->SetEdgeColor(1,1,1);
+    // renderer
+    renderer->AddActor(actor2);
+
+
+
+
     std::ifstream inFile("../mbdyn/robot/ur3.traj");
     std::vector<std::string> lines;
     std::string line;
@@ -3134,7 +3178,6 @@ void VTKWidget::mbdPath () {
     for (int i=0; i<int(lines.size())-1; i++) {
         double z[6];
         sscanf(lines[i+1].data(),"%lf %lf %lf %lf %lf %lf",z,z+1,z+2,z+3,z+4,z+5);
-
         points->InsertNextPoint(-z[0],-z[1],z[2]);
         points->InsertNextPoint(-z[3],-z[4],z[5]);
         vtkSmartPointer<vtkLine> line0 = vtkSmartPointer<vtkLine>::New();
@@ -3154,17 +3197,7 @@ void VTKWidget::mbdPath () {
     actor->GetProperty()->SetLineWidth(2);
     renderer->AddActor(actor);
 
-    //    vtkSmartPointer<vtkSphereSource> ss = vtkSmartPointer<vtkSphereSource>::New();
-    //    ss->SetCenter(0.1,0.3,0.3);
-    //    ss->SetRadius(0.02);
-    //    vtkSmartPointer<vtkPolyDataMapper> mapper_ss = vtkSmartPointer<vtkPolyDataMapper>::New();
-    //    mapper_ss->SetInputConnection(ss->GetOutputPort());
-    //    vtkSmartPointer<vtkActor> actor_ss = vtkSmartPointer<vtkActor>::New();
-    //    actor_ss->SetMapper(mapper_ss);
-    //    actor_ss->GetProperty()->SetColor(COLOR10);
-    //    renderer->AddActor(actor_ss);
     GetRenderWindow()->Render();
-
 }
 
 void VTKWidget::mbdImportResults(int n, QString file_name)

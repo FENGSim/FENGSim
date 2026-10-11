@@ -3613,7 +3613,7 @@ void MainWindow::mbdOpenFile () {
 
 
     vtk_widget->mbdmodel();
-    vtk_widget->mbdPath();
+    vtk_widget->mbdPath(robot_dock->ui->doubleSpinBox_3->value(),robot_dock->ui->doubleSpinBox_4->value());
 }
 
 void  MainWindow::mbdOpenFile2 () {

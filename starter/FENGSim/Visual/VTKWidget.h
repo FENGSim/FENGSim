@@ -477,7 +477,7 @@ public:
     }
 public:
     void mbdImportResults (int n, QString file_name);
-    void mbdPath ();
+    void mbdPath (double x=0, double y=0);
     void mbdImportMeasureResults (QString file_name, double x=0, double y=0);
     void mbdCartPoleResultsInit ();
     void mbdCartPoleResultsUpdate (double position, double angle);
