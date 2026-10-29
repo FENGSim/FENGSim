@@ -26,16 +26,16 @@ d1 = 0.636
 d2 = 1.936
 d3 = -2.969
 d4 = 0
-d5 = 0
+d5 = 1
 
 # temperature: eos and plastic work
 S = 1.5
 c0 = 5030
-Gamma = 0
+Gamma = 1
 chi = 0.9
 cp = 510
 cv = 510
-alpha = 0
+alpha = 1
 kappa = 44e-06
 Tr = 25
 Tm = 1300
@@ -45,8 +45,7 @@ L = 1
 H = 1
 
 FLIP=0.0
-method(tlmpm, FLIP, linear, FLIP, thermo-mechanical)
-#method(tlmpm, FLIP, linear, FLIP)
+method(tlmpm, FLIP, linear, FLIP)
 
 N = 16
 cellsize = L/N
@@ -63,8 +62,9 @@ temperature(tpw, plastic_work, chi, cp, kappa, alpha, Tr, Tm)
 
 damage(damagejc, damage_johnson_cook, d1, d2, d3, d4, d5, epsdot0, Tr, Tm)
 
-#material(mat, eos-strength, eoss, strengthjc, damagejc, tpw)
+#material(mat, eos-strength, eoss, strengthjc)
 material(mat, eos-strength, eoss, strengthjc, damagejc)
+#material(mat, eos-strength, eoss, strengthjc, damagejc, tpw)
 
 # -----------SOLIDS ----------------#
 # defined using: geometry, material, PPC per 1 direction
