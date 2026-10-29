@@ -10,8 +10,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-find_package(VTK REQUIRED COMPONENTS CommonCore PATHS ${CMAKE_BINARY_DIR}/../../toolkit/Geometry/install/vtk-9.6.0/lib/cmake/vtk-9.6/)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Widgets OpenGLWidgets)
+find_package(VTK REQUIRED COMPONENTS CommonCore RenderingOpenGL2 InteractionStyle GUISupportQt PATHS ${CMAKE_BINARY_DIR}/../../toolkit/Geometry/install/vtk-9.6.0/lib/cmake/vtk-9.6/ NO_DEFAULT_PATH)
 find_package(OpenCASCADE REQUIRED PATHS ${CMAKE_BINARY_DIR}/../../toolkit/Geometry/install/occt-7.9.3/lib/cmake/opencascade NO_DEFAULT_PATH)
 
 set(PROJECT_SOURCES
@@ -46,7 +46,12 @@ endif()
 
 include_directories(${OpenCASCADE_INCLUDE_DIR})
 
-target_link_libraries(FENGSim2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets VTK::CommonCore ${OpenCASCADE_LIBRARIES})
+target_link_libraries(FENGSim2 PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::OpenGLWidgets
+    ${OpenCASCADE_LIBRARIES}
+    ${VTK_LIBRARIES}
+)
 
 set_target_properties(FENGSim2 PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
