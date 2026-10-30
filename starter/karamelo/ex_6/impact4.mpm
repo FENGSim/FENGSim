@@ -86,7 +86,7 @@ group(gbc2, nodes, region, bc2, solid, piece)
 fix(BC2, velocity_nodes, gbc2, 0, 0, NULL)
 
 # cutting tool
-fix(cutting-tool, cuttingtool, gpart, K, 1-time, 0.5, 0, 0, 0, 0, 1-time, 10, 10, 0.5)
+fix(cutting-tool, cuttingtool, gpart, 10000000, 1-100*time, 0.8, 0, 0, 0, 0, 11-100*time, 0.8, 1-100*time, 10.8)
 
 # output
 dumping_interval = 20
@@ -95,5 +95,5 @@ dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
 
 # run
 set_dt(0.000001)
-run(100)
-#run_time(0.01)
+#run(1000)
+run_time(0.002)
