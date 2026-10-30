@@ -34,12 +34,10 @@ c0 = 5030
 Gamma = 1
 chi = 0.9
 cp = 510
-#cp = 0
 cv = 510
-alpha = 10000000000
-#kappa = 44e-06
-kappa = 1
-Tr = 0
+alpha = 1
+kappa = 44e-06
+Tr = 25
 Tm = 1300
 
 # problem dimensions
@@ -47,10 +45,10 @@ L = 1
 H = 1
 
 FLIP=0.0
-method(tlmpm, FLIP, linear, FLIP, thermo-mechanical)
 #method(tlmpm, FLIP, linear, FLIP)
+method(tlmpm, FLIP, linear, FLIP, thermo-mechanical)
 
-N = 16
+N = 32
 cellsize = L/N
 dimension(2,0,1,0,1,cellsize)
 
@@ -65,8 +63,9 @@ temperature(tpw, plastic_work, chi, cp, kappa, alpha, Tr, Tm)
 
 damage(damagejc, damage_johnson_cook, d1, d2, d3, d4, d5, epsdot0, Tr, Tm)
 
-material(mat, eos-strength, eoss, strengthjc, damagejc, tpw)
+#material(mat, eos-strength, eoss, strengthjc)
 #material(mat, eos-strength, eoss, strengthjc, damagejc)
+material(mat, eos-strength, eoss, strengthjc, damagejc, tpw)
 
 # -----------SOLIDS ----------------#
 # defined using: geometry, material, PPC per 1 direction
@@ -75,12 +74,19 @@ solid(piece, region, work-piece, 1, mat, cellsize, 0)
 
 # initial conditions
 group(gpart, particles, region, work-piece, solid, piece)
-fix(v0part, initial_velocity_particles, gpart, 10000.0, 0, NULL)
+fix(v0part, initial_velocity_particles, gpart, 0, 0, NULL)
 
 # boundary conditions
-region(bc, block, 1, INF, -INF, INF)
-group(gbc, nodes, region, bc, solid, piece)
-fix(BC, velocity_nodes, gbc, 0, 0, NULL)
+region(bc1, block, -INF, INF, -INF, 0)
+group(gbc1, nodes, region, bc1, solid, piece)
+fix(BC1, velocity_nodes, gbc1, 0, 0, NULL)
+
+region(bc2, block, -INF, 0, -INF, INF)
+group(gbc2, nodes, region, bc2, solid, piece)
+fix(BC2, velocity_nodes, gbc2, 0, 0, NULL)
+
+# cutting tool
+fix(cutting-tool, cuttingtool, gpart, K, 1-time, 0.5, 0, 0, 0, 0, 1-time, 10, 10, 0.5)
 
 # output
 dumping_interval = 20
@@ -89,5 +95,5 @@ dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
 
 # run
 set_dt(0.000001)
-run(1000)
-#run_time(0.001)
+run(100)
+#run_time(0.01)
