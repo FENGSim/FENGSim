@@ -48,7 +48,7 @@ FLIP=0.99
 method(tlmpm, FLIP, linear, FLIP)
 #method(tlmpm, FLIP, linear, FLIP, thermo-mechanical)
 
-N = 100
+N = 50
 cellsize = 1/N
 dimension(2,0,L,0,H,cellsize)
 
@@ -56,11 +56,8 @@ dimension(2,0,L,0,H,cellsize)
 # EOS, strengh, damage and temperature
 
 eos(eoss, shock, rho, K, c0, S, Gamma, cv, Tr, 0, 0)
-
 strength(strengthjc, johnson_cook, G, sigmay, B, n, epsdot0, C, m, Tr, Tm)
-
 temperature(tpw, plastic_work, chi, cp, kappa, alpha, Tr, Tm)
-
 damage(damagejc, damage_johnson_cook, d1, d2, d3, d4, d5, epsdot0, Tr, Tm)
 
 #material(mat, eos-strength, eoss, strengthjc)
@@ -86,7 +83,7 @@ group(gbc2, nodes, region, bc2, solid, piece)
 fix(BC2, velocity_nodes, gbc2, 0, 0, NULL)
 
 # cutting tool
-fix(cutting-tool, cuttingtool, gpart, 100, 1-cellsize/2-100*time, 0.2, 0, -100, 0, 0, 10+1-cellsize/2-100*time, 0.2+0.5, 1-cellsize/2-100*time+2, 10+0.2)
+fix(cutting-tool, cuttingtool, gpart, 100, 1-cellsize/2-50*time, 0.2, 0, -100, 0, 0, 10+1-cellsize/2-50*time, 0.2+0.1, 1-cellsize/2-50*time+2, 10+0.2)
 
 # output
 dumping_interval = 20
@@ -95,5 +92,5 @@ dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
 
 # run
 set_dt(0.000001)
-#run(1000)
-run_time(0.005)
+run(5000)
+#run_time(0.005)
