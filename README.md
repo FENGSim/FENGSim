@@ -68,14 +68,20 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 <img decoding="async" src="image/am.jpg" width="1800">
 </div>
 
-<div align="center">
-<img decoding="async" src="image/cutting.gif" width="1800">
-</div>
-
 ## Composite Materials
 
 <div align="center">
 <img decoding="async" src="image/cm.jpg" width="1800">
+</div>
+
+## Metal Forming
+
+<div align="center">
+<img decoding="async" src="image/metalforming.jpg" width="1800">
+</div>
+
+<div align="center">
+<img decoding="async" src="image/cutting.gif" width="1800">
 </div>
 
 ## Adaptive Manufacturing (Physical AI)
