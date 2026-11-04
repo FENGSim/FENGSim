@@ -38,7 +38,7 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 ```
 
 ```shell
-	cd FENGSim/toolkit
+	cd FENGSim
 	./multix
 ```
 
