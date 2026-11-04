@@ -38,7 +38,7 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 ```
 
 ```shell
-	cd FENGSim/toolkit
+	cd FENGSim
 	./multix
 ```
 
@@ -72,6 +72,16 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 
 <div align="center">
 <img decoding="async" src="image/cm.jpg" width="1800">
+</div>
+
+## Metal Forming
+
+<div align="center">
+<img decoding="async" src="image/metalforming.jpg" width="1800">
+</div>
+
+<div align="center">
+<img decoding="async" src="image/cutting.gif" width="1800">
 </div>
 
 ## Adaptive Manufacturing (Physical AI)
