@@ -86,7 +86,7 @@ fix(BC2, velocity_nodes, gbc2, 0, 0, NULL)
 fix(cutting-tool, cuttingtool, gpart, 100, 1-cellsize/2-50*time, 0.2, 0, -100, 0, 0, 10+1-cellsize/2-50*time, 0.2+0.1, 1-cellsize/2-50*time+2, 10+0.2)
 
 # output
-dumping_interval = 20
+dumping_interval = 25
 dump(dump1, all, particle, dumping_interval, dump_p.*.LAMMPS, x, y, z)
 dump(dump2, all, grid, dumping_interval, dump_g.*.LAMMPS, x, y, z)
 
