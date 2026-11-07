@@ -3287,7 +3287,7 @@ void VTKWidget::mbdImportResults(int n, QString file_name)
             mbd_simulation_actor_5->SetMapper(mapper5);
             mbd_simulation_actor_5->GetProperty()->EdgeVisibilityOff();
             mbd_simulation_actor_5->GetProperty()->SetLineWidth(1);
-            mbd_simulation_actor_5->GetProperty()->SetOpacity(0.5);
+            mbd_simulation_actor_5->GetProperty()->SetOpacity(0.3);
             mbd_simulation_actor_5->SetSelected(false);
             mbd_simulation_actor_5->SetPickable(false);
         }
