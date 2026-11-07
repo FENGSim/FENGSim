@@ -3287,6 +3287,7 @@ void VTKWidget::mbdImportResults(int n, QString file_name)
             mbd_simulation_actor_5->SetMapper(mapper5);
             mbd_simulation_actor_5->GetProperty()->EdgeVisibilityOff();
             mbd_simulation_actor_5->GetProperty()->SetLineWidth(1);
+            mbd_simulation_actor_5->GetProperty()->SetOpacity(0.5);
             mbd_simulation_actor_5->SetSelected(false);
             mbd_simulation_actor_5->SetPickable(false);
         }
@@ -3693,24 +3694,63 @@ void VTKWidget::Machining2PlotTool(double cx, double cy, double cz, double r) {
 }
 
 
-void VTKWidget::Machining2MPMPlotTool (QString file_name) {
-    vtkSmartPointer<vtkSimplePointsReader> reader = vtkSmartPointer<vtkSimplePointsReader>::New();
+void VTKWidget::Machining2MPMPlot (QString file_name, QString file_name2) {
+    vtkSmartPointer<vtkPolyDataReader> reader = vtkSmartPointer<vtkPolyDataReader>::New();
     reader->SetFileName(file_name.toStdString().c_str());
     reader->Update();
 
+    double scale = 0.4;
+
+    vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
+    transform->PostMultiply();
+    transform->RotateX(90);
+    transform->RotateZ(180);
+    transform->Scale(scale, scale, scale);
+    transform->Translate(scale+0.3,0,0);
+
+
+    vtkSmartPointer<vtkTransformPolyDataFilter> tf = vtkSmartPointer<vtkTransformPolyDataFilter>::New();
+    tf->SetInputConnection(reader->GetOutputPort());
+    tf->SetTransform(transform);
+    tf->Update();
+
     vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-    mapper->SetInputConnection(reader->GetOutputPort());
+    //mapper->SetInputConnection(reader->GetOutputPort());
+    mapper->SetInputConnection(tf->GetOutputPort());
     mapper->Update();
 
-    renderer->RemoveActor(machining2_mpm_actor);
-    machining2_mpm_actor = vtkSmartPointer<vtkActor>::New();
-    machining2_mpm_actor->SetMapper(mapper);
-    machining2_mpm_actor->GetProperty()->EdgeVisibilityOn();
-    machining2_mpm_actor->GetProperty()->SetPointSize(5);
-    machining2_mpm_actor->GetProperty()->SetColor(237,125,49);
-    machining2_mpm_actor->SetPickable(false);
-    machining2_mpm_actor->SetSelected(false);
-    renderer->AddActor(machining2_mpm_actor);
+    renderer->RemoveActor(machining2_mpm_part_actor);
+    machining2_mpm_part_actor = vtkSmartPointer<vtkActor>::New();
+    machining2_mpm_part_actor->SetMapper(mapper);
+    machining2_mpm_part_actor->GetProperty()->EdgeVisibilityOn();
+    machining2_mpm_part_actor->GetProperty()->SetPointSize(5);
+    machining2_mpm_part_actor->GetProperty()->SetColor(237.0/255.0,125.0/255.0,49.0/255.0);
+    machining2_mpm_part_actor->SetPickable(false);
+    machining2_mpm_part_actor->SetSelected(false);
+    renderer->AddActor(machining2_mpm_part_actor);
+
+    // tool
+//    vtkSmartPointer<vtkPolyDataReader> reader2 = vtkSmartPointer<vtkPolyDataReader>::New();
+//    reader2->SetFileName(file_name2.toStdString().c_str());
+//    reader2->Update();
+
+//    cout << "file: " << file_name.toStdString() << endl;
+//    //double stop; cin>>stop;
+//    vtkSmartPointer<vtkPolyDataMapper> mapper2 = vtkSmartPointer<vtkPolyDataMapper>::New();
+//    mapper2->SetInputConnection(reader2->GetOutputPort());
+//    mapper2->Update();
+
+//    renderer->RemoveActor(machining2_mpm_tool_actor);
+//    machining2_mpm_tool_actor = vtkSmartPointer<vtkActor>::New();
+//    machining2_mpm_tool_actor->SetMapper(mapper2);
+//    machining2_mpm_tool_actor->GetProperty()->EdgeVisibilityOn();
+//    machining2_mpm_tool_actor->GetProperty()->SetPointSize(5);
+//    machining2_mpm_tool_actor->GetProperty()->SetColor(237.0/255.0,125.0/255.0,49.0/255.0);
+//    machining2_mpm_tool_actor->SetPickable(false);
+//    machining2_mpm_tool_actor->SetSelected(false);
+//    renderer->AddActor(machining2_mpm_tool_actor);
+
+
     renderer->ResetCameraClippingRange();
     GetRenderWindow()->Render();
 
