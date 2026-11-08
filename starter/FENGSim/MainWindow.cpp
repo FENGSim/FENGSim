@@ -4832,16 +4832,18 @@ void MainWindow::Machining2ImportResults () {
 }
 
 void MainWindow::Machining2ImportMPMResults () {
-    vtk_widget->mbdmodel();
-    mbd_file_name = "./../mbdyn/robot/robot_arm.mov";
-    ofstream out;
-    out.open("./../mbdyn/robot/ur3.traj");
-    out << "# point 1(3) --- point 2(3) --- orientation(3) --- velocity(1)" << endl;
-    out << "-0.3 0 0.08 -0.4 0 0.08 90 0 0 0.05" << endl;
-    out.close();
-//    RobotSolver();
-//    return;
     if (machining2_step == 0) {
+        vtk_widget->mbdmodel();
+        mbd_file_name = "./../mbdyn/robot/robot_arm.mov";
+        ofstream out;
+        out.open("./../mbdyn/robot/ur3.traj");
+        out << "# point 1(3) --- point 2(3) --- orientation(3) --- velocity(1)" << endl;
+        out << "-0.3 0 0.08 -0.4 0 0.08 0 0 90 0.05" << endl;
+        out.close();
+        QProcess *proc = new QProcess();
+        proc->execute("bash", QStringList() << "-c" << "cd ../mbdyn/robot && ./run");
+
+
         vtk_widget->Hide();
         machining_dock2->ui->pushButton_7->setEnabled(true);
         QDir dir("../karamelo/ex_6");
@@ -4859,9 +4861,6 @@ void MainWindow::Machining2ImportMPMResults () {
         machining2_total_step = 0;
         return;
     }
-    //    std::cout << (QString("../karamelo/ex_6/dump_p_")
-    //                  +QString::number(machining2_step)
-    //                  +QString(".vtk")).toStdString() << std::endl;
     vtk_widget->Machining2MPMPlot(
                 QString("../karamelo/ex_6/dump_p_")
                 +QString::number(machining2_step)
