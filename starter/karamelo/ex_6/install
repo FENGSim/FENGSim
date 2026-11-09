@@ -1,0 +1,11 @@
+cd ../../../toolkit/MultiX/extern/Karamelo/
+./install
+
+cd ../../../../starter/karamelo/ex_6/
+mkdir data
+cd data
+./../../../../toolkit/MultiX/extern/Karamelo/build/karamelo -i ../impact5.mpm
+cp ../export2vtk.py ./
+cp ../cuttingtool.py ./
+python3 export2vtk.py
+python3 cuttingtool.py
