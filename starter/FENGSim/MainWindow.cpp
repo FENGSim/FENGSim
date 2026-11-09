@@ -4846,7 +4846,7 @@ void MainWindow::Machining2ImportMPMResults () {
 
         vtk_widget->Hide();
         machining_dock2->ui->pushButton_7->setEnabled(true);
-        QDir dir("../karamelo/ex_6");
+        QDir dir("../karamelo/ex_6/data");
         QStringList stringlist_vtk;
         stringlist_vtk << "dump_p_*.vtk";
         dir.setNameFilters(stringlist_vtk);
@@ -4862,10 +4862,10 @@ void MainWindow::Machining2ImportMPMResults () {
         return;
     }
     vtk_widget->Machining2MPMPlot(
-                QString("../karamelo/ex_6/dump_p_")
+                QString("../karamelo/ex_6/data/dump_p_")
                 +QString::number(machining2_step)
                 +QString(".vtk"),
-                QString("../karamelo/ex_6/tool_vtk_files/tool_")
+                QString("../karamelo/ex_6/data/tool_vtk_files/tool_")
                 +QString::number(machining2_step)
                 +QString(".vtk"));
     vtk_widget->mbdImportResults(machining2_step+20,mbd_file_name);
