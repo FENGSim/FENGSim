@@ -84,7 +84,7 @@ There exist various solvers designed for nonlinear solid mechanics, computationa
 <img decoding="async" src="image/cutting.gif" width="1800">
 </div>
 
-The multibody dynamics simulation is performed using MBDyn (https://www.mbdyn.org/), a very powerful tool.
+The multibody dynamics simulation is performed using [MBDyn](https://www.mbdyn.org/), a very powerful tool.
 
 ## Adaptive Manufacturing (Physical AI)
 
