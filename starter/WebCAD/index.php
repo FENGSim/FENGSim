@@ -12,7 +12,7 @@
     <?php
      echo exec("./build/oceSolver");
     ?>
-
+    
     <script type="module">
 
 
@@ -147,7 +147,7 @@
 
 					const message = "Hello Physical AI !!!";
 
-					const shapes = font.generateShapes( message, 2 );
+					const shapes = font.generateShapes( message, 20 );
 
 					const geometry = new THREE.ShapeBufferGeometry( shapes );
 
@@ -160,7 +160,7 @@
 					// make shape ( N.B. edge view not visible )
 
 				    const text = new THREE.Mesh( geometry, matLite );
-				    text.position.x = 10;
+				    text.position.x = 200;
 					text.position.z = 20;
 					scene.add( text );
 
@@ -220,12 +220,13 @@
 			    
 
 
-	  const grid = new THREE.GridHelper( 200, 20, 0x000000, 0x000000 );
+	  const grid = new THREE.GridHelper( 2000, 20, 0x000000, 0x000000 );
 	  grid.material.opacity = 0.2;
 	  grid.material.transparent = true;
 	  scene.add( grid );
-	  
-	  
+
+	
+	
 	  
 	  // lights
 	  
